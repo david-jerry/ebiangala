@@ -1,0 +1,68 @@
+pytz==2021.1  # https://github.com/stub42/pytz
+python-slugify==4.0.1  # https://github.com/un33k/python-slugify
+Pillow==8.1.1  # https://github.com/python-pillow/Pillow
+rcssmin==1.0.6  # https://github.com/ndparker/rcssmin
+argon2-cffi==20.1.0  # https://github.com/hynek/argon2_cffi
+redis==3.5.3  # https://github.com/andymccurdy/redis-py
+hiredis==1.1.0  # https://github.com/redis/hiredis-py
+celery==4.4.6  # pyup: < 5.0,!=4.4.7  # https://github.com/celery/celery
+django-celery-beat==2.2.0  # https://github.com/celery/django-celery-beat
+
+# Django
+# ------------------------------------------------------------------------------
+django==3.1.7  # pyup: < 3.2  # https://www.djangoproject.com/
+django-environ==0.4.5  # https://github.com/joke2k/django-environ
+django-model-utils==4.1.1  # https://github.com/jazzband/django-model-utils
+django-allauth==0.44.0  # https://github.com/pennersr/django-allauth
+django-crispy-forms==1.11.1  # https://github.com/django-crispy-forms/django-crispy-forms
+django-compressor==2.4  # https://github.com/django-compressor/django-compressor
+django-redis==4.12.1  # https://github.com/jazzband/django-redis
+# Django REST Framework
+djangorestframework==3.12.2  # https://github.com/encode/django-rest-framework
+django-cors-headers==3.7.0 # https://github.com/adamchainz/django-cors-headers
+
+# Extra line
+# ------------------------------------------------------------------------------
+google-api-python-client==1.4.1
+django-admin-honeypot==1.1.0
+django-autocomplete-light==3.5.0
+django-bootstrap4==1.1.1
+django-bootstrap-datepicker-plus==3.0.5
+django-ckeditor==6.0.0
+sweetify==2.0.0
+readtime==1.1.1
+django-cookie-consent==0.2.6
+
+# PHONE NUMBER VERIFICATION
+# ------------------------------------------------------------------------------
+django-phonenumber-field==5.0.0
+phonenumbers==8.11.1
+
+# SEARCH INDEX IMPORTS & PLUGINS
+# ------------------------------------------------------------------------------
+django-haystack==3.0
+whoosh==2.7.4
+
+# Admin
+# ------------------------------------------------------------------------------
+django-jet2==1.0.12
+FeedParser==5.2.1
+python-magic==0.4.15
+django-ipware==3.0.1
+
+# Django countries
+# ------------------------------------------------------------------------------
+django-localflavor==2.2
+django-countries==7.0
+
+
+# Minify HTML in django
+# ------------------------------------------------------------------------------
+# Todo: find the uses of these to minify wesbites and others to improve security
+django-htmlmin==0.11.0
+python-memcached==1.59
+
+
+# Documentation API
+# ------------------------------------------------------------------------------
+coreapi==2.3.3
