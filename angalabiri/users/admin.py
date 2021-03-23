@@ -1,13 +1,23 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from angalabiri.users.forms import UserChangeForm, UserCreationForm
+from angalabiri.users.forms import (
+    UserAdminAddressCreateForm,
+    UserChangeForm,
+    UserCreationForm,
+)
+from angalabiri.users.models import Addresses
 from angalabiri.utils.export_as_csv import ExportCsvMixin
-from django.utils.safestring import mark_safe
 
 User = get_user_model()
+
+
+class UserAddress(admin.StackedInline):
+    form = UserAdminAddressCreateForm
+    model = Addresses
 
 
 @admin.register(User)
@@ -16,12 +26,24 @@ class UserAdmin(auth_admin.UserAdmin, ExportCsvMixin):
     form = UserChangeForm
     add_form = UserCreationForm
     list_per_page = 250
+    inlines = [UserAddress]
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
             _("Personal info"),
             {
-                "fields": ("first_name", "mid_name", "last_name", "dob", "lga", "email", "phone", "gender", "royals", "status"),
+                "fields": (
+                    "first_name",
+                    "mid_name",
+                    "last_name",
+                    "dob",
+                    "lga",
+                    "email",
+                    "phone",
+                    "gender",
+                    "royals",
+                    "status",
+                ),
             },
         ),
         (
@@ -58,7 +80,14 @@ class UserAdmin(auth_admin.UserAdmin, ExportCsvMixin):
         "last_login",
         "date_joined",
     ]
-    search_fields = ["username", "first_name", "mid_name", "last_name", "email", "phone",]
+    search_fields = [
+        "username",
+        "first_name",
+        "mid_name",
+        "last_name",
+        "email",
+        "phone",
+    ]
     exclude = [
         "added_by",
     ]

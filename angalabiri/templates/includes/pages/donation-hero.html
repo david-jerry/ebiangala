@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="container">
+  <div class="w-100 position-relative">
+    {% if richest_causes.tt_amount__sum %}
+    <div class="donor-img d-flex align-items-center rounded parallax mx-auto shadow-sm w-100" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -50px;" style="height: 500px; background: url('{% if cause.image %}{{cause.image.url}}{% else %}{% static "images/others/3.jpg" %}{% endif %}') no-repeat center center / cover"></div>
+    <div class="card bg-white border-0 center py-sm-4 px-sm-5 p-2 shadow-sm" style="position: absolute; top: 50%; right: 80px; transform: translateY(-50%);">
+      <div class="card-body">
+        <div class="color h1 mb-3"><i class="icon-heart"></i></div>
+        <h3 class="display-3 font-weight-bold mb-3 font-secondary">{{richest_causes.tt_amount__sum}}</h3>
+        <small class="text-uppercase font-weight-normal ls2 text-muted mb-3 d-block">Raised</small>
+        {% if not request.path == "/cause/" %}
+        <a href="{% url 'cause:list'  %}" class="button-svg">View More</a>
+        {% endif %}
+      </div>
+    </div>
+    {% else %}
+    <div class="donor-img d-flex align-items-center rounded parallax mx-auto shadow-sm w-100" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -50px;" style="height: 500px; background: url('{% static "images/others/3.jpg" %}') no-repeat center center / cover"></div>
+    <div class="card bg-white border-0 center py-sm-4 px-sm-5 p-2 shadow-sm" style="position: absolute; top: 50%; right: 80px; transform: translateY(-50%);">
+      <div class="card-body">
+        <div class="color h1 mb-3"><i class="icon-heart"></i></div>
+        <small class="text-uppercase font-weight-normal ls2 text-muted mb-3 d-block">Nothing Raised</small>
+        <h3 class="display-3 font-weight-bold mb-3 font-secondary">$0</h3>
+        {% if not request.path == "/cause/" %}
+        <a href="{% url 'cause:list'  %}" class="button-svg">View More</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,74 @@
+{% extends "pages/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "The royal family of Ebiangala, Angalabiri Community" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "The Royal Family" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "The royal family of Ebiangala, Angalabiri Community" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'fam' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'fam' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "The royal family of Ebiangala, Angalabiri Community" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block content %}
+<section id="page-title" class="page-title-dark page-title-parallax page-title-center" style="
+background: linear-gradient(to bottom, rgba(57, 48, 6, 0.7), rgba(57, 48, 6, 0.7)), url('{% static 'images/angalabiri/king/The_Royal_Family.jpeg' %}') no-repeat center center;
+background-size: cover;
+padding: 140px 0;">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">The Royal Family</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Royal Family</li>
+    </ol>
+  </div>
+
+</section>
+<main id="content">
+  <div class="content-wrap py-0">
+    <svg viewBox="0 0 1382 58" width="100%" height="60" preserveAspectRatio="none"
+      style="position: absolute; top: -58px; left:0; z-index: 1">
+      <path style="fill:#FFF;" d="M1.52.62s802.13,127,1380,0v56H.51Z" />
+    </svg>
+
+    <div class="container">
+      <div class="section-title topmargin-lg center">
+        <div class="heading-block border-bottom-0 mb-4">
+          <h2 class="mb-4 nott">Angalabiri {% trans 'Royal Family' %}</h2>
+        </div>
+        <div class="svg-line bottommargin-sm">
+          <img src="{% static 'images/divider-1.svg' %}" alt="svg divider" height="20">
+        </div>
+      </div>
+      <section class="masonry-thumbs grid-container grid-3 bottommargin-lg" data-big="3" data-lightbox="gallery">
+        <a class="grid-item" href="{% static 'images/angalabiri/king/Amananaowei.jpeg' %}" data-lightbox="gallery-item"><img src="{% static 'images/angalabiri/king/Amananaowei.jpeg' %}" alt="Amananaowei"></a>
+        <a class="grid-item" href="{% static 'images/angalabiri/king/HRH_Famous_S_Eseduwo.jpeg' %}" data-lightbox="gallery-item"><img src="{% static 'images/angalabiri/king/HRH_Famous_S_Eseduwo.jpeg' %}" alt="Amananaowei"></a>
+        <a class="grid-item" href="{% static 'images/angalabiri/king/Amananaowei_&_Wife.jpeg' %}" data-lightbox="gallery-item"><img src="{% static 'images/angalabiri/king/Amananaowei_&_Wife.jpeg' %}" alt="The Queen"></a>
+        <a class="grid-item" href="{% static 'images/angalabiri/king/The_Royal_Family.jpeg' %}" data-lightbox="gallery-item"><img src="{% static 'images/angalabiri/king/The_Royal_Family.jpeg' %}" alt="Amananaowei Family"></a>
+        <a class="grid-item" href="{% static 'images/angalabiri/king/Prince_&_Princesses.jpeg' %}" data-lightbox="gallery-item"><img src="{% static 'images/angalabiri/king/Prince_&_Princesses.jpeg' %}" alt="Amananaowei Children"></a>
+      </section>
+    </div>
+  </div>
+</main>
+{% endblock content %}

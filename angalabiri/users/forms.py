@@ -1,6 +1,10 @@
+from dal import autocomplete
+from django import forms
 from django.contrib.auth import forms as admin_forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+
+from angalabiri.users.models import Addresses
 
 User = get_user_model()
 
@@ -31,4 +35,13 @@ class UserCreationForm(admin_forms.UserCreationForm):
 
         error_messages = {
             "username": {"unique": _("This username has already been taken.")}
+        }
+
+
+class UserAdminAddressCreateForm(forms.ModelForm):
+    class Meta:
+        model = Addresses
+        fields = ["user", "flat", "street"]
+        widgets = {
+            "user": autocomplete.ModelSelect2(url="user-autocomplete"),
         }

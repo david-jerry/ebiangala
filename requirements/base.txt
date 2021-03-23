@@ -65,4 +65,10 @@ python-memcached==1.59
 
 # Documentation API
 # ------------------------------------------------------------------------------
-coreapi==2.3.3
+coreapi==2.3.3 # https://github.com/core-api/python-client
+
+
+
+# Add categories into django models
+# ------------------------------------------------------------------------------
+django-category==2.0.1 #

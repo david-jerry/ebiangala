@@ -1,1 +1,81 @@
-{% extends "base.html" %}
+{% extends "pages/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock description %}
+
+{% block title %}
+{% trans "Welcome to " %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'home' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'home' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block content %}
+{% include 'includes/pages/slider.html' %}
+<main id="content">
+  <div class="content-wrap py-0" style="overflow: visible">
+    <svg viewBox="0 0 1382 58" width="100%" height="60" preserveAspectRatio="none"
+      style="position: absolute; top: -58px; left:0; z-index: 1">
+      <path style="fill:#FFF;" d="M1.52.62s802.13,127,1380,0v56H.51Z" />
+    </svg>
+
+    <section class="container">
+      <div class="slider-feature w-100">
+        <div class="row justify-content-center">
+          <div class="col-md-3 px-1">
+            <a href="{% url 'about' %}"
+              class="card center border-left-0 border-right-0 border-top-0 border-bottom border-bottom shadow py-3 rounded-0 font-weight-semibold text-uppercase ls1">
+              <div class="card-body">
+                <i class="icon-line-align-center"></i>View Our History
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 px-1">
+            <a href="demo-nonprofit-causes.html"
+              class="card center border-left-0 border-right-0 border-top-0 border-bottom border-bottom shadow py-3 rounded-0 font-weight-semibold text-uppercase ls1">
+              <div class="card-body">
+                <i class="icon-line-umbrella"></i>Prominent Men
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 px-1">
+            <a href="demo-nonprofit-contact.html"
+              class="card center border-left-0 border-right-0 border-top-0 border-bottom border-bottom shadow py-3 rounded-0 font-weight-semibold text-uppercase ls1">
+              <div class="card-body">
+                <i class="icon-line-mail"></i>Request Audience
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% include 'includes/pages/brief-about.html' %}
+    <div class="container">
+      <div class="divider"><i class="icon-circle"></i></div>
+    </div>
+    {% include 'includes/pages/counter.html' %}
+    {% include 'includes/pages/donation-hero.html' %}
+    {% include 'includes/pages/cabinets.html' %}
+  </div>
+</main>
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% load static i18n %}
+
+<!-- Header
+		============================================= -->
+<header id="header" class="header-size-sm border-bottom-0" data-sticky-shrink="false">
+  <div id="header-wrap">
+    <div class="container">
+      <div class="header-row justify-content-lg-between">
+
+        <!-- Logo
+						============================================= -->
+        <div id="logo" class="mr-lg-5">
+          <a href="{% url 'home' %}" class="standard-logo" data-dark-logo="{% static 'images/logo-dark.png' %}"><img
+              src="{% static 'images/logo.png' %}" alt="Canvas Logo"></a>
+          <a href="{% url 'home' %}" class="retina-logo" data-dark-logo="{% static 'images/logo-dark@2x.png' %}"><img
+              src="{% static 'images/logo@2x.png' %}" alt="Canvas Logo"></a>
+        </div><!-- #logo end -->
+
+        <div class="header-misc">
+          <a href="demo-nonprofit-causes-single.html" class="button button-rounded button-light">
+            <div>{% trans "Donate" %}</div>
+          </a>
+        </div>
+
+        <div id="primary-menu-trigger">
+          <svg class="svg-trigger" viewBox="0 0 100 100">
+            <path
+              d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20">
+            </path>
+            <path d="m 30,50 h 40"></path>
+            <path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20">
+            </path>
+          </svg>
+        </div>
+
+        <!-- Primary Navigation
+						============================================= -->
+        <nav class="primary-menu with-arrows mr-lg-auto">
+
+          <ul class="menu-container align-self-start">
+            <li class="menu-item"><span class="menu-bg col-auto align-self-start d-flex"></span></li>
+            <li class="menu-item current"><a class="menu-link" href="{% url 'home' %}">
+                <div>{% trans "Home" %}</div>
+              </a></li>
+            <li class="menu-item">
+              <a class="menu-link" href="#">
+                <div>{% trans "About" %}</div>
+              </a>
+              <ul class="sub-menu-container">
+                <li class="menu-item">
+                  <a href="{% url 'hrh' %}">
+                    <div class="widget center">
+                      <h5 class="text-uppercase ls1">HRH Famous Eseduwo</h5>
+                      <img src="{% static 'images/angalabiri/king/akou2.jpg' %}" alt="HRH Famous Eseduwo" width="100px"
+                        height="auto" class="img-responsive">
+                    </div>
+                  </a>
+                </li>
+                <li class="menu-item center">
+                  <a class="menu-link" href="{% url 'about' %}">
+                    <div>History</div>
+                  </a>
+                </li>
+                <li class="menu-item center">
+                  <a class="menu-link" href="{% url 'fam' %}">
+                    <div>Royal Family</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item"><a class="menu-link" href="{% url 'cause:list' %}">
+                <div>Causes</div>
+              </a>
+            </li>
+            <li class="menu-item"><a class="menu-link" href="demo-nonprofit-events.html">
+                <div>Events</div>
+              </a></li>
+          </ul>
+
+        </nav><!-- #primary-menu end -->
+
+      </div>
+    </div>
+  </div>
+  <div class="header-wrap-clone"></div>
+</header><!-- #header end -->

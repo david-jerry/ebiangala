@@ -102,6 +102,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "angalabiri.users.apps.UsersConfig",
+    "angalabiri.blog.apps.BlogConfig",
+    "angalabiri.causes.apps.CausesConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -223,6 +225,13 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "angalabiri.utils.context_processors.settings_context",
+                "angalabiri.blog.context_processors.recent_posts",
+                "angalabiri.users.context_processors.all_chiefs",
+                "angalabiri.users.context_processors.all_females",
+                "angalabiri.users.context_processors.all_males",
+                "angalabiri.users.context_processors.all_citizen",
+                "angalabiri.causes.context_processors.richest_causes",
+                "angalabiri.causes.context_processors.featured_causes",
             ],
         },
     }

@@ -1,116 +1,87 @@
-{% load static i18n compress%}<!DOCTYPE html>
+{% load static i18n compress%}
+{% spaceless %}
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}angalabiri{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Founded before the year<br>1815 AD <span> by AKOU </span>  the son of Angalabiriowei and the granson of Tarakiriowei.">
-    <meta name="author" content="David Jeremiah">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block title %}Angalabiri{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block description %}{% endblock description %}">
+  <meta name="author" content="David Jeremiah">
+  <meta name="keywords"
+    content="ebiangala, angalabiri, angalabiri community, angalabiri in sagbama, angalabiri nigeria, bayelsa sagbama, akuo akuo akuo, ebiangala federated community, federated community in bayelsa,, community in bayelsa, major cities in bayelsa, sagbama city {% block keywords %}{% endblock keywords %}" />
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="{% block ogdesc %}{% endblock ogdesc %}
+  ">
+  <link rel="canonical" href="{% block cano %}{% endblock cano %}">
+  <meta property="og:url" content="{% block ogurl %}{% endblock ogurl %}">
+  <meta property=" og:site_name" content="Angalabiri Community">
+  <meta property="og:image" content="{% static 'images/logo@2x.png' %}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@ebiangala">
+  <meta name="twitter:creator" content="@ebiangala">
+  <meta name="twitter:title" content="Angalabiri Community">
+  <meta name="twitter:description" content="{% block twitdesc %}{% endblock twitdesc %}">
+  <meta name="twitter:image" content="{% static 'images/logo@2x.png' %}">
+  <meta name="twitter:image:alt" content="Ebiangala Logo">
+
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
 
-    <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+  <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
 
-    {% block css %}
+  {% block css %}
 
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Poppins:wght@300;400;500;600;700;900&display=swap"
+    rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Poppins:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet" type="text/css" />
+  </noscript>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="preload" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+      type="text/css" />
+  </noscript>
 
 
-    <!-- Your stuff: Third-party CSS libraries go here -->
-    {% compress css %}
-    <!-- This file stores project-specific CSS -->
-
-    <link href="{% static 'css/project.css' %}" rel="stylesheet">
-
-    {% endcompress %}
-    {% endblock %}
-    <!-- Le javascript
+  <!-- Your stuff: Third-party CSS libraries go here -->
+  {% endblock %}
+  <!-- Le javascript
     ================================================== -->
-    {# Placed at the top of the document so pages load faster with defer #}
-    {% block javascript %}
+  {# Placed at the top of the document so pages load faster with defer #}
+  {% block javascript %}
 
-      <!-- Bootstrap JS and its dependencies-->
-      <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-      <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-      <!-- Your stuff: Third-party javascript libraries go here -->
+  <!-- Your stuff: Third-party javascript libraries go here -->
 
 
-      <!-- place project specific Javascript in this file -->
-      {% compress js %}
-      <script defer src="{% static 'js/project.js' %}"></script>
-      {% endcompress %}
+  <!-- place project specific Javascript in this file -->
+  {% endblock javascript %}
 
-    {% endblock javascript %}
+  {{form.media}}
+</head>
 
-  </head>
+<body {% block body-class %}{% endblock body-class%}>
 
-  <body>
+  {% block maincontent %}
+  {% endblock maincontent %}
 
-    <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{% url 'home' %}">angalabiri</a>
+  {% block inline_javascript %}
+  {# Script tags with only code, no src (defer by default) #}
+  {% endblock inline_javascript %}
+</body>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-            {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      </nav>
-
-    </div>
-
-    <div class="container">
-
-      {% if messages %}
-          {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-          {% endfor %}
-      {% endif %}
-
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
-
-    </div> <!-- /container -->
-
-    {% block modal %}{% endblock modal %}
-
-    {% block inline_javascript %}
-    {# Script tags with only code, no src (defer by default) #}
-    {% endblock inline_javascript %}
-  </body>
 </html>
+{% endspaceless %}

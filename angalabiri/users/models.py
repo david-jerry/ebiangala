@@ -1,11 +1,15 @@
-import random
 import os
-from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+import random
+import datetime
+from dateutil.relativedelta import relativedelta
+from datetime import date, timedelta
 
+from category.models import Category, Tag
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db.models import (
+    CASCADE,
+    SET_NULL,
     BooleanField,
     CharField,
     DateField,
@@ -14,22 +18,24 @@ from django.db.models import (
     EmailField,
     FileField,
     ForeignKey,
+    GenericIPAddressField,
     ImageField,
     IntegerField,
+    IPAddressField,
     OneToOneField,
     Q,
     SlugField,
-    CASCADE,
-    SET_NULL,
     URLField,
-    IPAddressField,
-    GenericIPAddressField,
 )
-from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from model_utils import Choices
+from model_utils.models import StatusModel, TimeStampedModel
 
-from category.models import Category, Tag
 from .validators import validate_user_photo_extension
+from .managers import UserManager
+
 
 MALE = "male"
 FEMALE = "female"
@@ -209,9 +215,7 @@ class User(AbstractUser):
         blank=True,
     )
     gender = CharField(_("Gender"), max_length=9, choices=GENDER, null=True, blank=True)
-    status = CharField(
-        _("Prefix"), max_length=8, choices=TITLE, null=True, blank=True
-    )
+    status = CharField(_("Prefix"), max_length=8, choices=TITLE, null=True, blank=True)
     royals = CharField(
         _("Royal Status"), max_length=12, choices=ROYALTY, null=True, blank=True
     )
@@ -243,6 +247,8 @@ class User(AbstractUser):
     accessed_with = CharField(
         _("System IP Accessed with"), max_length=255, null=True, blank=True
     )
+    objects=UserManager()
+
 
     def __str__(self):
         return f"{self.first_name} {self.mid_name} {self.last_name}"
@@ -252,6 +258,12 @@ class User(AbstractUser):
             self.pk = self.__class__.objects.first().pk
         super().save(*args, **kwargs)
 
+    @property
+    def age(self):
+        TODAY = datetime.date.today()
+        if self.dob:
+            return u"%s" % relativedelta(TODAY, self.dob).years
+
     def get_absolute_url(self):
         """Get url for user's detail view.
 
@@ -260,3 +272,21 @@ class User(AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"username": self.username})
+
+
+class Addresses(TimeStampedModel, StatusModel):
+    STATUS = Choices("Old", "Current")
+    user = ForeignKey(User, on_delete=CASCADE)
+    flat = CharField(_("Flat"), max_length=222, null=True, blank=True)
+    street = CharField(_("Street Address"), max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return (
+            f"{self.user.first_name} {self.user.mid_name} {self.user.last_name} Address"
+        )
+
+    class Meta:
+        managed = True
+        verbose_name = "User Addresse"
+        verbose_name_plural = "User Addresses"
+        ordering = ["-created"]

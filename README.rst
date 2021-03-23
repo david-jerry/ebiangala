@@ -1,7 +1,7 @@
 angalabiri
 ==========
 
-Founded before the year<br>1815 AD <span> by AKOU </span>  the son of Angalabiriowei and the granson of Tarakiriowei.
+Founded before the year1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter
      :target: https://github.com/pydanny/cookiecutter-django/

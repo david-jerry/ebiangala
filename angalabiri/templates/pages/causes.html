@@ -1,0 +1,67 @@
+{% extends "pages/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "Supporting a cause that enriches a large number of people is a blessing" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "Our Causes" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Supporting a cause that enriches a large number of people is a blessing" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'cause:list' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'cause:list' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Supporting a cause that enriches a large number of people is a blessing" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+causes, philantropic, philantropy, giving, enriching, surviving
+{% endblock keywords %}
+
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title" class="page-title-dark page-title-parallax page-title-center" style="
+background: linear-gradient(to bottom, rgba(57, 48, 6, 0.7), rgba(57, 48, 6, 0.7)), url('{% static 'images/cause/page-title.jpg' %}') no-repeat center center;
+background-size: cover;
+padding: 140px 0;">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">Enriching Angalabiri through Philantropy</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Our Causes</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+<main id="content">
+  <div class="content-wrap py-0">
+    <svg viewBox="0 0 1382 58" width="100%" height="60" preserveAspectRatio="none"
+      style="position: absolute; top: -58px; left:0; z-index: 1">
+      <path style="fill:#FFF;" d="M1.52.62s802.13,127,1380,0v56H.51Z" />
+    </svg>
+    <div class="my-4">
+    {% include 'includes/pages/donation-hero.html' %}
+    </div>
+
+  </div>
+</main>
+{% endblock content %}

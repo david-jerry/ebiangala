@@ -1,0 +1,73 @@
+{% load static i18n %}
+
+<!-- Slider
+		============================================= -->
+<section id="slider" class="slider-element dark swiper_wrapper slider-parallax min-vh-75">
+  <div class="slider-inner">
+
+    <div class="swiper-container swiper-parent">
+      <div class="swiper-wrapper">
+        {% for post in recent_posts %}
+        <div class="swiper-slide dark">
+          <div class="container">
+            <div class="slider-caption">
+              <div>
+                <h2 class="nott" data-animate="fadeInUp">{{post.title|truncatewords:4|safe}}</h2>
+                <a href="{{post.get_absolute_url}}" data-animate="fadeInUp" data-delay="400"
+                  class="button button-rounded button-large button-light shadow nott ls0 ml-0 mt-4">Know More</a>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide-bg"
+            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url({% if post.image_set.all %}{% for image in post.image_set.all %}{{image.image.url}}{% endfor %}{% else%}{% static 'images/slider/1.jpg' %}{% endif %})no-repeat center center; background-size: cover;">
+          </div>
+        </div>
+        {% empty %}
+        <div class="swiper-slide dark">
+          <div class="container">
+            <div class="slider-caption">
+              <div>
+                <h2 class="nott" data-animate="fadeInUp">The Royal Palace</h2>
+                <p class="nott" data-animate="fadeInUp" data-delay="460">The Palace of HRH Famous Eseduwo</p>
+                <a href="#" data-animate="fadeInUp" data-delay="400"
+                  class="button button-rounded button-large button-light shadow nott ls0 ml-0 mt-4">Know More</a>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide-bg"
+            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url('{% static "images/angalabiri/banner/ban3.JPG" %}') no-repeat center center; background-size: cover;">
+          </div>
+        </div>
+        <div class="swiper-slide dark">
+          <div class="container">
+            <div class="slider-caption">
+              <div>
+                <h2 class="nott" data-animate="fadeInUp">Angalabiri Community</h2>
+                <p class="nott" data-animate="fadeInUp" data-delay="460">Follow the latest community news.</span></p>
+                <a href="#" data-animate="fadeInUp" data-delay="400"
+                  class="button button-rounded button-large button-light shadow nott ls0 ml-0 mt-4">Visit Blog</a>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide-bg"
+            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url('{% static "images/angalabiri/banner/ban2.JPG" %}') no-repeat center center; background-size: cover;">
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-navs">
+        <div class="slider-arrow-left"><i class="icon-line-arrow-left"></i></div>
+        <div class="slider-arrow-right"><i class="icon-line-arrow-right"></i></div>
+      </div>
+      <div class="swiper-scrollbar">
+        <div class="swiper-scrollbar-drag">
+          <div class="slide-number">
+            <div class="slide-number-current"></div><span>/</span>
+            <div class="slide-number-total"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

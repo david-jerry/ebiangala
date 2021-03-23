@@ -1,1 +1,363 @@
-{% extends "base.html" %}
+{% extends "pages/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock description %}
+
+{% block title %}
+{% trans "About " %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'about' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'about' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community, Ebiangala Community, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title" class="page-title-dark page-title-parallax page-title-center" style="
+background: linear-gradient(to bottom, rgba(57, 48, 6, 0.7), rgba(57, 48, 6, 0.7)), url('{% static 'images/angalabiri/banner/ban1.JPG' %}') no-repeat center center;
+background-size: cover;
+padding: 140px 0;">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">About Angalabiri People</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Our History</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+<main id="content">
+  <div class="content-wrap py-0">
+    <svg viewBox="0 0 1382 58" width="100%" height="60" preserveAspectRatio="none"
+      style="position: absolute; top: -58px; left:0; z-index: 1">
+      <path style="fill:#FFF;" d="M1.52.62s802.13,127,1380,0v56H.51Z" />
+    </svg>
+    <!-- History section-->
+    <section data-scrollax-parent="true">
+      <div class="container">
+        <!-- section-title -->
+        <div class="section-title topmargin-lg center">
+          <div class="heading-block border-bottom-0 mb-4">
+            <h2 class="mb-4 nott">Angalabiri {% trans 'History' %}</h2>
+          </div>
+          <div class="svg-line bottommargin-sm">
+            <img src="{% static 'images/divider-1.svg' %}" alt="svg divider" height="20">
+          </div>
+          <p>
+            This is the birth and journey of Angalabiri people in Sagbama Local Government Area of Bayelsa State,
+            Nigeria.
+          </p>
+        </div>
+                  <!-- section-title end -->
+        <!-- custom-inner-holder -->
+        <div class="custom-inner-holder">
+          <!-- custom-inner -->
+          <div class="custom-inner">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="custom-inner-header workres">
+                  <i class="fa fa-briefcase"></i>
+                  <h3> Settlement on the "Shores of River Forcados"</h3>
+                  <span> Before 1815 </span>
+                </div>
+                <div class="ci-num"><span>01. -</span></div>
+              </div>
+              <div class="col-md-8">
+                <div class="custom-inner-content fl-wrap">
+                  <h4>Angalabiri Federated Community was founded over 200 years ago before 1815 AD</h4>
+                  <p>
+                    It was founded by AKOU the son of Angalabiriowei and the grandson of Tarakiriowei.
+                  </p>
+                  <p>
+                    AKOU was a hunter/fisherman who migrated from Ubioma in present Southern-Ijaw LGA of Bayelsa State.
+                    He first settled at Uwubulou (opposite present Amatolo) after a misunderstanding amongst
+                    Tarakiriowei sons over food. The Angalabiri kindred also settled at the present location of Amatolo
+                    before moving to Edeinpou on the shores of River Forcados estuary (near present Delta State
+                    Angiama).
+                  </p>
+                  <p>
+                    Thereafter, the Angalabiri kindred negotiated for its present location with Zado, son of Mein and
+                    the founder of Oboro Community in present Delta State. Fortunately, Zado was a lone settler far away
+                    from his Mein kindred so he was willing to leave the land and return to his father’s domain i.e. the
+                    present location of Oboro. Thus, Zado sold the land to the Angalabiri kindred through
+                    trade-by-barter. Initially, Angalabiri Federated Community settled with four quarters viz:
+                    Ozigbopelei, Aramabiri, Olodiamapelei and Agbeinware. It later expanded to five quarters with the
+                    creation of Guaware. The five quarters further developed to federating units as communities viz;
+                    Ozibgo-ama, Aran-ama, Olodiama, Agbein-ama and Gua-ama, making the modern Angalabiri Federated
+                    Community with an indigenous population of over ten thousand people. <br>
+                    Earlier, there was an unbridled culture of idol-worshipping amongst the sons of AKOU Angalabiriowei,
+                    as the discovery of the Eperetua Deity by AKOU, the founder of Angalabiri Federated Community was
+                    the precursor to the discovery of the land, Eperetuabou (Epiritua Bush) and the attendant final
+                    relocation/settlement of the community at its present location. History has it that earlier Chief
+                    Priests of Eperetua were buried at Owubulou (opposite Amatolo) according to customs\tradition. It
+                    was said that Saisai, Enewarikemieye, etc were among Chief Priests of Eperetua that were buried at
+                    Owubulou. The first Chief Priest that was buried at the present location of Angalabiri was
+                    Kuro-Orulagha Ebakpa.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- custom-inner end -->
+          <!-- custom-inner -->
+          <div class="custom-inner">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="custom-inner-header educ">
+                  <i class="fal fa-university"></i>
+                  <h3> Angalabiri Traditional Stool</h3>
+                  <span> 1937-2016 </span>
+                </div>
+                <div class="ci-num"><span>02. - </span></div>
+              </div>
+              <div class="col-md-8">
+                <div class="custom-inner-content fl-wrap">
+                  <h4>
+                    Angalabiri has a traditional stool of Amananaowei (Paramount Ruler) recognized by Bayelsa State
+                    Government and documented in the Gazette as a Second Class Stool
+                  </h4>
+                  <p>
+                    The Amananaowei of Angalabiri is greeted as: “AKOU!, AKOU!!, AKOU!!!, Datimi Ondu (Long live the
+                    Paramount Ruler)”. The Angalabiri traditional stool started with Boubaikeburu Mieyeseigha as the
+                    first Amananaowei that was traditionally recognized. He reigned from 1937 till his death in 1971.
+                    Thereafter, the stool was vacant till 2004, when Alex Youbogha became the Amananaowei. He was the
+                    first to be recognized and documented in the Gazette of Bayelsa State Government as AKOU I HRH Alex
+                    Youbogha also joined his ancestors in 2016, which made the Amananaowei stool vacant, again. Please
+                    see his portrait below:
+                  </p>
+                  <img src="{% static 'images/angalabiri/king/akou1.jpg' %}" class="img-fluid respimg" height="250px"
+                    alt="">
+                  <p style="text-align: center;"><small>HRH Alex Youbogha (1942 - 2016)</small></p>
+
+                  <br><br>
+                  <p>
+                    It is worthy to note that Angalabiri Federated Community has passed through a lot of crises in the
+                    practice of its traditional institution over the years. We are hoping that God will put all that
+                    behind us now and recreate a divine and united traditional stool to put the community on the fastest
+                    lane of development.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- custom-inner end -->
+          <!-- custom-inner -->
+          <div class="custom-inner">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="custom-inner-header workres">
+                  <i class="fa fa-briefcase"></i>
+                  <h3> Constitutional Laws, Customs and Traditional Values</h3>
+                  <span> Before 1815 - Date </span>
+                </div>
+                <div class="ci-num"><span>03. - </span></div>
+              </div>
+              <div class="col-md-8">
+                <div class="custom-inner-content fl-wrap">
+                  <h4>Angalabiri Federated Community operates a written Constitution that was first enacted in 1989</h4>
+                  <p>
+                    Prior to 1989, the Community was operating an unwritten pre-colonial Constitution based on
+                    historical facts and its traditional values. The Angalabiri constitutional development has witnessed
+                    four major constitutional amendments viz: 1989 (amendment from unwritten to written constitution),
+                    2004 (amendment of the 1989 Constitution), and 2015 (amendment of the 2004 Constitution). It was the
+                    2015 amendment that recognized five quarters as federating units (communities) and eventually
+                    declared Angalabiri a Federated Community (See S.2 of the Constitution as Amended). The 2015
+                    Constitution as Amended also reviewed the tenure of Amananaowei and the Title Chiefs from three
+                    years to life.
+                  </p>
+                  <p>
+                    Angalabiri Federated Community also has a recognized Community Development Committee (CDC), headed
+                    by a Chairman and EXCO Members. The Constitution allows one-year tenure for the CDC. The 2015
+                    Constitution as Amended further provides Statutory Development Committees on the following areas:
+                    (i) Education, (ii) Health, (iii) Festival, (iv) Funeral, (v) Electric Power/Water Supply (Utility),
+                    (vi) Town Planning, and (vii) Market. The Constitution allows two-year tenure for all Statutory
+                    Development Committees.
+                  </p>
+                  <p>
+                    The 2019 constitution (amendment of 2015 constitution) has provided specific requirements for the
+                    removal of the CDC Chairman and Members. This has laid to rest the babaric approach of any aggrieved
+                    group proclaiming the community with a GONG announcing the dethronement of a CDC Chairman at the
+                    slightest provocation.
+                  </p>
+                  <p>
+                    The Angalabiri people has two renowned annual festivals viz: the Aburubele Oge whereby epic
+                    masquerades like Eperitua, Fiyaifikakuro and others featured prominently; and the Abobulu (Island)
+                    Fishing Festival which is predominantly celebrated in April every year. Angalabiri Federated
+                    Community is also blessed with music (a.k.a Congo City). It has produced an amazing number of Ijaw
+                    musicians such as the Late Legend, the Numoupere of Ijaw, King (Dr) Robert Ebizimor, Late Bestman
+                    Doupere, SAN A.S. Eseduwo, Anthony Cockson, Peanock Fukurumo, DKC Lagos, Newman Zink, Late Fine
+                    Dieware, Princess Diana, Kente Bekeyei, etc. Angalabiri Federated Community has enjoyed peaceful
+                    co-existence with its neighbouring communities over the years, e.g. Ofoni, Adobu, Toru-Orua,
+                    Bulou-Orua, Ebedebiri, Angiama, etc.
+                  </p>
+                  <p>
+                    The late legend <b>King(Dr) Robert Ebizimor</b> is celebrated every year on <b>31st July</b> whereby
+                    all the IZON musicians gather for live performance by way of reaffirming their talents. This is also
+                    another canival in angalabiri federated community that attracts tourists from all over the world.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- custom-inner end -->
+          <!-- custom-inner -->
+          <div class="custom-inner">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="custom-inner-header workres">
+                  <i class="fa fa-briefcase"></i>
+                  <h3> Our Natural Resources </h3>
+                  <span> Before 1815-Date </span>
+                </div>
+                <div class="ci-num"><span>04. - </span></div>
+              </div>
+              <div class="col-md-8">
+                <img src="{% static 'images/angalabiri/banner/ban1.JPG' %}" class="respimg"
+                  data-scrollax="properties: { translateY: '100px' }" alt="">
+                <div class="custom-inner-content fl-wrap">
+                  <h4>The Community has a beautiful scenic view</h4>
+                  <p>
+                    The community is located by the <b>River Forcados</b>, overlooking the age-long ABOBULU island,
+                    which serves tripple purpose of fishing,
+                    farming and eco-green environment.
+                  </p>
+                  <p>
+                    The River Forcados can also serve as a source for Hydro Energy generation.
+                  </p>
+                  <p>
+                    With fishing lakes like Abobulu, Dunoubou, Kalaboye, Tamowei, Ogbalabeni, Etoindunou, Bienmadanwain,
+                    Torukubu, etc, our community engages majorly in the business of fishing.
+                  </p>
+                  <p>
+                    The community is also blessed with other natural resources, such as gravel, sharp sand, timber, etc.
+                    This largely explains the main occupations of the people of Angalabiri i.e farming, fishing,
+                    hunting, local dredging, lumbering, and so on.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- custom-inner end -->
+          <!-- custom-inner -->
+          <div class="custom-inner">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="custom-inner-header educ">
+                  <i class="fal fa-university"></i>
+                  <h3> Education and renowned accomplishment</h3>
+                  <span> 1927-Date </span>
+                </div>
+                <div class="ci-num"><span>05. - </span></div>
+              </div>
+              <div class="col-md-8">
+                <div class="custom-inner-content fl-wrap">
+                  <h4>
+                    Educational development started very late in Angalabiri Federated Community
+                  </h4>
+                  <p>
+                    This is evidenced by the late establishment of the first Primary School in 1927, which was after
+                    over One Hundred and Ten years of the existence of Angalabiri Federated Community. Please see
+                    primary school signboard:
+                  </p>
+                  <img src="{% static 'images/angalabiri/king/cps.jpg' %}" class="img-fluid respimg" height="250px"
+                    alt="">
+                  <br><br>
+                  <p>
+                    This has adversely affected the human and infrastructural development of the Community, largely.
+                    However, Angalabiri Federated Community is one of the fast developing communities in the Sagbama LGA
+                    of Bayelsa State, presently.
+                  </p>
+                  <p>
+                    The Community has been actively participating in the political activities of the area right from the
+                    days of districts to Sagbama LGA, Bayelsa State and national level. Angalabiri Federated Community
+                    has produced notable politicians such as Late Chief Gordon Bozimo, Late Paul Esewe, Late Chief
+                    Oyayigha Yinkere, Late Chief Thomas Aloku, Late Paul Youbogha, Late Chief J. Agene, Late Japan Botu,
+                    Late Moonshine Okoro, Late Moses Youbogha, Late Edeintu Orderly, Chief Clifford Apina, Prince (Barr)
+                    Peres Peretu, Late Chief Alabi Alapu, Chief S.S Eberiye, Hon. Nelson Ebi Campbell, Prince Lucky
+                    Youbogha, Barr. Stanley Damabide, Chief Meshach Botu, Alomu Alagoa, Modern Okomuko, Hon. Godbless
+                    Micah, Chief Kemebiye Oweisana, HRH (Dr) Famous S. Eseduwo, etc.
+                  </p>
+                  <p>
+                    The Community has also produced a number of senior retired/serving officers in the
+                    local/state/federal public/civil services. These include, Late Chief Arisei Agene (SUPOL), Elder
+                    Stephen Enamamu (Retired Accountant-General/Permanent Secretary, Bayelsa State), Lord Ekiamine
+                    (Retired Snr. SSS Officer/Administrative Officer to Former President Goodluck Jonathan), HRH (Dr)
+                    Famous S. Eseduwo, Ebiotu Alegi, Capt. Anthony Adede Boye, Dr. Mienbi Oweisana, Stanley Bekeyei,
+                    SUPOL Seiyefa Agene, SUPOL Gene March, SUPOL Chief Epigha Femone, MJR. Bibode Clark, Smith
+                    Adesefuobo, SUPOL Ebi Orukefe, Stanley Youbogha, Anthony Micah, Freedom Okpona, Stanley Emmanuel,
+                    Barr. Bribena Fanty, Barr. Funperelayefa Eseduwo etc.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- custom-inner end -->
+          <!-- custom-inner -->
+          <div class="custom-inner">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="custom-inner-header workres">
+                  <i class="fa fa-briefcase"></i>
+                  <h3> Religious and Traditional Beliefs</h3>
+                  <span> Present </span>
+                </div>
+                <div class="ci-num"><span>06. - </span></div>
+              </div>
+              <div class="col-md-4">
+                <div class="custom-inner-content fl-wrap">
+                  <h4>Angalabiri Federated Community has embraced Christianity to a large extent </h4>
+                  <p>
+                    With great men of God like Pastor Francis Micah of the Christ Harbour Ministry, Pst. Ebimobowei
+                    Surveyor (PFN Chairman, Angalabiri), Jonathan Hausa of the Cherubim & Seraphim Church, Late O.K.
+                    Nanatu, etc. and quite a number of churches have established their branches in Angalabiri. Thus,
+                    Christianity has started opening up the Community for development.
+                  </p>
+                  <p>
+                    The history of Angalabiri has been largely oral and this has also affected the development of the
+                    Community negatively, as most discoveries in science and technology were earlier uncultivated, and
+                    as such, affected the development of the Angalabiri Federated Community. This, the present
+                    Amananaowei of Angalabiri Federated Community, HRH (Dr) Famous S. Eseduwo has fixed and ensuring its
+                    sustainability.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4"><img src="{% static 'images/angalabiri/king/Amananaowei.jpeg' %}" class="respimg"
+                  data-scrollax="properties: { translateY: '100px' }" alt=""></div>
+            </div>
+          </div>
+          <!-- custom-inner end -->
+        </div>
+      </div>
+      <div class="sec-lines"></div>
+    </section>
+    <!-- section end-->
+
+  </div>
+</main>
+{% endblock content %}
