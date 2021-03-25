@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static i18n compress %}
+
+{% block title %}
+{{block.super}}
+{% endblock title %}
+
+{% block description %}
+{% endblock description %}
+
+{% block ogdesc %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+{% endblock body-class%}
+
+{% block keywords %}
+{% endblock keywords %}
+
+{% block maincontent %}
+
+<div id="wrapper">
+  {% include 'includes/pages/blog-nav.html' %}
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button"
+      class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+  {% endfor %}
+  {% endif %}
+
+  {% block content %}
+  {% endblock content %}
+
+  {% include 'includes/pages/blog-footer.html' %}
+</div> <!-- /wrapper -->
+{% include 'includes/pages/blog-totop.html' %}
+
+{% block modal %}{% endblock modal %}
+
+{% endblock maincontent %}
+
+{% block inline_javascript %}
+{% compress js inline %}
+<!-- ADD-ONS JS FILES -->
+<script>
+  // Current Date
+  var weekday = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+    month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    a = new Date();
+
+  jQuery('.divider-text').html(weekday[a.getDay()] + ', ' + month[a.getMonth()] + ' ' + a.getDate());
+
+  jQuery('.dark-mode').on('click', function () {
+    jQuery("body").toggleClass('dark');
+    SEMICOLON.header.logo();
+    return false;
+  });
+</script>
+
+{% endcompress %}
+{% endblock inline_javascript %}
+
+
+{% block javascript %}
+{% include 'includes/pages/js.html' %}
+{% endblock javascript %}

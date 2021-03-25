@@ -47,13 +47,15 @@ def get_filename_ext(filepath):
     return name, ext
 
 
-def cause_file_path(filename):
-    new_filename = random.randint(1, 3910209312)
-    ext = get_filename_ext(filename)
-    final_filename = "{new_filename}{ext}".format(new_filename=new_filename, ext=ext)
-    return "causes/{new_filename}/{final_filename}".format(
-        new_filename=new_filename, final_filename=final_filename
-    )
+# def cause_file_path(filename, instance):
+#     new_filename = random.randint(1, 3910209312)
+#     name, ext = get_filename_ext(filename)
+#     final_filename = "{new_filename}{ext}".format(new_filename=new_filename, ext=ext)
+#     return "causes/{new_filename}/{final_filename}".format(
+#         new_filename=new_filename, final_filename=final_filename
+#     )
+def cause_file_path(instance, filename):
+    return "causes/{filename}".format(filename=filename)
 
 class Cause(TimeStampedModel):
     author = ForeignKey(User, on_delete=SET_NULL, null=True)
@@ -73,7 +75,7 @@ class Cause(TimeStampedModel):
         blank=False,
     )
     end_date = DateField(
-        _("Post Published Date"),
+        _("End Published Date"),
         auto_now=False,
         auto_now_add=False,
         null=True,
@@ -96,6 +98,13 @@ class Cause(TimeStampedModel):
     @staticmethod
     def autocomplete_search_fields():
         return "title", "author.title"
+
+    @property
+    def avg(self):
+        dec = self.tt_amount / self.max_donation
+        avg = dec * 100
+        return avg
+
 
     def save(self, *args, **kwargs):
         if self.max_donation > self.tt_amount:

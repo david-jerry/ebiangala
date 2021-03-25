@@ -29,6 +29,10 @@
 class="stretched"
 {% endblock body-class%}
 
+{% block css %}
+{% include 'includes/pages/css.html' %}
+{% endblock css %}
+
 {% block content %}
 <section id="page-title" class="page-title-dark page-title-parallax page-title-center" style="
 background: linear-gradient(to bottom, rgba(57, 48, 6, 0.7), rgba(57, 48, 6, 0.7)), url('{% static 'images/angalabiri/king/The_Royal_Family.jpeg' %}') no-repeat center center;

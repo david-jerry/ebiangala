@@ -2,27 +2,27 @@
 {% load static i18n %}
 
 {% block description %}
-{% trans "{{cause.content|truncatewords:30|safe}}" %}
+{{cause.content|truncatewords:30|safe}}
 {% endblock description %}
 
 {% block title %}
-{% trans "{{cause.title}} " %} | {{block.super|upper}}
+{{cause.title|upper}} | {{block.super|upper}}
 {% endblock title %}
 
 {% block ogdesc %}
-{% trans "{{cause.content|truncatewords:30|safe}}" %}
+{{cause.content|truncatewords:30|safe}}
 {% endblock ogdesc %}
 
 {% block cano %}
-{% url 'cause.get_absolute_url' %}
+{{ 'cause.get_absolute_url' }}
 {% endblock cano %}
 
 {% block ogurl %}
-{% url 'cause.get_absolute_url' %}
+{{ 'cause.get_absolute_url' }}
 {% endblock ogurl %}
 
 {% block twitdesc %}
-{% trans "{{cause.content|truncatewords:30|safe}}" %}
+{{cause.content|truncatewords:30|safe}}
 {% endblock twitdesc %}
 
 {% block body-class %}
@@ -32,3 +32,135 @@ class="stretched"
 {% block keywords %}
 {{cause.title}}
 {% endblock keywords %}
+
+{% block css %}
+{% include 'includes/pages/css.html' %}
+{% endblock css %}
+
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title" class="page-title-dark page-title-parallax page-title-center" style="
+    background: linear-gradient(to bottom, rgba(57, 48, 6, 0.7), rgba(57, 48, 6, 0.7)), url('{{cause.image.url}}') no-repeat center center;
+    background-size: cover;
+    padding: 140px 0;">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">{{cause.title|upper}}</h1>
+    <span>{% for tag in cause.tags.all %}{{tag.title}}{% empty %}Angalabiri Projects{% endfor %}</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{cause.slug|safe}}</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+
+<main class="content">
+  <div class="content-wrap">
+    <section class="container pt-5">
+      <div class="row gutter-40 col-mb-80">
+        <div class="postcontent col-lg-9">
+          <div class="single-post mb-0">
+            <!-- Single Post
+								============================================= -->
+            <div class="entry clearfix">
+
+              <!-- Entry Image
+									============================================= -->
+              <div class="entry-image mb-0">
+                <a href="#"><img src="{{cause.image.url}}" alt="{{cause.title}}"></a>
+              </div><!-- .entry-image end -->
+
+              <div class="card bg-color-light rounded-0 my-4">
+                <div class="card-body py-4 px-5">
+                  <div class="d-flex justify-content-between">
+                    <div class="counter counter-inherit d-flex justify-content-between">
+                      <strong class="mr-1 ls0">Donated:</strong> $<span data-from="0" data-to="{{cause.tt_amount}}"
+                        data-refresh-interval="10" data-speed="100" data-comma="true"></span>
+                    </div>
+                    <span><strong>Target:</strong> {{cause.max_donation}}</span>
+                  </div>
+                  <ul class="skills pt-3 mb-2">
+                    <li data-percent="{{cause.avg}}">
+                      <div class="progress">
+                        <div class="progress-percent">
+                          <div class="counter counter-inherit counter-instant"><span data-from="0" data-to="{{cause.avg}}"
+                              data-refresh-interval="30" data-speed="1100"></span>%</div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Entry Content
+									============================================= -->
+              <div class="entry-content mt-0">
+
+                {{cause.content|safe}}
+                <!-- Post Single - Content End -->
+
+                <div class="clear"></div>
+
+                <!-- Post Single - Share
+										============================================= -->
+                <div class="si-share  d-flex justify-content-between align-items-center">
+                  <span>Share this Post:</span>
+                  <div>
+                    <a href="#" class="social-icon si-borderless si-facebook">
+                      <i class="icon-facebook"></i>
+                      <i class="icon-facebook"></i>
+                    </a>
+                    <a href="#" class="social-icon si-borderless si-twitter">
+                      <i class="icon-twitter"></i>
+                      <i class="icon-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon si-borderless si-pinterest">
+                      <i class="icon-pinterest"></i>
+                      <i class="icon-pinterest"></i>
+                    </a>
+                    <a href="#" class="social-icon si-borderless si-gplus">
+                      <i class="icon-gplus"></i>
+                      <i class="icon-gplus"></i>
+                    </a>
+                    <a href="#" class="social-icon si-borderless si-rss">
+                      <i class="icon-rss"></i>
+                      <i class="icon-rss"></i>
+                    </a>
+                    <a href="#" class="social-icon si-borderless si-email3">
+                      <i class="icon-email3"></i>
+                      <i class="icon-email3"></i>
+                    </a>
+                  </div>
+                </div><!-- Post Single - Share End -->
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="sidebar col-lg-3">
+          <div class="sidebar-widgets-wrap">
+
+            <div class="widget clearfix">
+
+              <h4>All Tags</h4>
+              <div class="tagcloud">
+                {% for tag in tags %}
+                <a href="{{tag.get_absolute_url}}">{{tag.title}}</a>
+                {% endfor %}
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock content %}

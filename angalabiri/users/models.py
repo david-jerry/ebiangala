@@ -34,7 +34,7 @@ from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 
 from .validators import validate_user_photo_extension
-from .managers import UserManager
+# from .managers import CustomUserManager
 
 
 MALE = "male"
@@ -247,7 +247,7 @@ class User(AbstractUser):
     accessed_with = CharField(
         _("System IP Accessed with"), max_length=255, null=True, blank=True
     )
-    objects=UserManager()
+    # custom=CustomUserManager()
 
 
     def __str__(self):

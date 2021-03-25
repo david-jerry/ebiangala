@@ -70,6 +70,31 @@ function styles() {
     .pipe(dest(paths.css))
 }
 
+function styles() {
+  var processCss = [
+      autoprefixer(), // adds vendor prefixes
+      pixrem(),       // add fallbacks for rem units
+  ]
+
+  var minifyCss = [
+      cssnano({ preset: 'default' })   // minify result
+  ]
+
+  return src(`${paths.sass}/modern.scss`)
+    .pipe(sass({
+      includePaths: [
+
+        paths.sass
+      ]
+    }).on('error', sass.logError))
+    .pipe(plumber()) // Checks for errors
+    .pipe(postcss(processCss))
+    .pipe(dest(paths.css))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(postcss(minifyCss)) // Minifies the result
+    .pipe(dest(paths.css))
+}
+
 // Javascript minification
 function scripts() {
   return src(`${paths.js}/project.js`)

@@ -51,16 +51,19 @@ class CauseList(ListView):
         return context
 
 
-class CauseDetail(DeleteView, FormMixin):
+class CauseDetail(DetailView):
     model = Cause
     template_name = 'pages/cause-detail.html'
     ordering = ['title', '-end_date']
     allow_empty = True
     queryset = Cause.objects.all()
-    context_object_name = 'cause'
+    # context_object_name = 'cause'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        tags = get_object_or_404(Tag, slug=self.kwargs['slug'])
+        tags = Tag.objects.all()
         context['tags'] = tags
         return context

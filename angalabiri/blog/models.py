@@ -48,22 +48,12 @@ def get_filename_ext(filepath):
     return name, ext
 
 
-def blog_file_path(filename):
-    new_filename = random.randint(1, 3910209312)
-    ext = get_filename_ext(filename)
-    final_filename = "{new_filename}{ext}".format(new_filename=new_filename, ext=ext)
-    return "blog/videos/{new_filename}/{final_filename}".format(
-        new_filename=new_filename, final_filename=final_filename
-    )
+def blog_file_path(filename, instance):
+    return "blog/videos/{filename}".format(filename=filename)
 
 
-def blog_image_path(filename):
-    new_filename = random.randint(1, 3910209312)
-    ext = get_filename_ext(filename)
-    final_filename = "{new_filename}{ext}".format(new_filename=new_filename, ext=ext)
-    return "blog/images/{new_filename}/{final_filename}".format(
-        new_filename=new_filename, final_filename=final_filename
-    )
+def blog_image_path(instance, filename):
+    return "blog/images/{filename}".format(filename=filename)
 
 
 class Post(TimeStampedModel):
@@ -105,9 +95,13 @@ class Post(TimeStampedModel):
         verbose_name = "Post"
         verbose_name_plural = "Posts"
         ordering = ["title", "-pub_date"]
+    
+    @property
+    def get_related_posts_by_tags(self):
+        return Post.objects.filter(tags__in=self.tags.all())
 
     def get_absolute_url(self):
-        return f"/blog/{self.slug}"
+        return f"/blogs/{self.slug}"
 
     def get_update_url(self):
         return f"{self.get_absolute_url}/update"

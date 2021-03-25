@@ -1,5 +1,5 @@
 {% extends "pages/base.html" %}
-{% load static i18n %}
+{% load static i18n humanize %}
 
 {% block description %}
 {% trans "Supporting a cause that enriches a large number of people is a blessing" %}
@@ -33,6 +33,9 @@ class="stretched"
 causes, philantropic, philantropy, giving, enriching, surviving
 {% endblock keywords %}
 
+{% block css %}
+{% include 'includes/pages/css.html' %}
+{% endblock css %}
 
 {% block content %}
 <!-- Page Title
@@ -58,9 +61,61 @@ padding: 140px 0;">
       style="position: absolute; top: -58px; left:0; z-index: 1">
       <path style="fill:#FFF;" d="M1.52.62s802.13,127,1380,0v56H.51Z" />
     </svg>
-    <div class="my-4">
-    {% include 'includes/pages/donation-hero.html' %}
-    </div>
+    <section class="container">
+      <div class="row col-mb-30 py-4">
+        <div class="col-12">
+          <div class="donor-img d-flex align-items-center rounded parallax mx-auto shadow-sm w-100"
+            data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -50px;"
+            style="height: 500px; 
+            background: url('{% static 'images/others/3.jpg' %}') no-repeat center center / cover"></div>
+          <div class="card bg-white border-0 center py-sm-4 px-sm-5 p-2 shadow-sm"
+            style="position: absolute; top: 50%; right: 80px; transform: translateY(-50%);">
+            <div class="card-body">
+              <div class="color h1 mb-3"><i class="icon-heart"></i></div>
+              <h4>Generated</h4>
+              <h3 class="display-3 font-weight-bold mb-3 font-secondary">{{richest_causes.tt_amount__sum}}</h3>
+              <small class="text-uppercase font-weight-normal ls2 text-muted mb-3 d-block">Raised</small>
+            </div>
+          </div>
+        </div>
+        {% for cause in causes %}
+        <div class="col-lg-4 col-md-6">
+          <div class="charity-card h-shadow shadow-ts card rounded-xxl">
+            <a href="{{cause.get_absolute_url}}">
+              <img src="{{cause.image.url}}" alt="{{cause.title}}" class="card-img-top">
+            </a>
+            <div class="px-4 py-3 charity-card-title">
+              {% for tag in cause.tags.all %}
+              <small class="text-uppercase font-weight-normal ls1 mb-2 d-block">{{tag.title}}</small>
+              {% endfor %}
+              <h3 class="mb-3"><a href="{{cause.get_absolute_url}}">{{cause.title|upper}}</a></h3>
+              <ul class="skills mb-3">
+                <li data-percent="{{cause.avg}}">
+                  <div class="progress">
+                    <div class="progress-percent">
+                      <div class="counter counter-inherit">
+                        N <span data-from="0" data-to="{{cause.tt_amount}}" data-refresh-interval="10" data-speed="200"
+                          data-comma="true"></span> Donated of N {{cause.max_donation}}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="p-4">
+              <p class="mb-0 text-black-50">{{cause.content|safe|truncatewords:20}}</p>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12 center">
+          <div class="card">
+            No Donation Cause yet
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
 
   </div>
 </main>

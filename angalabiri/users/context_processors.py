@@ -11,15 +11,15 @@ def all_citizen(request):
 
 def all_chiefs(request):
     return {
-        "all_chiefs": User.objects.all_cheifs().order_by("-id").count(),
+        "all_chiefs": User.objects.filter(royals__iexact="Chief", is_active=True).order_by("-id").count(),
     }
 
 def all_females(request):
     return {
-        "all_females": User.objects.all_female().count(),
+        "all_females": User.objects.filter(gender__iexact="Female", is_active=True).count(),
     }
 
 def all_males(request):
     return {
-        "all_males": User.objects.all_male().count(),
+        "all_males": User.objects.filter(gender__iexact="Female", is_active=True).count(),
     }

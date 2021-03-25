@@ -122,5 +122,5 @@ class UserAdmin(auth_admin.UserAdmin, ExportCsvMixin):
         )
 
     def save_model(self, request, obj, form, change):
-        obj.added_by = request.user
+        obj.added_by = request.user.username
         super().save_model(request, obj, form, change)

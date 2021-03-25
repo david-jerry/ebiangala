@@ -10,43 +10,53 @@ from angalabiri.causes.forms import CauseCreateForm
 # Register your models here.
 class CauseModelAdmin(admin.ModelAdmin, ExportCsvMixin):
     add_form = CauseCreateForm()
-    list_display = ["title", "image", "created", "featured"]
+    list_display = ["title", "photo", "created", "featured"]
     list_display_links = ["created"]
     list_editable = ["title", "featured"]
     search_fields = ["title", "content"]
     list_per_page = 250
+    actions = [
+        "export_as_csv",
+        "mark_all_cause_draft",
+        "mark_all_cause_featured",
+        "unmark_all_cause_featured",
+        "mark_all_cause_by_me",
+    ]
+
 
     class Meta:
         model = Cause
 
-        actions = [
-            "export_as_csv",
-            "mark_all_cause",
-            "mark_all_featured_cause",
-            "mark_all_cause_by_me",
-        ]
+    def mark_all_cause_draft(self, request, queryset):
+        for obj in queryset:
+            obj.draft = True
+        queryset.update(draft=True)
 
-    def mark_all_cause(self, request, queryset):
-        queryset.update(draft=False)
-
-    def mark_all_featured_cause(self, request, queryset):
+    def mark_all_cause_featured(self, request, queryset):
+        for obj in queryset:
+            obj.featured = True
         queryset.update(featured=True)
+
+    def unmark_all_cause_featured(self, request, queryset):
+        for obj in queryset:
+            obj.featured = False
+        queryset.update(featured=False)
 
     def mark_all_cause_by_me(self, request, queryset):
         user = request.user
         queryset.update(author=user)
 
-    def image(self, obj):
+    def photo(self, obj):
         return mark_safe(
-            '<img src="{url}" width="{width}" height={height} />'.format(
-                url=obj.images.image.url,
-                width=obj.images.image.width,
-                height=obj.images.image.height,
+            '<img src="{url}" width="150px" height="auto" />'.format(
+                url=obj.image.url,
+                width=obj.image.width,
+                height=obj.image.height,
             )
         )
 
     def save_model(self, request, obj, form, change):
-        obj.added_by = request.user
+        obj.added_by = request.user.username
         obj.author = request.user
         super().save_model(request, obj, form, change)
 

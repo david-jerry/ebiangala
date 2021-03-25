@@ -1,0 +1,174 @@
+{% extends "pages/blog-base.html" %}
+{% load static i18n humanize %}
+
+{% block description %}
+{% trans "Get the latest news report from angalabiri" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "News" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block keywords %}
+his royal highness, Amananaowei Famous Eseduwo, Eseduwo, Amananaowei, Angalabiri King, Ebiangala King, Community,
+Bayelsa
+{% endblock keywords %}
+
+{% block ogdesc %}
+{% trans "Get the latest news report from angalabiri" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'blog:list' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'blog:list' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Get the latest news report from angalabiri" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched search-overlay"
+{% endblock body-class%}
+
+{% block css %}
+{% include 'includes/pages/blog-css.html' %}
+{% endblock css %}
+
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title" class="page-title-center">
+
+  <div class="container">
+    <h1>NEWS</h1>
+    <span>Phosfluorescently target clicks-and-mortar growth strategies for timely infrastructures. Monotonectally
+      embrace high-quality applications.</span>
+  </div>
+
+</section><!-- #page-title end -->
+
+
+<main id="content">
+  <section class="content-wrap pt-5" style="overflow: visible;">
+    <div class="container">
+      <div class="row gutter-50">
+
+        <div class="col-lg-3 cat-widgets position-sticky h-100" style="top: 234px;">
+          <div class="widget widget-search">
+            <form class="input-group">
+              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary icon-line-search" type="button"></button>
+              </div>
+            </form>
+          </div>
+          <div class="widget widget-nav mt-md-5">
+            <ul class="nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">All Categories</a>
+              </li>
+              {% for tag in tags %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'blog:tag' tag.slug %}">{{tag.title|upper}}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-9 mt-5 mt-lg-0">
+          <div class="d-flex">
+            <div class="flex-grow-1">
+              <h3>All Angalabiri Posts</h3>
+            </div>
+            <div>
+              <!-- Example single danger button -->
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Most Popular
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Latest Posts</a>
+                  <a class="dropdown-item" href="#">Most Comments</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row col-mb-50 posts md">
+            {% for post in posts %}
+            <div class="col-md-4">
+              <article class="entry mb-1 clearfix">
+                <div class="entry-user">
+                  <h4><a href="{% if post.url %}{{post.url}}{% endif %}">{{post.title}}</a>.<br><span
+                      style="font-size:10px; font-weight:400;"><i></i>{{post.author}}</span></h4>
+                </div>
+                {% if post.image_set %}
+                <div class="entry-image mb-3">
+                  <div class="fslider" data-arrows="false" data-lightbox="gallery">
+                    <div class="flexslider">
+                      <div class="slider-wrap">
+                        {% for image in post.image_set.all%}
+                        <div class="slide"><a href="{{image.image.url}}" data-lightbox="gallery-item"
+                            style="background: url('{{image.image.url}}') no-repeat center bottom; background-size: cover; height: 278px;"></a>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% elif post.videos %}
+                <div class="entry-image mb-3">
+                  <a href="#">
+                    <video poster="images/videos/explore-poster.jpg" preload="auto" loop autoplay muted
+                      style="display: block; width: 100%;">
+                      <source src='{{post.videos.url}}'
+                        type='application/mp4, video/mp4, video/mpeg, video/webm, audio/webm' />
+                    </video>
+                  </a>
+                </div>
+                {% endif %}
+                <div class="entry-title">
+                  <h3><a href="#">{{post.title}}</a></h3>
+                </div>
+                <div class="entry-content">
+                  <p>
+                    {{post.content|truncatewords:20|safe}}
+                  </p>
+                </div>
+                <div class="container">
+                  <div class="entry-meta no-separator nohover">
+                    <ul class="justify-content-between mx-0">
+                      <li><i class="icon-calendar2"></i> {{post.pub_date|naturalday}}</li>
+                      {% for tag in post.tags.all %}<li>{{tag.title|upper}}</li>{% endfor %}
+                    </ul>
+                  </div>
+                  <div class="entry-meta no-separator hover">
+                    <ul class="mx-0">
+                      <li><a href="{{post.get_absolute_url}}">View More &rarr;</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </article>
+            </div>
+            {% empty %}
+            <div class="col-md-12">
+              <article class="entry">
+                No Posts Yet
+              </article>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}
