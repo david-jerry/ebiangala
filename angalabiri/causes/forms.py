@@ -10,4 +10,3 @@ class CauseCreateForm(forms.ModelForm):
     class Meta:
         model = Cause
         exclude = ["added_by", "created", "updated", "tt_amount", "author", "slug"]
-        

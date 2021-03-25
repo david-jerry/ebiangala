@@ -95,7 +95,7 @@ class Post(TimeStampedModel):
         verbose_name = "Post"
         verbose_name_plural = "Posts"
         ordering = ["title", "-pub_date"]
-    
+
     @property
     def get_related_posts_by_tags(self):
         return Post.objects.filter(tags__in=self.tags.all())

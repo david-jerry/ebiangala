@@ -56,7 +56,7 @@ class="stretched search-overlay"
 									============================================= -->
               <div class="entry-title">
                 <div class="entry-categories"><a href="demo-blog-categories.html">Coronavirus Update - World</a></div>
-                <h2>All online Conferences to save your box, get Inspired and Stay Connected</h2>
+                <h2>{{post.title}}</h2>
               </div><!-- .entry-title end -->
             </div>
           </div>
@@ -66,18 +66,39 @@ class="stretched search-overlay"
           <div class="d-flex justify-content-center mt-2">
             <div class="entry-meta">
               <ul>
-                <li>10th July 2014</li>
-                <li>By <a href="#">SemiColonWeb</a></li>
+                <li>{{post.pub_date|naturalday}}</li>
+                <li>By <a href="{{post.author.get_absolute_url}}">{{post.author}}</a></li>
               </ul>
             </div>
           </div><!-- .entry-meta end -->
 
           <!-- Entry Image
 							============================================= -->
+          {% if post.image_set %}
           <div class="entry-image mt-5">
-            <a href="demos/blog/images/single/hero-full.jpg" data-lightbox="image"><img class="rounded"
-                src="demos/blog/images/single/hero.jpg" alt="Blog Single"></a>
+            <div class="fslider" data-arrows="false" data-lightbox="gallery">
+              <div class="flexslider">
+                <div class="slider-wrap">
+                  {% for image in post.image_set.all%}
+                  <div class="slide"><a href="{{image.image.url}}" data-lightbox="image"><img class="rounded"
+                        src="{{image.image.url}}" alt="{{post.title}} image"></a></div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
           </div><!-- .entry-image end -->
+          {% elif post.videos %}
+          <div class="entry-image mb-3">
+            <a href="#">
+              <video poster="images/videos/explore-poster.jpg" preload="auto" loop autoplay muted
+                style="display: block; width: 100%;">
+                <source src='{{post.videos.url}}'
+                  type='application/mp4, video/mp4, video/mpeg, video/webm, audio/webm' />
+              </video>
+            </a>
+          </div>
+          {% endif %}
+
 
           <!-- Entry Content
 							============================================= -->
@@ -87,7 +108,7 @@ class="stretched search-overlay"
 
               <div class="col-lg-2 media-content" data-animate="fadeIn">
                 <div class="entry-title text-left">
-                  <h4>All online Conferences to save your box, get Inspired and Stay Connected</h4>
+                  <h4>{{post.content|safe|truncatewords:20}}</h4>
                 </div>
                 <!-- Post Single - Share
 										============================================= -->
@@ -118,73 +139,7 @@ class="stretched search-overlay"
 
               <div class="text-content col-lg-6">
 
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                  mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at
-                  eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p><br>
-
-                <h3>1. Content</h3>
-                In this cheat sheet, we will go over the following:
-                <ol class="list-numbers">
-                  <li>Anatomy</li>
-                  <li>Dropdown types and variations</li>
-                  <li>Dropdown styles</li>
-                  <li>Dropdown states</li>
-                  <li>What the placeholder should say</li>
-                  <li>When not to use a dropdown (and when to)</li>
-                  <li>Native dropdowns</li>
-                  <li>Accessibility checklist</li>
-                  <li>Closing thoughts</li>
-                </ol>
-
-                <p>Nullam id dolor id nibh ultricies vehicula ut id elit. <a href="#">Curabitur blandit tempus
-                    porttitor</a>. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio,
-                  dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Donec id
-                  elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper.</p>
-
-                <blockquote>
-                  <p>Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Aenean eu
-                    leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo
-                    luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non
-                    metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p>
-                </blockquote><br>
-
-                <h3>2. Anatomy</h3>
-
-                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus
-                  sit amet fermentum. Donec id elit non mi porta gravida at eget metus.</p>
-
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed
-                  consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. <a href="#">Nullam quis
-                    risus eget urna</a> mollis ornare vel eu leo. Integer posuere erat a ante venenatis dapibus posuere
-                  velit aliquet.</p>
-
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                  mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at
-                  eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p><br>
-
-                <h3>3. Standard Solution</h3>
-                <p>Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Integer
-                  posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus ac facilisis in,
-                  egestas eget quam. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida
-                  at eget metus. Vestibulum id ligula porta felis euismod semper.</p>
-
-                <div class="row mb-4" data-lightbox="gallery">
-                  <div class="col-md-6">
-                    <a href="demos/blog/images/single/1-full.jpg" data-lightbox="gallery-item"><img class="rounded"
-                        src="demos/blog/images/single/1.jpg" alt="Alt Images"></a>
-                  </div>
-                  <div class="col-md-6">
-                    <a href="demos/blog/images/single/2-full.jpg" data-lightbox="gallery-item"><img class="rounded"
-                        src="demos/blog/images/single/2.jpg" alt="Alt Images"></a>
-                  </div>
-                </div>
-                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus
-                  sit amet fermentum. Donec id elit non mi porta gravida at eget metus.</p>
-
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed
-                  consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. <a href="#">Nullam quis
-                    risus eget urna</a> mollis ornare vel eu leo. Integer posuere erat a ante venenatis dapibus posuere
-                  velit aliquet.</p>
+                {{post.content|safe}}
 
                 <div class="line"></div>
 
