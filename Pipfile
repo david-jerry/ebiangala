@@ -77,6 +77,7 @@ django-category = "*"
 paystackapi = "*"
 isort = "*"
 pylint = "*"
+django-resized = "*"
 
 [dev-packages]
 

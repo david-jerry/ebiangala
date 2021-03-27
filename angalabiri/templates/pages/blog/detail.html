@@ -1,5 +1,5 @@
 {% extends "pages/blog-base.html" %}
-{% load static i18n humanize %}
+{% load static i18n humanize crispy_forms_tags %}
 
 {% block description %}
 {{post.content|truncatewords:20}}
@@ -80,8 +80,9 @@ class="stretched search-overlay"
               <div class="flexslider">
                 <div class="slider-wrap">
                   {% for image in post.image_set.all%}
-                  <div class="slide"><a href="{{image.image.url}}" data-lightbox="image"><img class="rounded"
-                        src="{{image.image.url}}" alt="{{post.title}} image"></a></div>
+                  <div class="slide"><a href="{{image.image.url}}" data-lightbox="image"><img
+                        class="rounded img-responsive" src="{{image.image.url}}" alt="{{post.title}} image" width="100%"
+                        height="500px"></a></div>
                   {% endfor %}
                 </div>
               </div>
@@ -143,34 +144,38 @@ class="stretched search-overlay"
 
                 <div class="line"></div>
 
-                <!-- Tag Cloud
-										============================================= -->
-                <div class="tagcloud">
-                  <h4>Related Tags</h4>
-                  <a href="#">general</a>
-                  <a href="#">information</a>
-                  <a href="#">media</a>
-                  <a href="#">press</a>
-                  <a href="#">gallery</a>
-                  <a href="#">illustration</a>
-                </div><!-- .tagcloud end -->
-
                 <div class="clear"></div>
+                <!-- Comment Form
+											============================================= -->
+                <div id="respond">
+
+
+                  {% if request.user.is_authenticated %}
+                  <h3>Leave a <span>Comment {{ request.user.first_name }}</span></h3>
+
+                  <form id="comment-form" class="row mb-0" action="." method="POST">
+                    {% crispy form %}
+                  </form>
+                  {% else %}
+                  <p>You must login to comment</p>
+                  {% endif %}
+
+                </div><!-- #respond end -->
+
 
                 <!-- Comments
 										============================================= -->
                 <div id="comments">
 
-                  <h3 id="comments-title"><span>3</span> Comments</h3>
+                  <h3 id="comments-title"><span>{{ comments.count }}</span> Comments</h3>
 
                   <!-- Comments List
 											============================================= -->
                   <ol class="commentlist">
-
                     <li class="comment even thread-even depth-1" id="li-comment-1">
 
-                      <div id="comment-1" class="comment-wrap">
-
+                      {% for comment in comments %}
+                      <div id="comment-1" class="comment-wrap mb-4">
                         <div class="comment-meta">
 
                           <div class="comment-author vcard">
@@ -182,59 +187,41 @@ class="stretched search-overlay"
                           </div>
 
                         </div>
-
                         <div class="comment-content">
 
-                          <div class="comment-author">John Doe<span><a href="#" title="Permalink to this comment">April
-                                24, 2012 at 10:46 am</a></span></div>
+                          <div class="comment-author">{{comment.author}}<span><a href="#"
+                                title="Permalink to this comment">{{comment.created|naturalday}}</a></span></div>
 
-                          <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh
-                            ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit
-                            aliquet.</p>
+                          <p>{{comment.text}}</p>
 
                           <a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
 
                         </div>
-
                         <div class="clear"></div>
-
                       </div>
+                      {% endfor %}
+
 
 
                       <ul class='children'>
 
                         <li class="comment byuser comment-author-_smcl_admin odd alt depth-2" id="li-comment-3">
-
+                          {% if new_comment %}
+                          <div class="alert alert-success" role="alert">
+                            Your comment is awaiting moderation
+                          </div>
+                          {% else %}
                           <div id="comment-3" class="comment-wrap">
 
-                            <div class="comment-meta">
-
-                              <div class="comment-author vcard">
-
-                                <span class="comment-avatar">
-                                  <img alt=''
-                                    src='https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=40&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G'
-                                    class='avatar avatar-40 photo' height='40' width='40' /></span>
-
-                              </div>
-
-                            </div>
-
-                            <div class="comment-content">
-
-                              <div class="comment-author"><a href='#' rel='external nofollow'
-                                  class='url'>SemiColon</a><span><a href="#" title="Permalink to this comment">April 25,
-                                    2012 at 1:03 am</a></span></div>
-
-                              <p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-
-                              <a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
-
-                            </div>
+                            <form action="." method="POST" id="sub-comment">
+                              {% csrf_token %}
+                              {% crispy form %}
+                            </form>
 
                             <div class="clear"></div>
 
                           </div>
+                          {% endif %}
 
                         </li>
 
@@ -242,100 +229,107 @@ class="stretched search-overlay"
 
                     </li>
 
-                    <li class="comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1"
-                      id="li-comment-2">
-
-                      <div id="comment-2" class="comment-wrap">
-
-                        <div class="comment-meta">
-
-                          <div class="comment-author vcard">
-
-                            <span class="comment-avatar">
-                              <img alt=''
-                                src='https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G'
-                                class='avatar avatar-60 photo' height='60' width='60' /></span>
-
-                          </div>
-
-                        </div>
-
-                        <div class="comment-content">
-
-                          <div class="comment-author"><a href='https://themeforest.net/user/semicolonweb'
-                              rel='external nofollow' class='url'>SemiColon</a><span><a href="#"
-                                title="Permalink to this comment">April 25, 2012 at 1:03 am</a></span></div>
-
-                          <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-
-                          <a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
-
-                        </div>
-
-                        <div class="clear"></div>
-
-                      </div>
-
-                    </li>
-
                   </ol><!-- .commentlist end -->
 
                   <div class="clear"></div>
 
-                  <!-- Comment Form
-											============================================= -->
-                  <div id="respond">
-
-                    <h3>Leave a <span>Comment</span></h3>
-
-                    <form class="row mb-0" action="#" method="post" id="commentform">
-
-                      <div class="form-group col-4">
-                        <label for="author">Name</label>
-                        <input type="text" name="author" id="author" value="" size="22" tabindex="1"
-                          class="form-control" />
-                      </div>
-
-                      <div class="form-group col-4">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email" value="" size="22" tabindex="2"
-                          class="form-control" />
-                      </div>
-
-                      <div class="form-group col-4">
-                        <label for="url">Website</label>
-                        <input type="text" name="url" id="url" value="" size="22" tabindex="3" class="form-control" />
-                      </div>
-
-                      <div class="w-100"></div>
-
-                      <div class="form-group col-12">
-                        <label for="comment">Comment</label>
-                        <textarea name="comment" id="comment" cols="58" rows="7" tabindex="4"
-                          class="form-control"></textarea>
-                      </div>
-
-                      <div class="form-group col-12 mt-4 mb-0">
-                        <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit"
-                          class="button button-large button-black button-dark nott font-weight-medium ls0 button-rounded m-0">Submit
-                          Comment</button>
-                      </div>
-
-                    </form>
-
-                  </div><!-- #respond end -->
 
                 </div><!-- #comments end -->
+
               </div>
               <!-- Post Single - Content End -->
-
             </div>
 
           </div>
         </div><!-- .entry end -->
+
+        <h3 class="mb-0">Related Posts</h3>
+
+        <div class="row posts-md">
+          <div class="col-lg-3 col-sm-6">
+            {% for post in post.get_related_posts_by_tags %}
+            <article class="entry">
+              {% if post.image_set %}
+              <div class="entry-image mb-3">
+                <div class="fslider" data-arrows="false" data-lightbox="gallery">
+                  <div class="flexslider">
+                    <div class="slider-wrap">
+                      {% for image in post.image_set.all%}
+                      <div class="slide"><a href="{{image.image.url}}" data-lightbox="gallery-item"
+                          style="background: url('{{image.image.url}}') no-repeat center bottom; background-size: cover; height: 278px;"></a>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% elif post.videos %}
+              <div class="entry-image mb-3">
+                <a href="#">
+                  <video poster="images/videos/explore-poster.jpg" preload="auto" loop autoplay muted
+                    style="display: block; width: 100%;">
+                    <source src='{{post.videos.url}}'
+                      type='application/mp4, video/mp4, video/mpeg, video/webm, audio/webm' />
+                  </video>
+                </a>
+              </div>
+              {% endif %}
+              <div class="entry-title title-sm text-left">
+                <div class="entry-categories"><a href="{% url 'blog:list' %}">
+                    {% for tag in post.tags.all %}{{tag.title}}{% endfor %}</a></div>
+                <h3><a href="{{post.get_absolute_url}}" class="color-underline stretched-link">{{post.title}}</a>
+                </h3>
+              </div>
+              <div class="entry-meta">
+                <div class="container">
+                  <ul>
+                    <li><a href="#">{{post.pub_date|naturalday}}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+
+
 
       </div>
     </div>
   </section>
 </main>
 {% endblock content %}
+
+{% block inline_javascript %}
+<script>
+  $(document).ready(function () {
+    $("#comment-form").submit(function (e) {
+      e.preventDefault();
+
+      var serializedData = $(this).serialize();
+      $ajax({
+        type: "POST",
+        url: "{% url 'blog:detail' post.slug %}",
+        success: function (response) {
+          $("#comment-form")[0].reset();
+        },
+        error: function (response) { console.log(response) }
+      });
+    });
+    $("#sub-comment").submit(function (e) {
+      e.preventDefault();
+
+      var serializedData = $(this).serialize();
+      $ajax({
+        type: "POST",
+        url: "{% url 'blog:detail' post.slug %}",
+        success: function (response) {
+          $("#sub-comment")[0].reset();
+        },
+        error: function (response) { console.log(response) }
+      });
+    });
+
+  });
+</script>
+{% endblock inline_javascript %}

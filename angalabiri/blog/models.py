@@ -16,8 +16,10 @@ from django.db.models import (
     DecimalField,
     EmailField,
     FileField,
+    TextField,
     ForeignKey,
     GenericIPAddressField,
+    PositiveIntegerField,
     ImageField,
     IntegerField,
     IPAddressField,
@@ -27,14 +29,17 @@ from django.db.models import (
     SlugField,
     URLField,
 )
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 
-from .managers import PostManager
+from .managers import PostManager, CommentManager
 from .validators import file_validator
+from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -100,6 +105,20 @@ class Post(TimeStampedModel):
     def get_related_posts_by_tags(self):
         return Post.objects.filter(tags__in=self.tags.all())
 
+    @property
+    def comments(self):
+        instance = self
+        return Comment.objects.filter_by_instance(instance)
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
+
+
+
+
     def get_absolute_url(self):
         return f"/blogs/{self.slug}"
 
@@ -112,8 +131,8 @@ class Post(TimeStampedModel):
 
 class Image(TimeStampedModel):
     post = ForeignKey(Post, on_delete=CASCADE)
-    image = ImageField(
-        _("Upload Post Image"), upload_to=blog_image_path, null=True, blank=True
+    image = ResizedImageField(
+        _("Upload Post Image"), quality=75, force_format='JPEG', size=[1920, 1148], crop=['middle', 'center'], upload_to=blog_image_path, null=True, blank=True
     )
 
     def __str__(self):
@@ -127,22 +146,14 @@ class Image(TimeStampedModel):
 
 
 class Comment(TimeStampedModel):
-    post = ForeignKey(Post, related_name="çomments", on_delete=CASCADE)
-    author = CharField(_("FullName"), max_length=500)
-    email = EmailField(_("Add your email"))
-    text = RichTextUploadingField()
-    parent = ForeignKey(
-        "self", null=True, blank=True, related_name="replies", on_delete=CASCADE
-    )
+    post = ForeignKey(Post, related_name="comments", on_delete=CASCADE)
+    author = CharField(_("FullName"), max_length=500, null=True, blank=True)
+    email = EmailField(_("Add your email"), null=True, blank=True)
+    text = TextField()
     active = BooleanField(default=True)
 
     class Meta:
         ordering = ["-created"]
 
     def _str_(self):
-        request = self.request
-        if request.user.ia_authenticated:
-            text = "Comment by {}".format(request.user.username)
-        else:
-            text = "Comment by {}".format(self.author)
-        return text
+        return f"Comment {self.text} by {self.author}"
