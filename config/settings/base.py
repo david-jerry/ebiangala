@@ -104,6 +104,7 @@ LOCAL_APPS = [
     "angalabiri.users.apps.UsersConfig",
     "angalabiri.blog.apps.BlogConfig",
     "angalabiri.causes.apps.CausesConfig",
+    "angalabiri.suggestion.apps.SuggestionConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -50,6 +50,7 @@ apps_pages = [
     # User management
     path("users/", include("angalabiri.users.urls", namespace="users")),
     path("blogs/", include("angalabiri.blog.urls", namespace="blog")),
+    path("suggestion/", include("angalabiri.suggestion.urls", namespace="suggestion")),
     path("cause/", include("angalabiri.causes.urls", namespace="cause")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
