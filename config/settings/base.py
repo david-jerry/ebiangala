@@ -279,6 +279,7 @@ ADMIN_DOC_URL = "portal/doc/"
 ADMINS = [
     ("""David Jeremiah""", "info@angalabiri.ng"),
     ("""Developer""", "admin@edavids.me"),
+    ("""Vicozed""", "iamvicozed@gmail.com"),
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
