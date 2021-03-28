@@ -83,7 +83,7 @@ class Post(TimeStampedModel):
     draft = BooleanField(default=False)
     featured = BooleanField(default=False)
     content = RichTextUploadingField()
-    added_by = ForeignKey(User, on_delete=SET_NULL, null=True, related_name="post_creator", default=1)
+    added_by = CharField(_("added_by"), max_length=555, null=True, blank=True)
     categories = ManyToManyField("category.Category", help_text="Categorize this item.")
     tags = ManyToManyField("category.Tag", help_text="Tag this item.")
     objects = PostManager()

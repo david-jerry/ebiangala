@@ -13,7 +13,7 @@ class PostImagesInline(admin.StackedInline):
 
 
 class PostModelAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ["title", "videos", "image", "created", "featured"]
+    list_display = ["title", "videos", "created", "featured"]
     list_display_links = ["created"]
     list_editable = ["title", "featured"]
     search_fields = ["title", "content"]
@@ -55,6 +55,8 @@ class PostModelAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     def save_model(self, request, obj, form, change):
         obj.added_by = request.user
+        if change:
+            obj.added_by = request.user
         obj.author = request.user
         super().save_model(request, obj, form, change)
 
