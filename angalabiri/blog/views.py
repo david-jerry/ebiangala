@@ -139,19 +139,19 @@ def PostDetail(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-        return JsonResponse({"success":True}, status=200)
+        # return JsonResponse({"success":True}, status=200)
     else:
         comment_form = CommentForm()
-        return JsonResponse({"success":False}, status=400)
+        # return JsonResponse({"success":False}, status=400)
 
-    context = {
+    data = {
         "post": post,
         "comments": comments,
         "new_comment": new_comment,
         "form": comment_form,
         "tags": tags
     }
-    return render(request, "pages/blog/detail.html", context)
+    return render(request, "pages/blog/detail.html", data)
 
 
     # share_string = quote_plus(instance.content)

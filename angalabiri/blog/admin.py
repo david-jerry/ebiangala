@@ -13,7 +13,7 @@ class PostImagesInline(admin.StackedInline):
 
 
 class PostModelAdmin(admin.ModelAdmin, ExportCsvMixin):
-    list_display = ["title", "videos", "created", "featured"]
+    list_display = ["title", "videos", "image", "created", "featured"]
     list_display_links = ["created"]
     list_editable = ["title", "featured"]
     search_fields = ["title", "content"]
@@ -50,8 +50,6 @@ class PostModelAdmin(admin.ModelAdmin, ExportCsvMixin):
         return mark_safe(
             '<img src="{url}" width="120px" height="auto" />'.format(
                 url=obj.image.image.url,
-                width=obj.image.image.width,
-                height=obj.image.image.height,
             )
         )
 
