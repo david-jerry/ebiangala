@@ -56,7 +56,7 @@ class PostModelAdmin(admin.ModelAdmin, ExportCsvMixin):
     def save_model(self, request, obj, form, change):
         obj.added_by = request.user
         if change:
-            obj.added_by = request.user
+            obj.added_by = str(request.user)
         obj.author = request.user
         super().save_model(request, obj, form, change)
 
