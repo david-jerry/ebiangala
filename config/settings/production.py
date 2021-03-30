@@ -79,6 +79,8 @@ AWS_SECRET_ACCESS_KEY = env("DJANGO_AWS_SECRET_ACCESS_KEY")
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_STORAGE_BUCKET_NAME = env("DJANGO_AWS_STORAGE_BUCKET_NAME")
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_FILE_EXPIRE = 200
+AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = False
 # DO NOT change these unless you know what you're doing.
 _AWS_EXPIRY = 60 * 60 * 24 * 7
@@ -86,7 +88,12 @@ _AWS_EXPIRY = 60 * 60 * 24 * 7
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate"
 }
-AWS_HEADERS = {"Access-Control-Allow-Origin": "*"}
+AWS_DOWNLOAD_EXPIRED = 5000
+AWS_HEADERS = {
+    "Access-Control-Allow-Origin": "*",
+    "Expires": _AWS_EXPIRY,
+    "Cache-Control": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate"
+}
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#cloudfront
@@ -103,7 +110,7 @@ DEFAULT_FILE_STORAGE = "angalabiri.utils.storages.MediaRootS3Boto3Storage"
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 # PRIVATE
 # ------------------------------------------------------------------------------
-PRIVATE_FILE_STORAGE = "diri.utils.storages.PrivateRootS3Boto3Storage"
+PRIVATE_FILE_STORAGE = "angalabiri.utils.storages.PrivateRootS3Boto3Storage"
 PRIVATE_URL = f"https://{aws_s3_domain}/private/"
 
 # TEMPLATES

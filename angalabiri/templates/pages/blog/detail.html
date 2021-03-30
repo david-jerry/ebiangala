@@ -1,5 +1,5 @@
 {% extends "pages/blog-base.html" %}
-{% load static i18n humanize crispy_forms_tags %}
+{% load static i18n humanize crispy_forms_tags comment_tags %}
 
 {% block description %}
 {{post.content|truncatewords:20}}
@@ -147,93 +147,17 @@ class="stretched search-overlay"
                 <div class="clear"></div>
                 <!-- Comment Form
 											============================================= -->
-                <div id="respond">
-
-
-                  {% if request.user.is_authenticated %}
-                  <h3>Leave a <span>Comment {{ request.user.first_name }}</span></h3>
-
-                  <form id="comment-form" class="row mb-0" action="." method="POST">
-                    {% crispy form %}
-                  </form>
-                  {% else %}
-                  <p>You must login to comment</p>
-                  {% endif %}
-
-                </div><!-- #respond end -->
 
 
                 <!-- Comments
 										============================================= -->
                 <div id="comments">
 
-                  <h3 id="comments-title"><span>{{ comments.count }}</span> Comments</h3>
-
-                  <!-- Comments List
-											============================================= -->
-                  <ol class="commentlist">
-                    <li class="comment even thread-even depth-1" id="li-comment-1">
-
-                      {% for comment in comments %}
-                      <div id="comment-1" class="comment-wrap mb-4">
-                        <div class="comment-meta">
-
-                          <div class="comment-author vcard">
-
-                            <span class="comment-avatar">
-                              <img alt='' src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
-                                class='avatar avatar-60 photo avatar-default' height='60' width='60' /></span>
-
-                          </div>
-
-                        </div>
-                        <div class="comment-content">
-
-                          <div class="comment-author">{{comment.author}}<span><a href="#"
-                                title="Permalink to this comment">{{comment.created|naturalday}}</a></span></div>
-
-                          <p>{{comment.text}}</p>
-
-                          <a class='comment-reply-link' href='#'><i class="icon-reply"></i></a>
-
-                        </div>
-                        <div class="clear"></div>
-                      </div>
-                      {% endfor %}
-
-
-
-                      <ul class='children'>
-
-                        <li class="comment byuser comment-author-_smcl_admin odd alt depth-2" id="li-comment-3">
-                          {% if new_comment %}
-                          <div class="alert alert-success" role="alert">
-                            Your comment is awaiting moderation
-                          </div>
-                          {% else %}
-                          <div id="comment-3" class="comment-wrap">
-
-                            <form action="." method="POST" id="sub-comment">
-                              {% csrf_token %}
-                              {% crispy form %}
-                            </form>
-
-                            <div class="clear"></div>
-
-                          </div>
-                          {% endif %}
-
-                        </li>
-
-                      </ul>
-
-                    </li>
-
-                  </ol><!-- .commentlist end -->
+                  <h3 id="comments-title"><span>{% get_comments_count post user %}</span> Comments</h3>
 
                   <div class="clear"></div>
 
-
+                  {% render_comments post request %}
                 </div><!-- #comments end -->
 
               </div>
@@ -246,8 +170,8 @@ class="stretched search-overlay"
         <h3 class="mb-0">Related Posts</h3>
 
         <div class="row posts-md">
+          {% for post in post.get_related_posts_by_tags %}
           <div class="col-lg-3 col-sm-6">
-            {% for post in post.get_related_posts_by_tags %}
             <article class="entry">
               {% if post.image_set %}
               <div class="entry-image mb-3">
@@ -288,8 +212,8 @@ class="stretched search-overlay"
                 </div>
               </div>
             </article>
-            {% endfor %}
           </div>
+          {% endfor %}
         </div>
 
 
@@ -299,37 +223,3 @@ class="stretched search-overlay"
   </section>
 </main>
 {% endblock content %}
-
-{% block inline_javascript %}
-<script>
-  $(document).ready(function () {
-    $("#comment-form").submit(function (e) {
-      e.preventDefault();
-
-      var serializedData = $(this).serialize();
-      $ajax({
-        type: "POST",
-        url: "{% url 'blog:detail' post.slug %}",
-        success: function (response) {
-          $("#comment-form")[0].reset();
-        },
-        error: function (response) { console.log(response) }
-      });
-    });
-    $("#sub-comment").submit(function (e) {
-      e.preventDefault();
-
-      var serializedData = $(this).serialize();
-      $ajax({
-        type: "POST",
-        url: "{% url 'blog:detail' post.slug %}",
-        success: function (response) {
-          $("#sub-comment")[0].reset();
-        },
-        error: function (response) { console.log(response) }
-      });
-    });
-
-  });
-</script>
-{% endblock inline_javascript %}

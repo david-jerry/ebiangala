@@ -1,0 +1,69 @@
+{% extends "pages/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock description %}
+
+{% block title %}
+{% trans "About " %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'about' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'about' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Founded before the year 1815 AD by AKOU the son of Angalabiriowei and the granson of Tarakiriowei." %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community, Ebiangala Community, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+{% block css %}
+{% include 'includes/pages/css.html' %}
+{% endblock css %}
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title" class="page-title-dark page-title-parallax page-title-center" style="
+background: linear-gradient(to bottom, rgba(57, 48, 6, 0.7), rgba(57, 48, 6, 0.7)), url('{% static 'images/angalabiri/banner/ban1.JPG' %}') no-repeat center center;
+background-size: cover;
+padding: 140px 0;">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">Leave a Suggesstion</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Suggestion Box</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+<main id="content">
+  <div class="content-wrap py-0">
+    <svg viewBox="0 0 1382 58" width="100%" height="60" preserveAspectRatio="none"
+      style="position: absolute; top: -58px; left:0; z-index: 1">
+      <path style="fill:#FFF;" d="M1.52.62s802.13,127,1380,0v56H.51Z" />
+    </svg>
+    <!-- History section-->
+   <!-- section end-->
+
+  </div>
+</main>
+{% endblock content %}

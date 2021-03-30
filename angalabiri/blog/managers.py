@@ -15,15 +15,15 @@ class PostManager(models.Manager):
         return super().get_queryset().filter(draft=True)
 
 
-class CommentManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset()
+# class CommentManager(models.Manager):
+#     def get_queryset(self):
+#         return super().get_queryset()
 
-    def all(self):
-        return super().get_queryset().filter(parent=None)
+#     def all(self):
+#         return super().get_queryset().filter(parent=None)
 
 
-    def filter_by_instance(self, instance):
-        content_type = ContentType.objects.get_for_model(instance.__class__)
-        obj_id = instance.id
-        return super().get_queryset().filter(content_type=content_type, object_id= obj_id).filter(parent=None)
+#     def filter_by_instance(self, instance):
+#         content_type = ContentType.objects.get_for_model(instance.__class__)
+#         obj_id = instance.id
+#         return super().get_queryset().filter(content_type=content_type, object_id= obj_id).filter(parent=None)

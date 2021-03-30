@@ -21,6 +21,7 @@ from django.http import JsonResponse
 import datetime
 from sweetify.views import SweetifySuccessMixin
 import sweetify
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from angalabiri.suggestion.models import Suggestion
 from angalabiri.suggestion.forms import SuggestionForm
@@ -51,13 +52,28 @@ class SuggestionDetail(DetailView):
 
 class SuggestionCreate(CreateView):
     model = Suggestion
-    template_name = "pages/suggestion/list.html"
-    form_class = SuggestionForm()
+    template_name = "pages/suggestion/create.html"
+    form_class = SuggestionForm
 
     def get_success_url(self):
         return reverse("suggestion:detail", kwargs={"slug": self.object.slug})
 
 
     def form_valid(self, form):
-
+        suggestion = form.save(commit=False)
+        msg = """
+            name: {name}\n
+            email: {email}\n
+            text: {content}\n
+            \n
+            suggesstion for angalabiri
+        """.format(name=suggestion.tite, email=suggestion.email, contet=suggestion.content)
+        send_mail(
+            "NEW SUGGESSTION HAS BEEN MADE",
+            msg,
+            "noreply@ebiangala.ng",
+            settings.ADMINS,
+            fail_silently=False
+        )
         return super().form_valid(form)
+

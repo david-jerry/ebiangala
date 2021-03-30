@@ -32,8 +32,11 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 
 from .managers import CauseManager
+from comment.models import Comment
+from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -61,11 +64,15 @@ class Cause(TimeStampedModel):
     author = ForeignKey(User, on_delete=SET_NULL, null=True)
     title = CharField(_("Cause Title"), blank=False, null=True, max_length=255)
     slug = SlugField(unique=True, null=True, blank=True, max_length=500)
-    image = ImageField(
-        _("Upload Image"),
-        upload_to=cause_file_path,
-        null=True,
-        blank=True,
+    image = ResizedImageField(
+        _("Upload Cause Image"), 
+        quality=75, 
+        force_format='JPEG', 
+        size=[1920, 1148], 
+        crop=['middle', 'center'], 
+        upload_to=cause_file_path, 
+        null=True, 
+        blank=True
     )
     pub_date = DateField(
         _("Post Published Date"),
@@ -86,6 +93,7 @@ class Cause(TimeStampedModel):
     max_donation = DecimalField(max_digits=20, decimal_places=2, null=True, blank=True, default=100000.00)
     draft = BooleanField(default=False)
     featured = BooleanField(default=False)
+    comments = GenericRelation(Comment)
     content = RichTextUploadingField()
     added_by = CharField(_("added_by"), max_length=255, null=True, blank=True)
     categories = ManyToManyField("category.Category", help_text="Categorize this item.")
@@ -94,6 +102,14 @@ class Cause(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    @property
+    def get_related_causes_by_tags(self):
+        return Cause.objects.filter(tags__in=self.tags.all())[0:4]
+
+    @property
+    def readtime(self):
+        return str(readtime.of_test(self.content))
 
     @staticmethod
     def autocomplete_search_fields():
@@ -111,6 +127,7 @@ class Cause(TimeStampedModel):
             self.tt_amount = self.tt_amount + self.donate
         else:
             self.draft = True
+            self.featured = False
         super().save(*args, **kwargs)
 
     class Meta:

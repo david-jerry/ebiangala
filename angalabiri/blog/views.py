@@ -32,8 +32,8 @@ import datetime
 from sweetify.views import SweetifySuccessMixin
 import sweetify
 from django.utils.translation import ugettext_lazy as _
-from angalabiri.blog.models import Post, Comment
-from angalabiri.blog.forms import CommentForm
+from angalabiri.blog.models import Post #, Comment
+# from angalabiri.blog.forms import CommentForm
 from category.models import Category, Tag
 from django.contrib.contenttypes.models import ContentType
 
@@ -57,6 +57,142 @@ class PostList(ListView):
         tags = Tag.objects.all()
         context["tags"] = tags
         return context
+
+
+def PostDetail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    tags = Tag.objects.all()
+
+    data = {
+        "post": post,
+        "tags": tags
+    }
+    return render(request, "pages/blog/detail.html", data)
+
+
+    # share_string = quote_plus(instance.content)
+    # initial_data = {"content_type": instance.get_content_type, "object_id": instance.id}
+    # form = CommentForm(request.POST or None, initial=initial_data)
+    # if form.is_valid() and request.user.is_authenticated:
+    #     c_type = form.cleaned_data.get("content_type")
+    #     content_type = ContentType.objects.get(model=c_type)
+    #     obj_id = form.cleaned_data.get("object_id")
+    #     content_data = form.cleaned_data.get("content")
+    #     parent_obj = None
+    #     author = self.request.user
+    #     email = self.request.user.email
+    #     try:
+    #         parent_id = int(request.POST.get("parent_id"))
+    #     except:
+    #         parent_id = None
+
+    #     if parent_id:
+    #         parent_qs = Comment.objects.filter(id=parent_id)
+    #         if parent_qs.exists() and parent_qs.count() == 1:
+    #             parent_obj = parent_qs.first()
+
+    #     new_comment, created = Comment.objects.get_or_create(
+    #         author=author,
+    #         email=email,
+    #         content_type=content_type,
+    #         object_id=obj_id,
+    #         content=content_data,
+    #         parent=parent_obj,
+    #     )
+    #     return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+
+    # comments = instance.comments
+    # tags = Tag.objects.all()
+    # context = {
+    #     "title": instance.title,
+    #     "post": instance,
+    #     "share_string": share_string,
+    #     "comments": comments,
+    #     "comment_form": form,
+    #     "tags": tags,
+    # }
+    # return render(request, "pages/blog/detail.html", context)
+
+
+class TagDetail(DetailView):
+    model = Tag
+    template_name = "pages/blog/tags.html"
+    ordering = ["title", "pub_date"]
+    allow_empty = True
+    queryset = Post.objects.all_posts()
+    context_object_name = "tag"
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tags = Tag.objects.all()
+        context["tags"] = tags
+        return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # class PostDetail(DetailView, FormMixin):
@@ -126,90 +262,3 @@ class PostList(ListView):
 #             )
 #             return HttpResponseRedirect(content_type.get_absolute_url())
 #         return super().form_valid(form)
-
-
-def PostDetail(request, slug):
-    post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.filter(active=True)
-    tags = Tag.objects.all()
-    new_comment = None
-    if request.method == "POST" and request.is_ajax():
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.post = post
-            new_comment.save()
-        # return JsonResponse({"success":True}, status=200)
-    else:
-        comment_form = CommentForm()
-        # return JsonResponse({"success":False}, status=400)
-
-    data = {
-        "post": post,
-        "comments": comments,
-        "new_comment": new_comment,
-        "form": comment_form,
-        "tags": tags
-    }
-    return render(request, "pages/blog/detail.html", data)
-
-
-    # share_string = quote_plus(instance.content)
-    # initial_data = {"content_type": instance.get_content_type, "object_id": instance.id}
-    # form = CommentForm(request.POST or None, initial=initial_data)
-    # if form.is_valid() and request.user.is_authenticated:
-    #     c_type = form.cleaned_data.get("content_type")
-    #     content_type = ContentType.objects.get(model=c_type)
-    #     obj_id = form.cleaned_data.get("object_id")
-    #     content_data = form.cleaned_data.get("content")
-    #     parent_obj = None
-    #     author = self.request.user
-    #     email = self.request.user.email
-    #     try:
-    #         parent_id = int(request.POST.get("parent_id"))
-    #     except:
-    #         parent_id = None
-
-    #     if parent_id:
-    #         parent_qs = Comment.objects.filter(id=parent_id)
-    #         if parent_qs.exists() and parent_qs.count() == 1:
-    #             parent_obj = parent_qs.first()
-
-    #     new_comment, created = Comment.objects.get_or_create(
-    #         author=author,
-    #         email=email,
-    #         content_type=content_type,
-    #         object_id=obj_id,
-    #         content=content_data,
-    #         parent=parent_obj,
-    #     )
-    #     return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
-
-    # comments = instance.comments
-    # tags = Tag.objects.all()
-    # context = {
-    #     "title": instance.title,
-    #     "post": instance,
-    #     "share_string": share_string,
-    #     "comments": comments,
-    #     "comment_form": form,
-    #     "tags": tags,
-    # }
-    # return render(request, "pages/blog/detail.html", context)
-
-
-class TagDetail(DetailView):
-    model = Tag
-    template_name = "pages/blog/tags.html"
-    ordering = ["title", "pub_date"]
-    allow_empty = True
-    queryset = Post.objects.all_posts()
-    context_object_name = "tag"
-    slug_field = "slug"
-    slug_url_kwarg = "slug"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        tags = Tag.objects.all()
-        context["tags"] = tags
-        return context

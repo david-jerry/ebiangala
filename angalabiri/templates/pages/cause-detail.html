@@ -1,5 +1,5 @@
 {% extends "pages/base.html" %}
-{% load static i18n %}
+{% load static i18n humanize comment_tags %}
 
 {% block description %}
 {{cause.content|truncatewords:30|safe}}
@@ -77,7 +77,7 @@ class="stretched"
                 <div class="card-body py-4 px-5">
                   <div class="d-flex justify-content-between">
                     <div class="counter counter-inherit d-flex justify-content-between">
-                      <strong class="mr-1 ls0">Donated:</strong> $<span data-from="0" data-to="{{cause.tt_amount}}"
+                      <strong class="mr-1 ls0">Donated:</strong> ₦<span data-from="0" data-to="{{cause.tt_amount}}"
                         data-refresh-interval="10" data-speed="100" data-comma="true"></span>
                     </div>
                     <span><strong>Target:</strong> ₦{{cause.max_donation}}</span>
@@ -86,8 +86,8 @@ class="stretched"
                     <li data-percent="{{cause.avg}}">
                       <div class="progress">
                         <div class="progress-percent">
-                          <div class="counter counter-inherit counter-instant"><span data-from="0" data-to="{{cause.avg}}"
-                              data-refresh-interval="30" data-speed="1100"></span>%</div>
+                          <div class="counter counter-inherit counter-instant"><span data-from="0"
+                              data-to="{{cause.avg}}" data-refresh-interval="30" data-speed="1100"></span>%</div>
                         </div>
                       </div>
                     </li>
@@ -136,6 +136,15 @@ class="stretched"
                   </div>
                 </div><!-- Post Single - Share End -->
 
+                <div id="comments">
+
+                  <h3 id="comments-title"><span>{% get_comments_count cause user %}</span> Comments</h3>
+
+                  <div class="clear"></div>
+
+                  {% render_comments cause request %}
+                </div><!-- #comments end -->
+
               </div>
 
             </div>
@@ -156,6 +165,46 @@ class="stretched"
               </div>
 
             </div>
+
+            <div class="widget clearfix">
+            <h3 class="mb-0">Related causes</h3>
+              {% for cause in cause.get_related_causes_by_tags %}
+                <article class="entry">
+                  {% if cause.image %}
+                  <div class="entry-image mb-3">
+                    <div class="fslider" data-arrows="false" data-lightbox="gallery">
+                      <div class="flexslider">
+                        <div class="slider-wrap">
+                          <div class="slide"><a href="{{cause.image.url}}" data-lightbox="gallery-item"
+                              style="background: url('{{cause.image.url}}') no-repeat center bottom; background-size: cover; height: 278px;"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="entry-title title-sm text-left">
+                    <div class="entry-categories"><a href="{% url 'blog:list' %}">
+                        {% for tag in cause.tags.all %}{{tag.title}}{% endfor %}</a></div>
+                    <h3><a href="{{cause.get_absolute_url}}" class="color-underline stretched-link">{{cause.title}}</a>
+                    </h3>
+                  </div>
+                  <div class="entry-meta">
+                    <div class="container">
+                      <ul>
+                        <li><a href="#">{{cause.pub_date|naturalday}}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+                {% empty %}
+                <article>
+                  No Related Cause
+                </article>
+              {% endfor %}
+            </div>
+
+
 
           </div>
         </div>

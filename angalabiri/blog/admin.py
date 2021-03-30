@@ -63,13 +63,13 @@ class PostModelAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 admin.site.register(Post, PostModelAdmin)
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ['author', 'email', 'text']
-    list_filter = ['active', 'created']
-    actions = ['approve_comments']
+# @admin.register(Comment)
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ['author', 'email', 'text']
+#     list_filter = ['active', 'created']
+#     actions = ['approve_comments']
 
-    def approve_comments(self, request, queryset):
-        queryset.update(active=True)
+#     def approve_comments(self, request, queryset):
+#         queryset.update(active=True)
 
-admin.site.register(Image)
+# admin.site.register(Image)

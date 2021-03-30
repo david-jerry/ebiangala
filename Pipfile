@@ -78,6 +78,7 @@ paystackapi = "*"
 isort = "*"
 pylint = "*"
 django-resized = "*"
+django-comments-dab = "*"
 
 [dev-packages]
 

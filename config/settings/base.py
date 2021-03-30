@@ -98,6 +98,8 @@ THIRD_PARTY_APPS = [
     # "crequest",
     # Category settings https://pypi.org/project/django-category/
     "category",
+    # comments app
+    "comment",
 ]
 
 LOCAL_APPS = [
@@ -105,6 +107,7 @@ LOCAL_APPS = [
     "angalabiri.blog.apps.BlogConfig",
     "angalabiri.causes.apps.CausesConfig",
     "angalabiri.suggestion.apps.SuggestionConfig",
+    "angalabiri.shop.apps.ShopConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -129,6 +132,9 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "users:redirect"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = "account_login"
+PROFILE_APP_NAME = 'angalabiri.users'
+PROFILE_MODEL_NAME = 'Users' # letter case insensitive
+COMMENT_USE_GRAVATAR = False
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -199,6 +205,9 @@ MEDIA_ROOT = str(APPS_DIR / "media")
 MEDIA_URL = "/media/"
 FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
 
+PRIVATE_ROOT = str(APPS_DIR / "private")
+PRIVATE_URL = "/private/"
+
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
@@ -233,6 +242,7 @@ TEMPLATES = [
                 "angalabiri.users.context_processors.all_citizen",
                 "angalabiri.causes.context_processors.richest_causes",
                 "angalabiri.causes.context_processors.featured_causes",
+                "angalabiri.suggestion.context_processors.recent_suggestion",
             ],
         },
     }
@@ -514,6 +524,10 @@ DJANGORESIZED_DEFAULT_KEEP_META = True
 DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'JPEG'
 DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_USER_ENDSESSION= False
+
 
 SWEETIFY_SWEETALERT_LIBRARY = "sweetalert2"
 COUNTRIES_FLAG_URL = "flags/16x10/{code_upper}.png"

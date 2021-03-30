@@ -18,15 +18,16 @@ from crispy_forms import layout
 class SuggestionForm(forms.ModelForm):
     class Meta:
         model = Suggestion
-        fields = ["title", 'content']
+        fields = ["title", "email", 'content']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column("title", css_class="form-group col-md-12"),
-                Column("content", css_class="form-group col-md-12"),
+                Column("title", css_class="input-group col-md-12"),
+                Column("email", css_class="input-group col-md-12"),
+                Column("content", css_class="input-group col-md-12"),
                 css_class="row mb-0"
             ),
             HTML(

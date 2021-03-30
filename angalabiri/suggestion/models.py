@@ -42,8 +42,8 @@ from .managers import SuggestionManager
 # Create your models here.
 class Suggestion(TimeStampedModel):
     title = CharField(_("Post Title"), blank=False, null=True, max_length=255)
+    email = EmailField(_("Your Email"), blank=False, null=True, max_length=255)
     slug = SlugField(unique=True, null=True, blank=True, max_length=500)
-    url = URLField(blank=True, max_length=500, null=True, unique=True)
     pub_date = DateField(
         _("Suggestion Published Date"),
         auto_now=False,

@@ -56,7 +56,7 @@ class CauseModelAdmin(admin.ModelAdmin, ExportCsvMixin):
         )
 
     def save_model(self, request, obj, form, change):
-        obj.added_by = request.user.username
+        obj.added_by = str(request.user.username)
         obj.author = request.user
         super().save_model(request, obj, form, change)
 

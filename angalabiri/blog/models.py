@@ -1,5 +1,6 @@
 import os
 import random
+import readtime
 
 from category.models import Category, Tag
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -29,7 +30,7 @@ from django.db.models import (
     SlugField,
     URLField,
 )
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils import timezone
@@ -37,7 +38,8 @@ from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 
-from .managers import PostManager, CommentManager
+from comment.models import Comment
+from .managers import PostManager
 from .validators import file_validator
 from django_resized import ResizedImageField
 
@@ -83,6 +85,7 @@ class Post(TimeStampedModel):
     draft = BooleanField(default=False)
     featured = BooleanField(default=False)
     content = RichTextUploadingField()
+    comments = GenericRelation(Comment)
     added_by = CharField(_("added_by"), max_length=555, null=True, blank=True)
     categories = ManyToManyField("category.Category", help_text="Categorize this item.")
     tags = ManyToManyField("category.Tag", help_text="Tag this item.")
@@ -95,6 +98,20 @@ class Post(TimeStampedModel):
     def autocomplete_search_fields():
         return "title", "author"
 
+    @property
+    def readtime(self):
+        return str(readtime.of_test(self.content))
+
+
+    @property
+    def get_image_url(self):
+        img = self.image_set.first()
+        if img:
+            return img.image.url
+        return img #None
+
+
+
     class Meta:
         managed = True
         verbose_name = "Post"
@@ -103,12 +120,12 @@ class Post(TimeStampedModel):
 
     @property
     def get_related_posts_by_tags(self):
-        return Post.objects.filter(tags__in=self.tags.all())
+        return Post.objects.filter(tags__in=self.tags.all())[:4]
 
-    @property
-    def comments(self):
-        instance = self
-        return Comment.objects.filter_by_instance(instance)
+    # @property
+    # def comments(self):
+    #     instance = self
+    #     return Comment.objects.filter_by_instance(instance)
 
     @property
     def get_content_type(self):
@@ -145,15 +162,15 @@ class Image(TimeStampedModel):
         ordering = ["-created"]
 
 
-class Comment(TimeStampedModel):
-    post = ForeignKey(Post, related_name="comments", on_delete=CASCADE)
-    author = CharField(_("FullName"), max_length=500, null=True, blank=True)
-    email = EmailField(_("Add your email"), null=True, blank=True)
-    text = TextField()
-    active = BooleanField(default=True)
+# class Comment(TimeStampedModel):
+#     post = ForeignKey(Post, related_name="comments", on_delete=CASCADE)
+#     author = CharField(_("FullName"), max_length=500, null=True, blank=True)
+#     email = EmailField(_("Add your email"), null=True, blank=True)
+#     text = TextField()
+#     active = BooleanField(default=True)
 
-    class Meta:
-        ordering = ["-created"]
+#     class Meta:
+#         ordering = ["-created"]
 
-    def _str_(self):
-        return f"Comment {self.text} by {self.author}"
+#     def _str_(self):
+#         return f"Comment {self.text} by {self.author}"

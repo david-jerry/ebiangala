@@ -1,0 +1,12 @@
+{% extends "comment/comments/create_comment.html" %}
+
+{% block submit_button_cls %}
+btn btn-block text-white block rounded-lg py-3 font-weight-semibold text-uppercase mt-3 button-black
+{% endblock submit_button_cls %}
+
+{# override pagination style: #}
+{% block pagination %}
+{% include 'comment/comments/pagination.html' with active_btn='bg-danger' text_style='text-dark' li_cls='page-item rounded mx-1' %}
+{% endblock pagination %}
+
+{% block text_area_wrapper_cls %}col-sm-9 col-md-10 py-2 input-group m-2 m-sm-0{% endblock text_area_wrapper_cls %}
