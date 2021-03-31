@@ -24,6 +24,7 @@ from django.urls import reverse
 
 from angalabiri.shop.models.billingmodels import BillingProfile
 
+from model_utils.models import StatusModel, TimeStampedModel
 
 
 ADDRESS_TYPES = (
@@ -31,7 +32,7 @@ ADDRESS_TYPES = (
     ('shipping', 'Shipping address'),
 )
 
-class Address(models.Model):
+class Address(TimeStampedModel):
     billing_profile = ForeignKey(BillingProfile, on_delete=SET_NULL, null=True)
     name            = CharField(max_length=120, null=True, blank=True, help_text='Shipping to? Who is it for?')
     nickname        = CharField(max_length=120, null=True, blank=True, help_text='Internal Reference Nickname')

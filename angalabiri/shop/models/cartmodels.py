@@ -38,7 +38,7 @@ from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 
-from angalabiri.shop.managers.cartmanagers import *
+from angalabiri.shop.managers.cartmanagers import CartManager
 from angalabiri.shop.models.productmodels import Product
 
 
@@ -47,7 +47,7 @@ User = settings.AUTH_USER_MODEL
 # Start Cart models
 class Cart(TimeStampedModel):
     user        = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True)
-    products    = ManyToManyField(Product, on_delete=SET_NULL, null=True,  blank=True)
+    products    = ManyToManyField(Product, blank=True)
     subtotal    = DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total       = DecimalField(default=0.00, max_digits=100, decimal_places=2)
 

@@ -17,7 +17,7 @@ from angalabiri.shop.models.productmodels import Product, ProductVariation, Prod
 class ProductList(ListView):
     model = Product
     template_name = "shop/list.html"
-    ordering = ["title", "-pub_date"]
+    ordering = ["title"]
     queryset = Product.objects.all()
     context_object_name = "products"
     allow_empty = True
@@ -38,7 +38,7 @@ class ProductList(ListView):
 class ProductDetail(DetailView):
     model = Product
     template_name = "shop/detail.html"
-    ordering = ["title", "-pub_date"]
+    ordering = ["title"]
     queryset = Product.objects.all()
     context_object_name = "product"
     allow_empty = True

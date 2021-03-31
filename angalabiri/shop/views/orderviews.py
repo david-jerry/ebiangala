@@ -3,16 +3,16 @@ from django.http import Http404, JsonResponse
 from django.views.generic import View, ListView, DetailView
 from django.shortcuts import render
 
-from angalabiri.shop.models.billingmodels.models import BillingProfile
-from angalabiri.shop.models.ordermodels.models import Order, ProductPurchase
+from angalabiri.shop.models.billingmodels import BillingProfile
+from angalabiri.shop.models.ordermodels import Order, ProductPurchase
 
-class ListView(LoginRequiredMixin, ListView):
+class OrderListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Order.objects.by_request(self.request).not_created()
 
 
-class DetailView(LoginRequiredMixin, DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     
     def get_object(self):
         #return Order.objects.get(id=self.kwargs.get('id'))
@@ -28,7 +28,7 @@ class DetailView(LoginRequiredMixin, DetailView):
 
 
 
-class LibraryView(LoginRequiredMixin, ListView):
+class OrderLibraryView(LoginRequiredMixin, ListView):
     template_name = 'orders/library.html'
     def get_queryset(self):
         return ProductPurchase.objects.products_by_request(self.request) #.by_request(self.request).digital()

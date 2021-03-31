@@ -31,6 +31,7 @@ from django.db.models import (
     Q,
     SlugField,
     URLField,
+    TextField,
 )
 from django.urls import reverse
 from django.utils import timezone
@@ -39,26 +40,14 @@ from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 
-from angalabiri.shop.managers.ordermanagers import *
+from angalabiri.shop.managers.ordermanagers import OrderManager, ProductPurchaseManager
 
 from angalabiri.shop.models.productmodels import Product
 from angalabiri.shop.models.cartmodels import Cart
-from angalabiri.shop.models.ordermodels import Order
 from angalabiri.shop.models.addressmodels import Address
 from angalabiri.shop.models.billingmodels import BillingProfile
 
 # Allorder models
-class ProductPurchase(TimeStampedModel):
-    order_id            = CharField(max_length=120)
-    billing_profile     = ForeignKey(BillingProfile, null=True, on_delete=SET_NULL, related_name="billing_info") # billingprofile.productpurchase_set.all()
-    product             = ForeignKey(Product, null=True, on_delete=SET_NULL, related_name="product_purchase") # product.productpurchase_set.count()
-    refunded            = BooleanField(default=False)
-
-    objects = ProductPurchaseManager()
-
-    def __str__(self):
-        return self.product.title
-
 ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
     ('paid', 'Paid'),
@@ -85,7 +74,7 @@ class Order(TimeStampedModel):
     objects = OrderManager()
 
     class Meta:
-       ordering = ['-created', '-updated']
+       ordering = ['-created']
 
     def get_absolute_url(self):
         return f"/orders/{self.order_id}"
@@ -147,18 +136,15 @@ class Order(TimeStampedModel):
         return self.status
 
 
-# end all order models
-
-
-
 class ProductPurchase(TimeStampedModel):
-    order_id            = models.CharField(max_length=120)
-    billing_profile     = models.ForeignKey(BillingProfile, on_delete=SET_NULL, null=True) # billingprofile.productpurchase_set.all()
-    product             = models.ForeignKey(Product, on_delete=SET_NULL, null=True) # product.productpurchase_set.count()
-    refunded            = models.BooleanField(default=False)
+    order_id            = CharField(max_length=120)
+    billing_profile     = ForeignKey(BillingProfile, null=True, on_delete=SET_NULL) # billingprofile.productpurchase_set.all()
+    product             = ForeignKey(Product, null=True, on_delete=SET_NULL) # product.productpurchase_set.count()
+    refunded            = BooleanField(default=False)
 
     objects = ProductPurchaseManager()
 
     def __str__(self):
         return self.product.title
 
+# end all order models

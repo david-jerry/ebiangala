@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Address
+from angalabiri.shop.models.addressmodels import Address
 
 
 class AddressForm(forms.ModelForm):

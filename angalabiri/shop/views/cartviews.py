@@ -3,24 +3,30 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 
-from accounts.forms import LoginForm, GuestForm
-from accounts.models import GuestEmail
+# from users.forms import LoginForm
 
-from addresses.forms import AddressCheckoutForm
-from addresses.models import Address
+from angalabiri.shop.forms.addressforms import AddressCheckoutForm
+from angalabiri.shop.models.addressmodels import Address
 
-from billing.models import BillingProfile
-from orders.models import Order
-from products.models import Product
-from .models import Cart
-
-
-import stripe
-STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_cu1lQmcg1OLffhLvYrSCp5XE")
-STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_PrV61avxnHaWIYZEeiYTTVMZ')
-stripe.api_key = STRIPE_SECRET_KEY
+from angalabiri.shop.models.billingmodels import BillingProfile
+from angalabiri.shop.models.ordermodels import Order
+from angalabiri.shop.models.productmodels import Product
+from angalabiri.shop.models.cartmodels import Cart
 
 
+# import stripe
+# STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_cu1lQmcg1OLffhLvYrSCp5XE")
+# STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_PrV61avxnHaWIYZEeiYTTVMZ')
+# stripe.api_key = STRIPE_SECRET_KEY
+from paystackapi.paystack import Paystack
+from paystackapi.customer import Customer
+from paystackapi.verification import Verification
+
+paystack_secret_key = settings.PAYSTACK_SECRET_KEY
+paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
+paystack = Paystack(secret_key=paystack_secret_key)
+
+from allauth.account.forms import LoginForm
 
 def cart_detail_api_view(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -77,7 +83,7 @@ def checkout_home(request):
         return redirect("cart:home")  
     
     login_form = LoginForm(request=request)
-    guest_form = GuestForm(request=request)
+    # guest_form = GuestForm(request=request)
     address_form = AddressCheckoutForm()
     billing_address_id = request.session.get("billing_address_id", None)
 
@@ -125,11 +131,10 @@ def checkout_home(request):
         "object": order_obj,
         "billing_profile": billing_profile,
         "login_form": login_form,
-        "guest_form": guest_form,
         "address_form": address_form,
         "address_qs": address_qs,
         "has_card": has_card,
-        "publish_key": STRIPE_PUB_KEY,
+        "publish_key": PAYSTACK_PUBLIC_KEY,
         "shipping_address_required": shipping_address_required,
     }
     return render(request, "carts/checkout.html", context)

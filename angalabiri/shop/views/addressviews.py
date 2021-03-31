@@ -4,9 +4,9 @@ from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 # CRUD create update retrieve delete
 
-from .models.billingmodels import BillingProfile
-from .forms.addressforms import AddressCheckoutForm, AddressForm
-from .models.addressmodels import Address
+from angalabiri.shop.models.billingmodels import BillingProfile
+from angalabiri.shop.forms.addressforms import AddressCheckoutForm, AddressForm
+from angalabiri.shop.models.addressmodels import Address
 
 
 

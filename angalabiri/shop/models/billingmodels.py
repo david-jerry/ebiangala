@@ -10,6 +10,7 @@ from django.db.models import (
     DecimalField,
     EmailField,
     FileField,
+    TextField,
     ForeignKey,
     GenericIPAddressField,
     ImageField,
@@ -35,7 +36,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class BillingProfile(TimeStampedModel):
-    user        = OneToOneField(User, null=True, blank=True)
+    user        = OneToOneField(User, on_delete=SET_NULL, null=True, blank=True)
     email       = EmailField()
     active      = BooleanField(default=True)
     customer_id = CharField(max_length=120, null=True, blank=True)
@@ -77,7 +78,7 @@ class BillingProfile(TimeStampedModel):
 
 
 class Card(models.Model):
-    billing_profile         = ForeignKey(BillingProfile)
+    billing_profile         = ForeignKey(BillingProfile, on_delete=SET_NULL, null=True)
     stripe_id               = CharField(max_length=120)
     brand                   = CharField(max_length=120, null=True, blank=True)
     country                 = CharField(max_length=20, null=True, blank=True)
@@ -97,7 +98,7 @@ class Card(models.Model):
 
 
 class Charge(models.Model):
-    billing_profile         = ForeignKey(BillingProfile)
+    billing_profile         = ForeignKey(BillingProfile, on_delete=SET_NULL, null=True)
     stripe_id               = CharField(max_length=120)
     paid                    = BooleanField(default=False)
     refunded                = BooleanField(default=False)

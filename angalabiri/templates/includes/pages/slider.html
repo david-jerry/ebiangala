@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="swiper-slide-bg"
-            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url({% if post.image_set.first %}{% for image in post.image_set.all %}{{image.image.url}}{% endfor %}{% else%}{% static 'images/1.jpg' %}{% endif %})no-repeat center center; background-size: cover;">
+            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url({% if post.get_image_url %}{{post.get_image_url}}{% else%}{% static 'images/1.jpg' %}{% endif %})no-repeat center center; background-size: cover;">
           </div>
         </div>
         {% empty %}
@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="swiper-slide-bg"
-            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url('{% static "images/angalabiri/banner/ban2.JPG" %}') no-repeat center center; background-size: cover;">
+            style="background: linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.5)), url('{% static 'images/angalabiri/banner/ban2.JPG' %}') no-repeat center center; background-size: cover;">
           </div>
         </div>
         {% endfor %}

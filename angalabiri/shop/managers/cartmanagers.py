@@ -1,5 +1,4 @@
 from django.db import models
-from angalabiri.shop.models.cartmodels import Cart
 
 class CartManager(models.Manager):
     def new_or_get(self, request):

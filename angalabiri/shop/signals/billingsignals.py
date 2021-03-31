@@ -8,12 +8,13 @@ from django.dispatch import Signal, receiver
 
 from angalabiri.shop.models.billingmodels import Card, BillingProfile, Charge
 from paystackapi.paystack import Paystack
-from config import settings
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from paystackapi.customer import Customer
 from paystackapi.verification import Verification
 
-paystack_secret_key = settings.base.PAYSTACK_SECRET_KEY
+paystack_secret_key = settings.PAYSTACK_SECRET_KEY
 paystack = Paystack(secret_key=paystack_secret_key)
 
 User = get_user_model()

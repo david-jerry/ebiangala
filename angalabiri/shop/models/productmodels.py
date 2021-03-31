@@ -42,10 +42,10 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from angalabiri.shop.managers.productmanagers import *
 from comment.models import Comment
 from django_resized import ResizedImageField
-from config.settings.production import PRIVATE_FILE_STORAGE
+from angalabiri.utils.storages import PrivateRootS3BOTO3Storage
 
+PRIVATE_FILE_STORAGE = PrivateRootS3BOTO3Storage
 
-PRIVATE_FILE_STORAGE
 # PRIVATE_FILE_STORAGE = getattr(settings, "PRIVATE_FILE_STORAGE", "angalabiri.utils.storages.PrivateRootS3Boto3Storage")
 # Create your models here.
 def get_filename_ext(filepath):
@@ -107,7 +107,7 @@ class Product(TimeStampedModel):
         managed = True
         verbose_name = "Product"
         verbose_name_plural = "Products"
-        ordering = ["title", "-end_date"]
+        ordering = ["title", "-created"]
 
     def get_absolute_url(self):
         return f"/products/{self.slug}"
@@ -234,7 +234,7 @@ class ProductVariation(TimeStampedModel):
         return "%s - %s" %(self.product.title, self.title)
 
 class ProductImage(TimeStampedModel):
-    product = ForeignKey(product, on_delete=CASCADE)
+    product = ForeignKey(Product, on_delete=CASCADE)
     image = ResizedImageField(
         _("Upload Product Image"), quality=75, force_format='JPEG', size=[1920, 1148], crop=['middle', 'center'], upload_to=upload_product_image_loc, null=True, blank=True
     )

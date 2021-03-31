@@ -1,11 +1,12 @@
 from django.db import models
 from paystackapi.paystack import Paystack
-from config import settings
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from paystackapi.customer import Customer
 from paystackapi.verification import Verification
 
-paystack_secret_key = settings.base.PAYSTACK_SECRET_KEY
+paystack_secret_key = settings.PAYSTACK_SECRET_KEY
 paystack = Paystack(secret_key=paystack_secret_key)
 
 User = get_user_model()
@@ -13,7 +14,7 @@ User = get_user_model()
 class BillingProfileManager(models.Manager):
     def new_or_get(self, request):
         user = request.user
-        guest_email_id = request.session.get('guest_email_id')
+        # guest_email_id = request.session.get('guest_email_id')
         created = False
         obj = None
         if user.is_authenticated():

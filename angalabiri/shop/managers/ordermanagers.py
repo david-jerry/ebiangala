@@ -1,11 +1,12 @@
 from django.db import models
 from paystackapi.paystack import Paystack
-from config import settings
+from django.conf import settings
 
 from paystackapi.customer import Customer
 from paystackapi.verification import Verification
+from django.contrib.auth import get_user_model
 
-paystack_secret_key = settings.base.PAYSTACK_SECRET_KEY
+paystack_secret_key = settings.PAYSTACK_SECRET_KEY
 paystack = Paystack(secret_key=paystack_secret_key)
 
 User = get_user_model()

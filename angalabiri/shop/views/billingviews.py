@@ -4,16 +4,25 @@ from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
 
+from paystackapi.paystack import Paystack
+
+from paystackapi.customer import Customer
+
+from paystackapi.verification import Verification
+
+paystack_secret_key = settings.PAYSTACK_SECRET_KEY
+
+paystack = Paystack(secret_key=paystack_secret_key)
 
 
-import stripe
-STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_cu1lQmcg1OLffhLvYrSCp5XE")
-STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_PrV61avxnHaWIYZEeiYTTVMZ')
-stripe.api_key = STRIPE_SECRET_KEY
+# import stripe
+# STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_cu1lQmcg1OLffhLvYrSCp5XE")
+# STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_PrV61avxnHaWIYZEeiYTTVMZ')
+# stripe.api_key = STRIPE_SECRET_KEY
 
 
 
-from .models import BillingProfile, Card
+from angalabiri.shop.models.billingmodels import BillingProfile, Card
 
 def payment_method_view(request):
     #next_url = 
