@@ -11,6 +11,7 @@ from paystackapi.customer import Customer
 from paystackapi.verification import Verification
 
 paystack_secret_key = settings.PAYSTACK_SECRET_KEY
+paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
 
 paystack = Paystack(secret_key=paystack_secret_key)
 
@@ -32,12 +33,12 @@ def payment_method_view(request):
 
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
     if not billing_profile:
-        return redirect("/cart")
+        return redirect("/shop/cart")
     next_url = None
     next_ = request.GET.get('next')
     if is_safe_url(next_, request.get_host()):
         next_url = next_
-    return render(request, 'billing/payment-method.html', {"publish_key": STRIPE_PUB_KEY, "next_url": next_url})
+    return render(request, 'shop/billing/payment-method.html', {"publish_key": paystack_public_key, "next_url": next_url})
 
 
 

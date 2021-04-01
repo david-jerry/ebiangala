@@ -54,14 +54,14 @@ class PostList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         request = self.request
-        tags = Tag.objects.all()
+        tags = Tag.objects.all().filter(categories__title__iexact="News")
         context["tags"] = tags
         return context
 
 
 def PostDetail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    tags = Tag.objects.all()
+    tags = Tag.objects.all().filter(categories__title__iexact="News")
 
     data = {
         "post": post,

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}
+{{block.super}}
+{% endblock title %}
+
+{% block description %}
+{% endblock description %}
+
+{% block ogdesc %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+{% endblock body-class%}
+
+{% block keywords %}
+{% endblock keywords %}
+
+{% block maincontent %}
+
+<div class="clearfix" id="wrapper">
+  {% include 'includes/shop/shopnav.html' %}
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button"
+      class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+  {% endfor %}
+  {% endif %}
+
+  {% block content %}
+  {% endblock content %}
+  {% include 'includes/shop/shopfooter.html' %}
+</div> <!-- /wrapper -->
+{% include 'includes/shop/shoptotop.html' %}
+
+{% block modal %}{% endblock modal %}
+
+{% endblock maincontent %}
+
+{% block inline_javascript %}
+	<script>
+
+		// Topbar Hide
+		$('#top-bar').on('click','#close-bar',function(){
+			$(this).parents('#top-bar').slideUp(300);
+			$('body').css('padding-top',0);
+		})
+
+		jQuery(window).on( 'pluginCarouselReady', function(){
+			// Custom Carousel
+			$('.owl-carousel').owlCarousel({
+				items: 1,
+				dotsContainer: '#item-color-dots',
+			    loop: true,
+			});
+		});
+	</script>
+
+    	<script>
+		jQuery(document).ready( function($){
+			$(window).on( 'pluginIsotopeReady', function(){
+				$('#shop').isotope({
+					transitionDuration: '0.65s',
+					getSortData: {
+						name: '.product-title',
+						price_lh: function( itemElem ) {
+							if( $(itemElem).find('.product-price').find('ins').length > 0 ) {
+								var price = $(itemElem).find('.product-price ins').text();
+							} else {
+								var price = $(itemElem).find('.product-price').text();
+							}
+
+							priceNum = price.split("$");
+
+							return parseFloat( priceNum[1] );
+						},
+						price_hl: function( itemElem ) {
+							if( $(itemElem).find('.product-price').find('ins').length > 0 ) {
+								var price = $(itemElem).find('.product-price ins').text();
+							} else {
+								var price = $(itemElem).find('.product-price').text();
+							}
+
+							priceNum = price.split("$");
+
+							return parseFloat( priceNum[1] );
+						}
+					},
+					sortAscending: {
+						name: true,
+						price_lh: true,
+						price_hl: false
+					}
+				});
+
+				$('.custom-filter:not(.no-count)').children('li:not(.widget-filter-reset)').each( function(){
+					var element = $(this),
+						elementFilter = element.children('a').attr('data-filter'),
+						elementFilterContainer = element.parents('.custom-filter').attr('data-container');
+
+					elementFilterCount = Number( jQuery(elementFilterContainer).find( elementFilter ).length );
+
+					element.append('<span>'+ elementFilterCount +'</span>');
+
+				});
+
+				$('.shop-sorting li').click( function() {
+					$('.shop-sorting').find('li').removeClass( 'active-filter' );
+					$(this).addClass( 'active-filter' );
+					var sortByValue = $(this).find('a').attr('data-sort-by');
+					$('#shop').isotope({ sortBy: sortByValue });
+					return false;
+				});
+			});
+		});
+	</script>
+
+
+
+{% endblock inline_javascript %}
+
+
+{% block javascript %}
+{% include 'includes/shop/shopjs.html' %}
+{% endblock javascript %}

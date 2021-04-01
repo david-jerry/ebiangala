@@ -1,7 +1,8 @@
 from django.views.generic import TemplateView, RedirectView
 from django.urls import path
-from angalabiri.shop.views.productviews import ProductList, ProductDetail, ProductDownload
-from angalabiri.shop.views.cartviews import cart_home, cart_update, checkout_home, checkout_done_view, cart_detail_api_view
+from angalabiri.shop.views.productviews import ProductList, product_detail, ProductDownload
+# from angalabiri.shop.views.cartviews import cart_home, cart_update, checkout_home, checkout_done_view, cart_detail_api_view
+from angalabiri.shop.views.cartviews import cart_add, cart_remove, cart_detail
 from angalabiri.shop.views.orderviews import OrderListView, OrderDetailView, VerifyOwnership, OrderLibraryView
 from angalabiri.shop.views.billingviews import payment_method_view, payment_method_createview
 from angalabiri.shop.views.addressviews import AddressCreateView, AddressListView, AddressUpdateView, checkout_address_create_view, checkout_address_reuse_view
@@ -9,17 +10,15 @@ from angalabiri.shop.views.addressviews import AddressCreateView, AddressListVie
 app_name = "shop"
 
 urlpatterns = [
-    path('', ProductList.as_view(), name='list'),
-    path('<slug>/', ProductDetail.as_view(), name='detail'),
-    path('<slug>/<int:pk>/', ProductDownload.as_view(), name='download'),
+    path("", TemplateView.as_view(template_name="shop/products/home.html"), name="home"),
+    path('products/', ProductList.as_view(), name='list'),
+    path('products/<slug>/<int:id>', product_detail, name='detail'),
+    path('products/<slug>/<int:pk>/', ProductDownload.as_view(), name='download'),
 
 
-    path('cart/', cart_home, name='home'),
-    path('cart/api/', cart_detail_api_view, name='api-cart'),
-    path('cart/checkout/success/', checkout_done_view, name='success'),
-    path('cart/checkout/', checkout_home, name='checkout'),
-    path('cart/update/', cart_update, name='update'),
-
+    path('cart/', cart_detail, name='cart'),
+    path('cart/add/<int:product_id>/', cart_add, name='add'),
+    path('cart/remove/<int:product_id>/', cart_remove, name='remove'),
 
     path('order/', OrderListView.as_view(), name='orders'),
     path('order/endpoint/verify/ownership/', VerifyOwnership.as_view(), name='verify-ownership'),

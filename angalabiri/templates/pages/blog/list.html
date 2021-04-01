@@ -105,7 +105,7 @@ class="stretched search-overlay"
             <div class="col-md-4">
               <article class="entry mb-1 clearfix">
                 <div class="entry-user">
-                  <h4><a href="{% if post.url %}{{post.url}}{% endif %}">{{post.title}}</a>.<br><span
+                  <h4><a href="{% if post.url %}{{post.url}}{% else %}{{post.get_absolute_url}}{% endif %}">{{post.title}}</a>.<br><span
                       style="font-size:10px; font-weight:400;"><i></i>{{post.author}}</span></h4>
                 </div>
                 {% if post.image_set %}

@@ -1,0 +1,17 @@
+{% load static compress %}
+
+{% compress css inline %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/project.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/swiper.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/dark.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/font-icons.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/animate.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css" />
+
+<link rel="stylesheet" href="{% static 'css/custom.css' %}" type="text/css" />
+
+<!-- NonProfit Demo Specific Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/ecommerce-fonts.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/ecommerce.css' %}" type="text/css" />
+{% endcompress %}

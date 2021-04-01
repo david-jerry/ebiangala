@@ -46,7 +46,7 @@ class CauseList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         request = self.request
-        tags = Tag.objects.all()
+        tags = Tag.objects.all().filter(categories__title__iexact="Cause")
         context['tags'] = tags
         return context
 
@@ -64,6 +64,6 @@ class CauseDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        tags = Tag.objects.all()
+        tags = Tag.objects.all().filter(categories__title__iexact="Cause")
         context['tags'] = tags
         return context

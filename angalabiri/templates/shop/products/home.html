@@ -1,0 +1,167 @@
+{% extends "shop/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "Start shopping" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'shop:home' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'shop:home' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabiri shop, ebiangala shop, ebiangala store, sagbama online store for timber, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+{% block css %}
+{% include 'includes/shop/shopcss.html' %}
+{% endblock css %}
+
+{% block content %}
+{% include 'includes/shop/shopslider.html' %}
+<main id="content">
+    <div class="content-wrap py-0">
+        <div class="section my-0 "  style="padding: 100px 0;">
+            <div class="container">
+
+                <div class="row grid-item">
+                    <div class="col-md-2 grid-image">
+                        <img src="{% static 'images/categories/1.jpg' %}" alt="Image 1">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="grid-info clearfix">
+                            <h3><a href="{% url 'shop:list' %}">Fresh Arrivals<span>Summer is Coming!</span></a></h3>
+                            <a href="{% url 'shop:list' %}" class="more-link clearfix">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 grid-image">
+                        <img src="{% static 'images/categories/2.jpg' %}" alt="Image 1">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="grid-info clearfix">
+                            <h3><a href="{% url 'shop:list' %}">Acessories<span>Check out more Products for your Lifestyles</span></a></h3>
+                            <a href="{% url 'shop:list' %}" class="more-link clearfix">Know More</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 grid-image">
+                        <img src="{% static 'images/categories/3.jpg' %}" alt="Image 1">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="grid-info clearfix">
+                            <h3><a href="#">Our Store<span>Where we Manufacture!</span></a></h3>
+                            <i class="icon-map-marker2"></i> <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2233.681463596743!2d-3.19397378404521!3d55.954892680607855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4887c78e1e83edab%3A0x627ac6bc4414f18b!2sGucci+-+Edinburgh+Harvey+Nichols+Women&#39;s!5e0!3m2!1sen!2sus!4v1489749205966" data-lightbox="iframe"  class="more-link clearfix">Find Store</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container topmargin clearfix">
+            <div class="heading-block border-bottom-0 bottommargin center">
+                <h3 style="font-size: 20px;">Shop By Categories</h3>
+                <span>Browse our catalogue by categorizing what you search for</span>
+            </div>
+
+            <div class="row col-mb-50">
+                {% for tag in all_cat %}
+                <div class="col-lg-2 col-md-4 col-6 offset-lg-1">
+                    <div class="feature-box fbox-center">
+                        <div class="fbox-content">
+                            <div class="before-heading ls2"></div>
+                            <h3 class="font-weight-normal ls1">{{tag.title}}</h3>
+                        </div>
+
+                        <div class="fbox-image imagescalein">
+                            <a href="#"><img src="{% static 'images/icon/2.png' %}" alt="Image"></a>
+                        </div>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="section clearfix"  style="padding: 80px 0;">
+            <div class="container clearfix">
+
+                <div class="heading-block border-bottom-0 center">
+                    <h3 class="font-weight-normal" style="font-size: 16px;">Featured Products</h3>
+                </div>
+
+                <div class="row clearfix">
+                    {% for product in featured_products %}
+                    <div class="w-100 bottommargin d-block d-md-none"></div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="portfolio-item">
+                            <div class="portfolio-image clearfix">
+                                <div class="fslider" data-pagi="false" data-animation="fade" data-slideshow="false">
+                                    <div class="flexslider">
+                                        <div class="slider-wrap">
+                                            {% for image in product.productimage_set.all %}
+                                            <div class="slide"><a href="#"><img src="{{image.image.url}}" alt="{{product.title}}"></a></div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-cart"><a href="#"><i class="icon-shopping-cart"></i></a></div>
+                                <div class="product-quickview"><a href="#" data-toggle="tooltip" data-placement="top" title="Available Sizes: L"><i class="icon-info"></i></a></div>
+                            </div>
+                            <div class="portfolio-desc pb-0-content-between">
+                                <div>
+                                    <h3><a href="#">{{product.title|truncatewords:4}}</a></h3>
+                                    <span class="mt-0"><a href="#">{{product.tags.first}}</a></span>
+                                    <div class="rating-stars">
+                                        <i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star-empty"></i>
+                                    </div>
+                                </div>
+                                <div class="item-price pt-1">
+                                    <span>₦ {{product.price}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="w-100 bottommargin d-block d-md-none"></div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="portfolio-item">
+                            <div class="portfolio-image bg-color-grey clearfix">
+                            </div>
+                            <div class="portfolio-desc bg-color-grey  pb-0-content-between">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</main>
+{% endblock content %}

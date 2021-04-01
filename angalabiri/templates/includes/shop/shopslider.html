@@ -1,0 +1,63 @@
+{% load static %}
+
+		<!-- Slider
+		============================================= -->
+		<section id="slider" class="slider-element swiper_wrapper min-vh-75 min-vh-md-75" data-autoplay="9000" data-speed="800" data-loop="true" data-grab="false">
+
+			<div class="swiper-container swiper-parent">
+				<div class="swiper-wrapper">
+                    {% for product in new_arrivals %}
+					<div class="swiper-slide">
+						<div class="container">
+							<div class="slider-caption" style="margin-top: -30px;">
+								<div class="emphasis-title mb-0">
+									<h2 class="bottommargin font-weight-bold" style="max-width: 600px; font-size: 80px; font-family: 'Montserrat'; line-height: 1.2;"><a href="{{product.get_absolute_url}}">{{product.title|truncatewords:3}}</a></h2>
+
+									<p class="lead topmargin-sm d-none d-md-block" style="max-width: 600px; font-family: 'Poppins'; color: #999; font-size: 18px;">
+                                        {{product.description|truncatewords:15|safe}}
+                                    </p>
+								</div>
+							</div>
+						</div>
+						<div class="slide-number font-primary">{% if product.id < 10 %}0{% endif %}{{product.id}}</div>
+						<div class="swiper-slide-bg" style="background: #FFF url('{% if product.get_image_url %}{{product.get_image_url}}{% endif %}') no-repeat center right; background-size: auto 100%;"></div>
+					</div>
+                    {% empty %}
+					<div class="swiper-slide">
+						<div class="container">
+							<div class="slider-caption" style="margin-top: -30px;">
+								<div class="emphasis-title mb-0">
+									<h2 class="bottommargin font-weight-bold" style="max-width: 600px; font-size: 80px; font-family: 'Montserrat'; line-height: 1.2;">Materials<br>and Crude Palm</h2>
+
+									<p class="lead topmargin-sm d-none d-md-block" style="max-width: 600px; font-family: 'Poppins'; color: #999; font-size: 18px;">
+                                    There is an abundance of green vegetation and water, to harvest large fresh agricultural produces.
+                                    </p>
+								</div>
+							</div>
+						</div>
+						<div class="slide-number font-primary">O1</div>
+						<div class="swiper-slide-bg" style="background: #FFF url('{% static 'images/sliders/1.jpg' %}') no-repeat center right; background-size: auto 100%;"></div>
+					</div>
+					<div class="swiper-slide">
+						<div class="container">
+							<div class="slider-caption" style="margin-top: -30px;">
+								<div class="emphasis-title mb-0">
+									<h2 class="bottommargin font-weight-bold" style="max-width: 600px; font-size: 80px; font-family: 'Montserrat'; line-height: 1.2;">Hire Local<br>Artisans.</h2>
+
+									<p class="lead topmargin-sm d-none d-md-block" style="max-width: 600px; font-family: 'Poppins'; color: #999; font-size: 18px;">
+                                    Hire our freelance artisans for your next project.
+                                    </p>
+								</div>
+							</div>
+						</div>
+						<div class="slide-number font-primary">O2</div>
+						<div class="swiper-slide-bg" style="background: #FFF url('{% static 'images/sliders/2.jpg' %}') no-repeat center right; background-size: auto 100%;"></div>
+					</div>
+                    {% endfor %}
+				</div>
+				<div class="slider-arrow-left"><i class="icon-line-arrow-left"></i></div>
+				<div class="slider-arrow-right"><i class="icon-line-arrow-right"></i></div>
+			</div>
+
+		</section><!-- #Slider End -->
+

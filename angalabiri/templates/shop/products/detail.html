@@ -1,0 +1,250 @@
+{% extends "shop/base.html" %}
+{% load static i18n comment_tags %}
+
+{% block description %}
+{% blocktrans with product.description as description %}
+{{description|truncatewords:30}}
+{% endblocktrans %}
+{% endblock description %}
+
+{% block title %}
+{% blocktrans with product.title as title %}{{title}}{% endblocktrans %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% blocktrans with product as product %}
+{{product.description|truncatewords:30}}
+{% endblocktrans %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{{product.get_absolute_url}}
+{% endblock cano %}
+
+{% block ogurl %}
+{{product.get_absolute_url}}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% blocktrans with product.description as description %}
+{{description|truncatewords:30}}
+{% endblocktrans %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabiri shop, ebiangala shop, ebiangala store, sagbama online store for timber, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+{% block css %}
+{% include 'includes/shop/shopcss.html' %}
+{% endblock css %}
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">{{product.title}}</h1>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'shop:list' %}">Shop</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{product.slug}}</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+
+<main id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            <div class="single-product">
+                <div class="product">
+                    <div class="row gutter-40">
+
+                        <div class="col-md-6">
+
+                            <!-- Product Single - Gallery
+                            ============================================= -->
+                            <div class="product-image">
+                                <div class="fslider" data-pagi="false" data-arrows="false" data-thumbs="true">
+                                    <div class="flexslider">
+                                        <div class="slider-wrap" data-lightbox="gallery">
+                                            {% for image in product.productimage_set.all %}
+                                            <div class="slide" data-thumb="{{image.image.url}}"><a href="{{image.image.url}}" title="{{product.title}}" data-lightbox="gallery-item"><img src="{{image.image.url}}" alt="{{product.title}}"></a></div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if product.inventory < 1 %}
+                                <div class="sale-flash badge badge-danger p-2">Out of Stock!</div>
+                                {% else %}
+                                <div class="sale-flash badge badge-success p-2">Sale!</div>
+                                {% endif %}
+                            </div><!-- Product Single - Gallery End -->
+
+                        </div>
+
+                        <div class="col-md-6 product-desc">
+
+                            <div class="d-flex align-items-center justify-content-between">
+
+                                <!-- Product Single - Price
+                                ============================================= -->
+                                <div class="product-price"><del>₦ 39.99</del> <ins>₦{{product.price}}</ins></div><!-- Product Single - Price End -->
+
+                            </div>
+
+                            <div class="line"></div>
+
+                            <!-- Product Single - Quantity & Cart Button
+                            ============================================= -->
+                            <form class="cart mb-0 d-flex justify-content-between align-items-center" method="post" enctype='multipart/form-data' action="{% url 'shop:add' product.id %}">
+                                {% csrf_token %}
+                                <div class="quantity">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" name="quantity" value="1" class="qty" />
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                                <button type="submit" class="add-to-cart button m-0">Add to cart</button>
+                            </form><!-- Product Single - Quantity & Cart Button End -->
+
+                            <div class="line"></div>
+
+                            <!-- Product Single - Short Description
+                            ============================================= -->
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Category:</span><span class="text-dark font-weight-semibold">{% for tag in product.tags.all %}{{tag.title|upper}}{% endfor %}</span>
+                                </li>
+                                {% if product.productcolor_set.all %}              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Color:</span><span class="text-dark font-weight-semibold">{% for color in product.productcolor_set.all %}color.title{% endfor %}k</span>
+                                </li>
+                                {% endif %}
+            
+                                {% if product.productvariation_set.all %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Size:</span><span class="text-dark font-weight-semibold">{% for var in product.productvariation_set.all %}{{var.title}}{% endfor %}</span>
+                                </li>
+                                {% endif %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Quantity:</span><span class="text-dark font-weight-semibold">{% if product.quantity %}{{product.quantity}}{% else %}0{% endif %}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Return Policy:</span><span class="text-dark font-weight-semibold">30 days</span>
+                                </li>
+                            </ul>
+
+                            <!-- Product Single - Share
+                            ============================================= -->
+                            <div class="si-share d-flex justify-content-between align-items-center mt-4">
+                                <span>Share:</span>
+                                <div>
+                                    <a href="#" class="social-icon si-borderless si-facebook">
+                                        <i class="icon-facebook"></i>
+                                        <i class="icon-facebook"></i>
+                                    </a>
+                                    <a href="#" class="social-icon si-borderless si-twitter">
+                                        <i class="icon-twitter"></i>
+                                        <i class="icon-twitter"></i>
+                                    </a>
+                                    <a href="#" class="social-icon si-borderless si-pinterest">
+                                        <i class="icon-pinterest"></i>
+                                        <i class="icon-pinterest"></i>
+                                    </a>
+                                    <a href="#" class="social-icon si-borderless si-gplus">
+                                        <i class="icon-gplus"></i>
+                                        <i class="icon-gplus"></i>
+                                    </a>
+                                    <a href="#" class="social-icon si-borderless si-rss">
+                                        <i class="icon-rss"></i>
+                                        <i class="icon-rss"></i>
+                                    </a>
+                                    <a href="#" class="social-icon si-borderless si-email3">
+                                        <i class="icon-email3"></i>
+                                        <i class="icon-email3"></i>
+                                    </a>
+                                </div>
+                            </div><!-- Product Single - Share End -->
+
+                        </div>
+
+                        <div class="w-100"></div>
+
+                        <div class="col-12 mt-5">
+
+                            <div class="tabs clearfix mb-0" id="tab-1">
+
+                                <ul class="tab-nav clearfix">
+                                    <li><a href="#tabs-1"><i class="icon-align-justify2"></i><span class="d-none d-md-inline-block"> Description</span></a></li>
+                                    <li><a href="#tabs-3"><i class="icon-star3"></i><span class="d-none d-md-inline-block"> Reviews ({% get_comments_count product user %})</span></a></li>
+                                </ul>
+
+                                <div class="tab-container">
+
+                                    <div class="tab-content clearfix" id="tabs-1">
+                                        <p>{{product.description|safe}}.</p>
+                                    </div>
+                                    <div class="tab-content clearfix" id="tabs-3">
+
+                                            {% render_comments product request %}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="w-100">
+
+                <h4>Related Products</h4>
+
+                <div class="owl-carousel product-carousel carousel-widget" data-margin="30" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-md="2" data-items-lg="3" data-items-xl="4">
+                    {% for product in product.get_related_product_by_tags %}
+                    <div class="oc-item">
+                        <div class="product">
+                            <div class="product-image">
+                                {% if product.productimage_set.all %}
+                                {% for image in product.productimage_set.all %}<a href="#"><img src="{{image.image.url}}" alt="{{product.title}}"></a>{% endfor %}
+                                {% endif %}
+                                <div class="badge badge-success p-2">50% Off*</div>
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
+                                        <a href="#" class="btn btn-dark mr-2"><i class="icon-shopping-cart"></i></a>
+                                        <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"><i class="icon-line-expand"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg bg-transparent"></div>
+                                </div>
+                            </div>
+                            <div class="product-desc center">
+                                <div class="product-title"><h3><a href="{{product.get_absolute_url}}">{{product.title}}</a></h3></div>
+                                <div class="product-price"><del>₦24.99</del> <ins>₦{{product.price}}</ins></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="oc-item">
+                    No related Product yet
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock content %}

@@ -39,7 +39,7 @@ from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 
 from angalabiri.shop.managers.cartmanagers import CartManager
-from angalabiri.shop.models.productmodels import Product
+from angalabiri.shop.models.productmodels import Product, ProductVariation
 
 
 User = settings.AUTH_USER_MODEL

@@ -11,7 +11,7 @@ from angalabiri.shop.models.addressmodels import Address
 
 
 class AddressListView(LoginRequiredMixin, ListView):
-    template_name = 'addresses/list.html'
+    template_name = 'shop/addresses/list.html'
 
     def get_queryset(self):
         request = self.request
@@ -21,9 +21,9 @@ class AddressListView(LoginRequiredMixin, ListView):
 
 
 class AddressUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'addresses/update.html'
+    template_name = 'shop/addresses/update.html'
     form_class = AddressForm
-    success_url = '/addresses'
+    success_url = '/shop/addresses/'
     
     def get_queryset(self):
         request = self.request
@@ -32,9 +32,9 @@ class AddressUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class AddressCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'addresses/update.html'
+    template_name = 'shop/addresses/update.html'
     form_class = AddressForm
-    success_url = '/addresses'
+    success_url = '/shop/addresses'
 
     def form_valid(self, form):
         request = self.request

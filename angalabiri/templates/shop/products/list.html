@@ -1,0 +1,138 @@
+{% extends "shop/base.html" %}
+{% load static i18n %}
+
+{% block description %}
+{% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "Catalogue" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'shop:list' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'shop:list' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabiri shop, ebiangala shop, ebiangala store, sagbama online store for timber, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+{% block css %}
+{% include 'includes/shop/shopcss.html' %}
+{% endblock css %}
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">Catalogue</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'shop:list' %}">Shop</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Products</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+
+<main id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            <div class="row gutter-40 col-mb-80">
+                                <!-- Sidebar
+                ============================================= -->
+                <div class="sidebar col-lg-3">
+                    <div class="sidebar-widgets-wrap">
+
+                        <div class="widget widget-filter-links">
+
+                            <h4>Select Category</h4>
+                            <ul class="custom-filter pl-2" data-container="#shop" data-active-class="active-filter">
+                                <li class="widget-filter-reset active-filter"><a href="#" data-filter="*">Clear</a></li>
+                                {% for tag in tags %}
+                                <li><a href="#" data-filter=".sf-{{tag.title|lower}}">{{tag.title|upper}}</a></li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                        <div class="widget widget-filter-links">
+
+                            <h4>Sort By</h4>
+                            <ul class="shop-sorting pl-2">
+                                <li class="widget-filter-reset active-filter"><a href="#" data-sort-by="original-order">Clear</a></li>
+                                <li><a href="#" data-sort-by="name">Name</a></li>
+                                <li><a href="#" data-sort-by="price_lh">Price: Low to High</a></li>
+                                <li><a href="#" data-sort-by="price_hl">Price: High to Low</a></li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div><!-- .sidebar end -->
+
+                <!-- Post Content
+                ============================================= -->
+                <div class="postcontent col-lg-9 order-lg-last">
+
+                    <!-- Shop
+                    ============================================= -->
+                    <div id="shop" class="shop row grid-container gutter-20" data-layout="fitRows">
+                        {% for product in products %}
+                        <div class="product col-md-4 col-sm-6 {% for tag in product.tags.all %}sf-{{tag.title}}{% endfor %}">
+                            <div class="grid-inner">
+                                <div class="product-image">
+                                    {% if product.productimage_set %}
+                                    {% for image in product.productimage_set.all %}
+                                    <a href="#"><img src="{{image.image.url}}" alt="{{product.title}}"></a>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% if product.quantity < 1 %}
+                                    <div class="sale-flash badge badge-secondary p-2">Out of Stock</div>
+                                    {% else %}
+                                    <div class="sale-flash badge badge-success p-2">In Stock</div>
+                                    {% endif %}
+                                    <div class="bg-overlay">
+                                        <div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
+                                            <a href="#" class="btn btn-dark mr-2"><i class="icon-shopping-cart"></i></a>
+                                            <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"><i class="icon-line-expand"></i></a>
+                                        </div>
+                                        <div class="bg-overlay-bg bg-transparent"></div>
+                                    </div>
+                                </div>
+                                <div class="product-desc">
+                                    <div class="product-title"><h3><a href="{{product.get_absolute_url}}">{{product.title|upper}}</a></h3></div>
+                                    <div class="product-price"><del>₦24.99</del> <ins>₦{{product.price}}</ins></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div><!-- #shop end -->
+
+                </div><!-- .postcontent end -->
+
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock content %}

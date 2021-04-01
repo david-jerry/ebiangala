@@ -38,8 +38,9 @@ from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from angalabiri.utils.models import unique_slug_generator
 
-from angalabiri.shop.managers.productmanagers import *
+from angalabiri.shop.managers.productmanagers import ProductManager
 from comment.models import Comment
 from django_resized import ResizedImageField
 from angalabiri.utils.storages import PrivateRootS3BOTO3Storage
@@ -74,16 +75,27 @@ class Product(TimeStampedModel):
     price = DecimalField(decimal_places=2, max_digits=20, default=0.99)
     comments = GenericRelation(Comment)
     added_by = CharField(_("added_by"), max_length=255, null=True, blank=True)
+    inventory = IntegerField(null=True, blank=True, default=0)
     categories = ManyToManyField("category.Category", help_text="Categorize this Product.")
     tags = ManyToManyField("category.Tag", help_text="Tag this Product.")
     featured = BooleanField(default=False)
+    old_stock = BooleanField(default=False)
     draft = BooleanField(default=False)
+    product_id = CharField(max_length=255, null=True, blank=True)
     is_digital = BooleanField(default=False)
 
     objects = ProductManager()
 
     def __str__(self):
         return str(self.title)
+
+    @property
+    def old_product(self):
+        created_on = self.created.day
+        ttdays = datetime.timedelta(days=60)
+        if created_on > ttdays:
+            return old_stock == True
+        return old_stock == False
 
     def get_downloads(self):
         qs = self.productfile_set.all()
@@ -93,7 +105,9 @@ class Product(TimeStampedModel):
         img = self.productimage_set.first()
         if img:
             return img.image.url
-        return img
+        return img 
+
+    
 
     @property
     def get_related_products_by_tags(self):
@@ -110,7 +124,7 @@ class Product(TimeStampedModel):
         ordering = ["title", "-created"]
 
     def get_absolute_url(self):
-        return f"/products/{self.slug}"
+        return f"/shop/products/{self.slug}/{self.id}"
 
     def get_update_url(self):
         return f"{self.get_absolute_url}/update"
@@ -191,13 +205,18 @@ def upload_product_image_loc(instance, filename):
     location = "product/image/{slug}/{id}/".format(slug=slug, id=id_)
     return location + filename #"path/to/filename.mp4"
 
+
+VAR_TYPE = (
+    ("SIZE", 'SIZE'),
+    ("WEIGHT", 'WEIGHT'),
+    ("COLOR", 'COLOR'),
+)
 class ProductVariation(TimeStampedModel):
     product = ForeignKey(Product, related_name="product_variation", on_delete=CASCADE)
     title = CharField(_("Product Variation"),max_length=255, null=True, blank=True)
     price = DecimalField(decimal_places=2, max_digits=20, default=0.99)
     sale_price = DecimalField(decimal_places=2, max_digits=20, null=True, blank=True)
     active = BooleanField(default=True)
-    inventory = IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.product.title)
@@ -208,10 +227,13 @@ class ProductVariation(TimeStampedModel):
         verbose_name_plural = "Post Variations"
         ordering = ["-created"]
 
+      
+
     def get_price(self):
         if self.sale_price is not None:
             return self.sale_price
         else:
+            self.price = self.product.price
             return self.price
 
     # def get_html_price(self):
@@ -222,7 +244,7 @@ class ProductVariation(TimeStampedModel):
     # 	return mark_safe(html_text)
 
     def get_absolute_url(self):
-        return f"/products/{self.slug}"
+        return f"/shop/products/{self.slug}/{self.id}"
 
     def get_update_url(self):
         return f"{self.get_absolute_url}/update"
@@ -250,8 +272,15 @@ class ProductImage(TimeStampedModel):
 
 
 
+class ProductColor(TimeStampedModel):
+    product = ForeignKey(Product, on_delete=CASCADE)
+    title = CharField(_("Product Color"), max_length=50, null=True, blank=True)
 
+    def __str__(self):
+        return self.product.title
 
-
-
-
+    class Meta:
+        managed = True
+        verbose_name = "Product Color"
+        verbose_name_plural = "Product Colors"
+        ordering = ["-created"]

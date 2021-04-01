@@ -7,13 +7,15 @@ from angalabiri.shop.models.billingmodels import BillingProfile
 from angalabiri.shop.models.ordermodels import Order, ProductPurchase
 
 class OrderListView(LoginRequiredMixin, ListView):
+    template_name = 'shop/orders/list.html'
 
     def get_queryset(self):
         return Order.objects.by_request(self.request).not_created()
 
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
-    
+    template_name = 'shop/orders/detail.html'
+
     def get_object(self):
         #return Order.objects.get(id=self.kwargs.get('id'))
         #return Order.objects.get(slug=self.kwargs.get('slug'))
@@ -29,7 +31,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
 
 class OrderLibraryView(LoginRequiredMixin, ListView):
-    template_name = 'orders/library.html'
+    template_name = 'shop/orders/library.html'
     def get_queryset(self):
         return ProductPurchase.objects.products_by_request(self.request) #.by_request(self.request).digital()
 

@@ -42,37 +42,46 @@
             <li class="menu-item current"><a class="menu-link" href="{% url 'home' %}">
                 <div>{% trans "Home" %}</div>
               </a></li>
-              <li class="menu-item current"><a class="menu-link" href="{% url 'blog:list' %}">
-                <div>{% trans "News" %}</div>
-              </a></li>
-            <li class="menu-item">
-              <a class="menu-link" href="#">
-                <div>{% trans "About" %}</div>
-              </a>
-              <ul class="sub-menu-container">
-                <li class="menu-item">
-                  <a href="{% url 'hrh' %}">
-                    <div class="widget center">
-                      <h5 class="text-uppercase ls1">HRH Famous Eseduwo</h5>
+              <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>About</div></a>
+									<div class="mega-menu-content mega-menu-style-2">
+										<div class="container">
+											<div class="row">
+												<ul class="sub-menu-container mega-menu-column col-lg-6">
+													<li class="menu-item mega-menu-title"><a class="menu-link" href="#"><div>HRH</div></a>
+														<ul class="sub-menu-container">
+															<li class="menu-item"><a href="{% url 'hrh' %}">
+                    <div class="widget">
+                      <p class="text-uppercase ls1">Read about HRH Famous Eseduwo as we take you through his life's journey</p>
                       <img src="{% static 'images/angalabiri/king/akou2.jpg' %}" alt="HRH Famous Eseduwo" width="100px"
                         height="auto" class="img-responsive">
                     </div>
-                  </a>
-                </li>
-                <li class="menu-item center">
-                  <a class="menu-link" href="{% url 'about' %}">
-                    <div>History</div>
-                  </a>
-                </li>
-                <li class="menu-item center">
-                  <a class="menu-link" href="{% url 'fam' %}">
-                    <div>Royal Family</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+                  </a></li>
+															
+														</ul>
+													</li>
+												</ul>
+												<ul class="sub-menu-container mega-menu-column col-lg-6">
+													<li class="menu-item mega-menu-title"><a class="menu-link" href="#"><div>Angalabiri</div></a>
+														<ul class="sub-menu-container">
+															<li class="menu-item"><a class="menu-link" href="{% url 'about' %}"><div>History</div></a></li>
+															<li class="menu-item"><a class="menu-link" href="{% url 'fam' %}"><div>Royalties</div></a></li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li><!-- .mega-menu end -->
+
             <li class="menu-item"><a class="menu-link" href="{% url 'cause:list' %}">
                 <div>Causes</div>
+              </a>
+            </li>
+              <li class="menu-item"><a class="menu-link" href="{% url 'blog:list' %}">
+                <div>{% trans "News" %}</div>
+              </a></li>
+            <li class="menu-item"><a class="menu-link" href="{% url 'shop:home' %}">
+                <div>{% trans "Shop" %}</div>
               </a>
             </li>
             <li class="menu-item"><a class="menu-link" href="{% url 'suggestion:create' %}">

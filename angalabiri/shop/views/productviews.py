@@ -10,13 +10,13 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import render, get_object_or_404, redirect
 from category.models import Category, Tag
-
+from angalabiri.shop.forms.cartform import CartAddProductForm
 from angalabiri.shop.models.productmodels import Product, ProductVariation, ProductFile, ProductImage
 # Create your views here.
 
 class ProductList(ListView):
     model = Product
-    template_name = "shop/list.html"
+    template_name = "shop/products/list.html"
     ordering = ["title"]
     queryset = Product.objects.all()
     context_object_name = "products"
@@ -28,47 +28,51 @@ class ProductList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         request = self.request
-        tags = Tag.objects.all()
+        tags = Tag.objects.all().filter(categories__title__iexact="shop")
         context["tags"] = tags
-        categories = Category.objects.all()
-        context["categories"] = categories
         return context
 
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product, id=id, slug=slug, draft=False)
+    tags = Tag.objects.all().filter(categories__title__iexact="shop")
+    cart_form = CartAddProductForm()
+    return render(request, 'shop/products/detail.html', {'tags':tags, 'cart_form':cart_form, 'product':product})
 
-class ProductDetail(DetailView):
-    model = Product
-    template_name = "shop/detail.html"
-    ordering = ["title"]
-    queryset = Product.objects.all()
-    context_object_name = "product"
-    allow_empty = True
-    paginate_by = 20
-    slug_field = "slug"
-    slug_url_kwarg = "slug"
 
-    def get_object(self, *args, **kwargs):
-        request = self.request
-        slug = self.kwargs.get("slug")
-        try:
-            product = Product.objects.get(slug=slug, draft=False)
-        except Product.DoesNotExist:
-            raise Http404("Not Found...")
-        except Product.MultipleObjectsReturned:
-            qs = Product.objects.filter(slug=slug, draft=False)
-            product = qs.first()
-        except:
-            raise Http404("Nothing to show")
-        return product
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        # cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-        # context['cart'] = cart_obj
-        tags = Tag.objects.all()
-        context["tags"] = tags
-        categories = Category.objects.all()
-        context["categories"] = categories
-        return context
+
+# class ProductDetail(DetailView):
+#     model = Product
+#     template_name = "shop/products/detail.html"
+#     ordering = ["title"]
+#     queryset = Product.objects.all()
+#     context_object_name = "product"
+#     allow_empty = True
+#     paginate_by = 20
+#     slug_field = "slug"
+#     slug_url_kwarg = "slug"
+
+#     def get_object(self, *args, **kwargs):
+#         request = self.request
+#         slug = self.kwargs.get("slug")
+#         try:
+#             product = Product.objects.get(slug=slug, draft=False)
+#         except Product.DoesNotExist:
+#             raise Http404("Not Found...")
+#         except Product.MultipleObjectsReturned:
+#             qs = Product.objects.filter(slug=slug, draft=False)
+#             product = qs.first()
+#         except:
+#             raise Http404("Nothing to show")
+#         return product
+
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(*args, **kwargs)
+#         tags = Tag.objects.all()
+#         context["tags"] = tags
+#         categories = Category.objects.all()
+#         context["categories"] = categories
+#         return context
 
 
 class ProductDownload(View):

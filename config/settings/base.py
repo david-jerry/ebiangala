@@ -243,6 +243,10 @@ TEMPLATES = [
                 "angalabiri.causes.context_processors.richest_causes",
                 "angalabiri.causes.context_processors.featured_causes",
                 "angalabiri.suggestion.context_processors.recent_suggestion",
+                "angalabiri.shop.context_processors.featured_products",
+                "angalabiri.shop.context_processors.new_arrivals",
+                "angalabiri.shop.context_processors.all_cat",
+                "angalabiri.shop.context_processors.cart",
             ],
         },
     }
@@ -265,6 +269,7 @@ FIXTURE_DIRS = (str(APPS_DIR / "fixtures"),)
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CART_SESSION_ID = 'cart'
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
 CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
