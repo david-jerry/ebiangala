@@ -28,13 +28,13 @@ class ProductList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         request = self.request
-        tags = Tag.objects.all().filter(categories__title__iexact="shop")
+        tags = Tag.objects.all().filter(categories__title__iexact="Shop")
         context["tags"] = tags
         return context
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, draft=False)
-    tags = Tag.objects.all().filter(categories__title__iexact="shop")
+    tags = Tag.objects.all().filter(categories__title__iexact="Shop")
     cart_form = CartAddProductForm()
     return render(request, 'shop/products/detail.html', {'tags':tags, 'cart_form':cart_form, 'product':product})
 
@@ -84,7 +84,7 @@ class ProductDownload(View):
             raise Http404("Download not found")
         download_obj = downloads_qs.first()
         # permission checks
-        
+
         can_download = False
         user_ready  = True
         if download_obj.user_required:
