@@ -79,6 +79,7 @@ isort = "*"
 pylint = "*"
 django-resized = "*"
 django-comments-dab = "*"
+django-newsletter = "*"
 
 [dev-packages]
 
