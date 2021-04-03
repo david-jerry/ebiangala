@@ -25,6 +25,7 @@ from django.db.models import (
     GenericIPAddressField,
     ImageField,
     IntegerField,
+    PositiveIntegerField,
     IPAddressField,
     ManyToManyField,
     OneToOneField,
@@ -40,7 +41,7 @@ from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 
-from angalabiri.shop.managers.ordermanagers import OrderManager, ProductPurchaseManager
+# from angalabiri.shop.managers.ordermanagers import OrderManager, ProductPurchaseManager
 
 from angalabiri.shop.models.productmodels import Product
 from angalabiri.shop.models.cartmodels import Cart
@@ -49,32 +50,30 @@ from angalabiri.shop.models.billingmodels import BillingProfile
 
 # Allorder models
 ORDER_STATUS_CHOICES = (
-    ('created', 'Created'),
-    ('paid', 'Paid'),
-    ('shipped', 'Shipped'),
-    ('refunded', 'Refunded'),
+    ("created", "Created"),
+    ("paid", "Paid"),
+    ("shipped", "Shipped"),
+    ("refunded", "Refunded"),
 )
 
+
 class Order(TimeStampedModel):
-    billing_profile     = ForeignKey(BillingProfile, on_delete=SET_NULL, null=True, blank=True)
-    order_id            = CharField(max_length=255, blank=True) # AB31DE3
-    shipping_address    = ForeignKey(Address, related_name="shipping_address",null=True, on_delete=SET_NULL, blank=True)
-    billing_address     = ForeignKey(Address, related_name="billing_address", null=True, on_delete=SET_NULL, blank=True)
-    shipping_address_final    = TextField(blank=True, null=True)
-    billing_address_final     = TextField(blank=True, null=True)
-    cart                = ForeignKey(Cart, on_delete=SET_NULL, null=True)
-    status              = CharField(max_length=255, default='created', choices=ORDER_STATUS_CHOICES)
-    shipping_total      = DecimalField(default=5.99, max_digits=100, decimal_places=2)
-    total               = DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    active              = BooleanField(default=True)
+    first_name = CharField(max_length=150, null=True)
+    last_name = CharField(max_length=150, null=True)
+    email = EmailField(null=True)
+    address = CharField(max_length=255, null=True)
+    postal_code = CharField(max_length=20, null=True)
+    city = CharField(max_length=100, null=True)
+    paid = BooleanField(default=False, null=True)
 
     def __str__(self):
         return self.order_id
 
-    objects = OrderManager()
-
     class Meta:
-       ordering = ['-created']
+        ordering = ["-created"]
+
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.items.all())
 
     def get_absolute_url(self):
         return f"/orders/{self.order_id}"
@@ -86,65 +85,14 @@ class Order(TimeStampedModel):
         return f"{self.get_absolute_url}/delete"
 
 
-    def get_status(self):
-        if self.status == "refunded":
-            return "Refunded order"
-        elif self.status == "shipped":
-            return "Shipped"
-        return "Shipping Soon"
-
-    def update_total(self):
-        cart_total = self.cart.total
-        shipping_total = self.shipping_total
-        new_total = math.fsum([cart_total, shipping_total])
-        formatted_total = format(new_total, '.2f')
-        self.total = formatted_total
-        self.save()
-        return new_total
-
-    def check_done(self):
-        shipping_address_required = not self.cart.is_digital
-        shipping_done = False
-        if shipping_address_required and self.shipping_address:
-            shipping_done = True
-        elif shipping_address_required and not self.shipping_address:
-            shipping_done = False
-        else:
-            shipping_done = True
-        billing_profile = self.billing_profile
-        billing_address = self.billing_address
-        total   = self.total
-        if billing_profile and shipping_done and billing_address and total > 0:
-            return True
-        return False
-
-    def update_purchases(self):
-        for p in self.cart.products.all():
-            obj, created = ProductPurchase.objects.get_or_create(
-                    order_id=self.order_id,
-                    product=p,
-                    billing_profile=self.billing_profile
-                )
-        return ProductPurchase.objects.filter(order_id=self.order_id).count()
-
-    def mark_paid(self):
-        if self.status != 'paid':
-            if self.check_done():
-                self.status = "paid"
-                self.save()
-                self.update_purchases()
-        return self.status
-
-
-class ProductPurchase(TimeStampedModel):
-    order_id            = CharField(max_length=120)
-    billing_profile     = ForeignKey(BillingProfile, null=True, on_delete=SET_NULL) # billingprofile.productpurchase_set.all()
-    product             = ForeignKey(Product, null=True, on_delete=SET_NULL) # product.productpurchase_set.count()
-    refunded            = BooleanField(default=False)
-
-    objects = ProductPurchaseManager()
+class OrderItem(models.Model):
+    order = ForeignKey(Order, related_name="items", on_delete=CASCADE)
+    product = ForeignKey(Product, related_name="order_items", on_delete=CASCADE)
+    price = DecimalField(max_digits=10, decimal_places=2)
+    quantity = PositiveIntegerField(default=1)
 
     def __str__(self):
-        return self.product.title
+        return "{}".format(self.id)
 
-# end all order models
+    def get_cost(self):
+        return self.price * self.quantity

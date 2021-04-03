@@ -93,8 +93,9 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
                             {% csrf_token %}
                             <div class="quantity">
                                 <input type="button" value="-" class="minus">
-                                <input type="text" name="quantity" value="{{item.quantity}}" class="qty" />
-                                <input type="button" value="+" class="plus">
+																{{ item.update_quantity_form.quantity }}
+																{{ item.update_quantity_form.update }}
+																<input type="button" value="+" class="plus">
                             </div>
                             <button type="submit" class="add-to-cart button m-0">Update cart</button>
                             </form>
@@ -121,7 +122,7 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
                                 </div>
                                 <div class="col-lg-auto pr-lg-0">
                                     <a href="{% url 'shop:list' %}" class="button button-3d m-0">Continue Shopping</a>
-                                    <a href="#" class="button button-3d mt-2 mt-sm-0 mr-0">Proceed to Checkout</a>
+                                    <a href="{% url 'shop:order-create' %}" class="button button-3d mt-2 mt-sm-0 mr-0">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </td>

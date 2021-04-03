@@ -66,58 +66,26 @@
 
 							<ul class="menu-container">
 								<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Angalabiri</div></a></li>
-								<li class="menu-item current mega-menu"><a class="menu-link" href="#"><div>Storefront</div></a>
-									<div class="mega-menu-content mega-menu-style-2" style="background-image: url('images/shop/shop-menu.jpg'); background-repeat: no-repeat; background-position: right bottom;">
-										<div class="container">
-											<div class="row">
-                                                {% for product in featured_products %}
-												<ul class="sub-menu-container mega-menu-column col-md-3">
-													<li class="menu-item">
-														<div class="widget">
-
-															<div class="portfolio-item">
-																<div class="portfolio-image">
-																	<a href="{{product.get_absolute_url}}"><img src="{{product.get_image_url}}" alt="{{product.title|truncatewords:3}} Image"></a>
-																	<div class="product-cart"><a href="#"><i class="icon-shopping-cart"></i></a></div>
-																	<div class="product-quickview"><a href="#" data-toggle="tooltip" data-placement="top" title="Available Sizes: S | M | L"><i class="icon-info"></i></a></div>
-																</div>
-																<div class="portfolio-desc pb-0">
-																	<div>
-																		<h3><a href="{{product.get_absolute_url}}">{{product.title}}</a></h3>
-																		<span class="mt-0"><a href="#">{{product.tags.first}}</a></span>
-																		<div class="rating-stars">
-																			<i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i>
-																		</div>
-																	</div>
-																	<div class="item-price">
-																		<span>₦ {{product.price}}</span>
-																	</div>
-																</div>
-															</div>
-
-														</div>
-													</li>
-												</ul>
-                                                {% endfor %}
-											</div>
-										</div>
-									</div>
-								</li>
-								<li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>Categories</div></a>
+								<li class="menu-item current mega-menu"><a class="menu-link" href="{% url 'shop:list' %}"><div>Storefront</div></a></li>
+								{% comment %} <li class="menu-item mega-menu mega-menu-small"><a class="menu-link" href="#"><div>Categories</div></a>
 									<div class="mega-menu-content mega-menu-style-1">
 										<div class="container">
 												<ul class="sub-menu-container mega-menu-column col-12">
 													<li class="menu-item mega-menu-title"><a class="menu-link" href="#"><div>COMMODITIES</div></a>
 														<ul class="sub-menu-container">
-                                                            {% for tag in all_cat %}
-															<li class="menu-item"><a class="menu-link" href="#"><div>{{tag.title}}</div></a></li>
-                                                            {% endfor %}
+															{% for tag in all_cat %}
+															<li class="menu-item">
+																<a class="menu-link" href="{% url 'shop:list'  %}">
+																	<div>{{tag.title}}</div>
+																</a>
+															</li>
+															{% endfor %}
 														</ul>
 													</li>
 												</ul>
 										</div>
 									</div>
-								</li><!-- .mega-menu end -->
+								</li><!-- .mega-menu end --> {% endcomment %}
 								<li class="menu-item"><a class="menu-link" href="{% url 'blog:list' %}"><div>Blog</div></a></li>
 							</ul>
 

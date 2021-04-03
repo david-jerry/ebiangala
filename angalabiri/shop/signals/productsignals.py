@@ -12,15 +12,15 @@ from .models.ordermodels import Order
 from .models.addressmodels import Address
 from angalabiri.utils.models import unique_slug_generator
 
-from paystackapi.product import Product
+from paystackapi.product import Product as PaystackProduct
 
 @receiver(pre_save, sender=Product)
 def create_product_slug(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = unique_slug_generator(instance)
 	if not instance.product_id:
-		product = Product.create(name=product.title,description=product.description, price=product.price, currency="NGN", **kwargs)
-		instance.product_id = product.id 
+		product = PaystackProduct.create(name=instance.title,description=instance.description, price=instance.price, currency="NGN", **kwargs)
+		instance.product_id = product.id
 
 
 
@@ -37,8 +37,3 @@ def product_post_saved_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(product_post_saved_receiver, sender=Product)
-
-
-
-
-

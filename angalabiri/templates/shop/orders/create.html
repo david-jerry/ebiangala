@@ -1,0 +1,183 @@
+{% extends "shop/base.html" %}
+{% load static i18n crispy_forms_tags %}
+
+{% block description %}
+{% trans "Confirm your orders" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "Checkout" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Confirm your orders" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'shop:order-create' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'shop:order-create' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Confirm your orders" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabiri shop, ebiangala shop, ebiangala store, sagbama online store for timber, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+{% block css %}
+{% include 'includes/shop/shopcss.html' %}
+{% endblock css %}
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">Checkout</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'shop:list' %}">Shop</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+
+<main id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+
+          <div class="row col-mb-30 gutter-50 mb-4">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									Returning customer? <a href="login-register.html">Click here to login</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									Have a coupon? <a href="login-register.html">Click here to enter your code</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row col-mb-50 gutter-50">
+            <!-- billing address -->
+						<div class="col-lg-6">
+							<h4>Your Orders</h4>
+
+							<div class="table-responsive">
+								<table class="table cart">
+									<thead>
+										<tr>
+											<th class="cart-product-thumbnail">&nbsp;</th>
+											<th class="cart-product-name">Product</th>
+											<th class="cart-product-quantity">Quantity</th>
+											<th class="cart-product-subtotal">Total</th>
+										</tr>
+									</thead>
+									<tbody>
+                    {% for item in cart %}
+										<tr class="cart_item">
+											<td class="cart-product-thumbnail">
+												<a href="#"><img width="64" height="64" src="{{item.product.get_image_url}}" alt="{{item.title}}"></a>
+											</td>
+
+											<td class="cart-product-name">
+												<a href="{{item.product.get_absolute_url}}">{{item.product.title|upper}}</a>
+											</td>
+
+											<td class="cart-product-quantity">
+												<div class="quantity clearfix">
+													1x{{item.quantity}}
+												</div>
+											</td>
+
+											<td class="cart-product-subtotal">
+												<span class="amount">₦{{item.total_price}}</span>
+											</td>
+										</tr>
+                    {% endfor %}
+									</tbody>
+
+								</table>
+							</div>
+              <div class="w-100"></div>
+
+
+              <div class="mt-5">
+                <h4>Cart Totals</h4>
+
+                <div class="table-responsive">
+                  <table class="table cart">
+                    <tbody>
+                      <tr class="cart_item">
+                        <td class="border-top-0 cart-product-name">
+                          <strong>Cart Subtotal</strong>
+                        </td>
+
+                        <td class="border-top-0 cart-product-name">
+                          <span class="amount">₦{{cart.get_total_price}}</span>
+                        </td>
+                      </tr>
+                      <tr class="cart_item">
+                        <td class="cart-product-name">
+                          <strong>Shipping</strong>
+                        </td>
+
+                        <td class="cart-product-name">
+                          <span class="amount">Free Delivery within bayelsa</span>
+                        </td>
+                      </tr>
+                      <tr class="cart_item">
+                        <td class="cart-product-name">
+                          <strong>Total</strong>
+                        </td>
+
+                        <td class="cart-product-name">
+                          <span class="amount color lead"><strong>₦{{cart.get_total_price}}</strong></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+						</div>
+
+
+						<div class="col-lg-6">
+							<h3>Billing Address</h3>
+
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, vel odio non dicta provident sint ex autem mollitia dolorem illum repellat ipsum aliquid illo similique sapiente fugiat minus ratione.</p>
+
+							<form action="." method="post">
+								{% csrf_token %}
+								{{form|crispy}}
+								<input type="submit" class="button button-3d float-right" value="Place Order">
+							</form>
+
+						</div>
+
+
+					</div>
+
+
+        </div>
+    </div>
+</main>
+{% endblock content %}

@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-{% load static i18n comment_tags %}
+{% load static i18n comment_tags crispy_forms_tags %}
 
 {% block description %}
 {% blocktrans with product.description as description %}
@@ -105,12 +105,7 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
                             ============================================= -->
                             <form class="cart mb-0 d-flex justify-content-between align-items-center" method="post" enctype='multipart/form-data' action="{% url 'shop:add' product.id %}">
                                 {% csrf_token %}
-                                <div class="quantity">
-                                    <input type="button" value="-" class="minus">
-                                    <input type="text" name="quantity" value="1" class="qty" />
-                                    <input type="button" value="+" class="plus">
-                                </div>
-                                <button type="submit" class="add-to-cart button m-0">Add to cart</button>
+                                {% crispy cart_form %}
                             </form><!-- Product Single - Quantity & Cart Button End -->
 
                             <div class="line"></div>
@@ -126,7 +121,7 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
                                     <span class="text-muted">Color:</span><span class="text-dark font-weight-semibold">{% for color in product.productcolor_set.all %}color.title{% endfor %}k</span>
                                 </li>
                                 {% endif %}
-            
+
                                 {% if product.productvariation_set.all %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                     <span class="text-muted">Size:</span><span class="text-dark font-weight-semibold">{% for var in product.productvariation_set.all %}{{var.title}}{% endfor %}</span>

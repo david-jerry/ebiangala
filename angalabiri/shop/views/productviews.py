@@ -40,7 +40,6 @@ def product_detail(request, id, slug):
 
 
 
-
 # class ProductDetail(DetailView):
 #     model = Product
 #     template_name = "shop/products/detail.html"
