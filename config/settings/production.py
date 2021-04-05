@@ -91,10 +91,11 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 AWS_DEFAULT_ACL = None
 AWS_DOWNLOAD_EXPIRED = 5000
+AWS_FILE_EXPIRE = 200
+AWS_PRELOAD_METADATA = True
 AWS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
     "Expires": _AWS_EXPIRY,
-    "Cache-Control": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate"
 }
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
