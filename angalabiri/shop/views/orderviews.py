@@ -8,6 +8,7 @@ from angalabiri.shop.models.ordermodels import Order, OrderItem
 from angalabiri.shop.forms.orderforms import OrderCreateForm
 from angalabiri.shop.cart import Cart
 from django.contrib import messages
+from angalabiri.shop.tasks import order_created
 
 
 def OrderCreate(request):
@@ -24,7 +25,8 @@ def OrderCreate(request):
                     quantity=item["quantity"],
                 )
             cart.clear()
-            messages.success(request, "Order Completed. \n Your order id is: {{order}}".format(order=order.id))
+            order_created.delay(order.id)
+            messages.success(request, "Order Completed. \n Your order id is: {}".format(order.id))
             return redirect('shop:home')
             # return render(request, "shop/orders/created.html", {"order": order})
     else:

@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-{% load static i18n %}
+{% load static i18n crispy_forms_tags %}
 
 {% block description %}
 {% trans "Online Store to purchase resources and agricultural produces from angalabiri" %}
@@ -113,7 +113,11 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
                                     {% endif %}
                                     <div class="bg-overlay">
                                         <div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
-                                            <a href="{% url 'shop:add' product.id %}" class="btn btn-dark mr-2"><i class="icon-shopping-cart"></i></a>
+                                            {% comment %} <a href="{% url 'shop:add' product.id %}" class="btn btn-dark mr-2"><i class="icon-shopping-cart"></i></a> {% endcomment %}
+                                            <form class="cart mb-0 d-flex justify-content-between align-items-center" method="post" enctype='multipart/form-data' action="{% url 'shop:add' product.id %}">
+                                                {% csrf_token %}
+                                                {% crispy cart_form %}
+                                            </form>
                                         </div>
                                         <div class="bg-overlay-bg bg-transparent"></div>
                                     </div>

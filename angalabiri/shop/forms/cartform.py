@@ -33,5 +33,29 @@ class CartAddProductForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             BaseInput("quantity", value=1, style="width:50px;", add_class="qty"),
-            Submit("Add To Cart", "Add To Cart", css_class="add-to-cart button m-0"),
+            Submit("Add To Cart", "Add to Cart", css_class="add-to-cart button m-0"),
         )
+
+
+# class ListCartAddProductForm(forms.Form):
+
+#     quantity = forms.TypedChoiceField(
+#         choices=PRODUCT_QUANTITY_CHOICES,
+#         coerce=int,
+#         required=False,
+#         widget=forms.TextInput(attrs={'class': 'qty', 'style':'width:60px; padding: 8.7px;'})
+#     )
+#     update = forms.BooleanField(
+#         widget=forms.HiddenInput(), initial=False, required=False
+#     )
+
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.layout = Layout(
+#             BaseInput("quantity", value=1, style="width:50px;", add_class="qty"),
+#             Submit("Add To Cart", "Add To Cart", css_class="add-to-cart button m-0"),
+#         )
+
+
+# <i class="icon-shopping-cart"></i>
