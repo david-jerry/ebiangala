@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "467b5f71de78007af77508938e966dd7a3dc99bdc7627df97a4d606e71545961"
+            "sha256": "be5f4ea0c4b26358c86790302485281b8fa98d9169d251ec268ce73a79706fe9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -433,6 +433,13 @@
             "index": "pypi",
             "version": "==6.0.0"
         },
+        "django-comments-dab": {
+            "hashes": [
+                "sha256:2fedd7965c3cbc78c72dd5b69e5658d37e1e5a4e944a768e6b53021316eecadf"
+            ],
+            "index": "pypi",
+            "version": "==2.6.0"
+        },
         "django-compressor": {
             "hashes": [
                 "sha256:57ac0a696d061e5fc6fbc55381d2050f353b973fb97eee5593f39247bc0f30af",
@@ -832,7 +839,7 @@
                 "sha256:0a943902919f65c5684ac4e0154b1ad4fac6dcaa5d9f3426b732f1c8b5419be6",
                 "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d"
             ],
-            "markers": "python_version >= '3.6' and python_version < '4'",
+            "markers": "python_version >= '3.6' and python_version < '4.0'",
             "version": "==5.8.0"
         },
         "itypes": {
@@ -955,7 +962,7 @@
                 "sha256:28d769f0e544e6f68f684f01e9b186747b079a6927d9ca77ebc8c640a2829b1b",
                 "sha256:8d4ef4a2d090c99532069c4611a9a2b9bea6ae1fa29b6c3727c95d1e31a8f6c5"
             ],
-            "markers": "python_version >= '3.5' and python_version < '4'",
+            "markers": "python_version >= '3.5' and python_version < '4.0'",
             "version": "==2.4.0"
         },
         "markupsafe": {
@@ -1628,7 +1635,7 @@
                 "sha256:78f9a9bf4e7be0c5ded4583326e7461e3a3c5aae24073648b4bdfa797d78c9d2",
                 "sha256:9d689e6ca1b3038bc82bf8d23e944b6b6037bc02301a574935b2dd946e0353b9"
             ],
-            "markers": "python_version >= '3.5' and python_version < '4'",
+            "markers": "python_version >= '3.5' and python_version < '4.0'",
             "version": "==4.7.2"
         },
         "s3transfer": {
@@ -1888,7 +1895,7 @@
                 "sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df",
                 "sha256:e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4.0'",
             "version": "==1.26.4"
         },
         "vine": {
