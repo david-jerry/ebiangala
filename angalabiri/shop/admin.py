@@ -1,7 +1,5 @@
 from django.contrib import admin
-from angalabiri.shop.models.addressmodels import Address
 
-from angalabiri.shop.models.billingmodels import BillingProfile, Card, Charge
 from angalabiri.shop.models.ordermodels import Order, OrderItem
 from angalabiri.shop.models.productmodels import (
     Product,
@@ -62,10 +60,3 @@ class OrderAdmin(admin.ModelAdmin):
 
 # admin.site.register(Cart)
 
-admin.site.register(BillingProfile)
-
-admin.site.register(Card)
-
-admin.site.register(Charge)
-
-admin.site.register(Address)

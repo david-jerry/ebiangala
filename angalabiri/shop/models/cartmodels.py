@@ -38,30 +38,30 @@ from django.utils.translation import gettext_lazy as _
 from model_utils import Choices
 from model_utils.models import StatusModel, TimeStampedModel
 
-from angalabiri.shop.managers.cartmanagers import CartManager
+# from angalabiri.shop.managers.cartmanagers import CartManager
 from angalabiri.shop.models.productmodels import Product, ProductVariation
 
 
 User = settings.AUTH_USER_MODEL
 
 # Start Cart models
-class Cart(TimeStampedModel):
-    user        = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True)
-    products    = ManyToManyField(Product, blank=True)
-    subtotal    = DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    total       = DecimalField(default=0.00, max_digits=100, decimal_places=2)
+# class Cart(TimeStampedModel):
+#     user        = ForeignKey(User, on_delete=SET_NULL, null=True, blank=True)
+#     products    = ManyToManyField(Product, blank=True)
+#     subtotal    = DecimalField(default=0.00, max_digits=100, decimal_places=2)
+#     total       = DecimalField(default=0.00, max_digits=100, decimal_places=2)
 
-    objects = CartManager()
+#     objects = CartManager()
 
-    def __str__(self):
-        return str(self.id)
+#     def __str__(self):
+#         return str(self.id)
 
-    @property
-    def is_digital(self):
-        qs = self.products.all() #every product
-        new_qs = qs.filter(is_digital=False) # every product that is not digial
-        if new_qs.exists():
-            return False
-        return True
+#     @property
+#     def is_digital(self):
+#         qs = self.products.all() #every product
+#         new_qs = qs.filter(is_digital=False) # every product that is not digial
+#         if new_qs.exists():
+#             return False
+#         return True
 
 # End cart models

@@ -5,11 +5,11 @@ from django.views.decorators.http import require_POST
 
 # from users.forms import LoginForm
 
-from angalabiri.shop.forms.addressforms import AddressCheckoutForm
+# from angalabiri.shop.forms.addressforms import AddressCheckoutForm
 from angalabiri.shop.forms.cartform import CartAddProductForm
-from angalabiri.shop.models.addressmodels import Address
+# from angalabiri.shop.models.addressmodels import Address
 
-from angalabiri.shop.models.billingmodels import BillingProfile
+# from angalabiri.shop.models.billingmodels import BillingProfile
 from angalabiri.shop.models.ordermodels import Order
 from angalabiri.shop.models.productmodels import Product
 from angalabiri.shop.cart import Cart
@@ -80,9 +80,9 @@ def cart_detail(request):
 #     products = [{
 #             "id": x.id,
 #             "url": x.get_absolute_url(),
-#             "name": x.name, 
+#             "name": x.name,
 #             "price": x.price
-#             } 
+#             }
 #             for x in cart_obj.products.all()]
 #     cart_data  = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
 #     return JsonResponse(cart_data)
@@ -94,7 +94,7 @@ def cart_detail(request):
 
 # def cart_update(request):
 #     product_id = request.POST.get('product_id')
-    
+
 #     if product_id is not None:
 #         try:
 #             product_obj = Product.objects.get(id=product_id)
@@ -127,8 +127,8 @@ def cart_detail(request):
 #     cart_obj, cart_created = Cart.objects.new_or_get(request)
 #     order_obj = None
 #     if cart_created or cart_obj.products.count() == 0:
-#         return redirect("shop:cart")  
-    
+#         return redirect("shop:cart")
+
 #     login_form = LoginForm(request=request)
 #     # guest_form = GuestForm(request=request)
 #     address_form = AddressCheckoutForm()
@@ -150,7 +150,7 @@ def cart_detail(request):
 #             order_obj.shipping_address = Address.objects.get(id=shipping_address_id)
 #             del request.session["shipping_address_id"]
 #         if billing_address_id:
-#             order_obj.billing_address = Address.objects.get(id=billing_address_id) 
+#             order_obj.billing_address = Address.objects.get(id=billing_address_id)
 #             del request.session["billing_address_id"]
 #         if billing_address_id or shipping_address_id:
 #             order_obj.save()

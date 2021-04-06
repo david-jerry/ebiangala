@@ -91,9 +91,6 @@ AWS_DEFAULT_ACL = None
 AWS_DOWNLOAD_EXPIRED = 5000
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
-AWS_HEADERS = {
-    "Access-Control-Allow-Origin": "*",
-}
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#cloudfront

@@ -50,3 +50,32 @@
 
 
 # post_save.connect(post_save_order, sender=Order)
+
+
+import math
+import datetime
+from django.conf import settings
+from django.db import models
+from django.db.models import Count, Sum, Avg
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import Signal, receiver
+
+
+from angalabiri.shop.models.ordermodels import Order
+from angalabiri.shop.models.addressmodels import Address
+from angalabiri.utils.models import unique_slug_generator
+
+from paystackapi.transactions import Transaction
+
+@receiver(pre_save, sender=Order)
+def create_initialized_order_id(sender, instance, *args, **kwargs):
+    if not instance.transaction_id:
+        transaction = Transaction.initialize(
+            reference=f"ANGALASHOP_ORDERNO_{instance.id}",
+            amount='{:.2f}'.format(instance.get_total_cost()) * 100,
+            email=instance.email,
+            **kwargs
+        )
+        instance.transaction_id = transaction.id
+
+

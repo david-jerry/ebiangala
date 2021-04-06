@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.views.generic import View, ListView, DetailView, CreateView
 from django.shortcuts import redirect, render
 
-from angalabiri.shop.models.billingmodels import BillingProfile
+# from angalabiri.shop.models.billingmodels import BillingProfile
 from angalabiri.shop.models.ordermodels import Order, OrderItem
 from angalabiri.shop.forms.orderforms import OrderCreateForm
 from angalabiri.shop.cart import Cart
@@ -27,7 +27,8 @@ def OrderCreate(request):
             cart.clear()
             order_created.delay(order.id)
             messages.success(request, "Order Completed. \n Your order id is: {}".format(order.id))
-            return redirect('shop:home')
+            request.session['order_id'] = order.id
+            return redirect('shop:payment_method')
             # return render(request, "shop/orders/created.html", {"order": order})
     else:
         form = OrderCreateForm()

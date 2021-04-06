@@ -44,9 +44,9 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 # from angalabiri.shop.managers.ordermanagers import OrderManager, ProductPurchaseManager
 
 from angalabiri.shop.models.productmodels import Product
-from angalabiri.shop.models.cartmodels import Cart
-from angalabiri.shop.models.addressmodels import Address
-from angalabiri.shop.models.billingmodels import BillingProfile
+# from angalabiri.shop.models.cartmodels import Cart
+# from angalabiri.shop.models.addressmodels import Address
+# from angalabiri.shop.models.billingmodels import BillingProfile
 
 # Allorder models
 ORDER_STATUS_CHOICES = (
@@ -65,6 +65,7 @@ class Order(TimeStampedModel):
     postal_code = CharField(max_length=20, null=True)
     city = CharField(max_length=100, null=True)
     paid = BooleanField(default=False, null=True)
+    transaction_id = CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.order_id

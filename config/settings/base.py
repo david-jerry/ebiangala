@@ -203,11 +203,11 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = str(APPS_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
-FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
 
 PRIVATE_ROOT = str(APPS_DIR / "private")
 PRIVATE_URL = "/private/"
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates

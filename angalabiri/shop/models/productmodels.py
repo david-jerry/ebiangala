@@ -62,7 +62,7 @@ def upload_image_path(instance, filename):
     name, ext = get_filename_ext(filename)
     final_filename = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
     return "products/{new_filename}/{final_filename}".format(
-            new_filename=new_filename, 
+            new_filename=new_filename,
             final_filename=final_filename
             )
 
@@ -105,9 +105,9 @@ class Product(TimeStampedModel):
         img = self.productimage_set.first()
         if img:
             return img.image.url
-        return img 
+        return img
 
-    
+
 
     @property
     def get_related_products_by_tags(self):
@@ -153,7 +153,7 @@ def upload_product_file_loc(instance, filename):
 class ProductFile(TimeStampedModel):
     product = ForeignKey(Product, null=True, on_delete=SET_NULL, blank=False)
     name = CharField(_("Digital Content Name"), null=True, blank=True, max_length=255)
-    digi_file = FileField(_("Digital File Upload"), upload_to=upload_product_file_loc, storage=PRIVATE_FILE_STORAGE(),)
+    digi_file = FileField(_("Digital File Upload"), upload_to=upload_product_file_loc, storage=PRIVATE_FILE_STORAGE())
     free  = BooleanField(default=False)
     user_required = BooleanField(default=False)
 
@@ -184,7 +184,7 @@ class ProductFile(TimeStampedModel):
         return file_url
 
     def get_download_url(self): # detail view
-        return reverse("products:download", 
+        return reverse("products:download",
                     kwargs={"slug": self.product.slug, "pk": self.pk}
                 )
 
@@ -227,7 +227,7 @@ class ProductVariation(TimeStampedModel):
         verbose_name_plural = "Post Variations"
         ordering = ["-created"]
 
-      
+
 
     def get_price(self):
         if self.sale_price is not None:
