@@ -1,0 +1,75 @@
+{% extends "shop/base.html" %}
+{% load static i18n crispy_forms_tags %}
+
+{% block description %}
+{% trans "Complete your payment" %}
+{% endblock description %}
+
+{% block title %}
+{% trans "Complete Payment" %} | {{block.super|upper}}
+{% endblock title %}
+
+{% block ogdesc %}
+{% trans "Complete your payment" %}
+{% endblock ogdesc %}
+
+{% block cano %}
+{% url 'shop:payment_method' %}
+{% endblock cano %}
+
+{% block ogurl %}
+{% url 'shop:payment_method' %}
+{% endblock ogurl %}
+
+{% block twitdesc %}
+{% trans "Complete your payment" %}
+{% endblock twitdesc %}
+
+{% block body-class %}
+class="stretched"
+{% endblock body-class%}
+
+{% block keywords %}
+Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabiri shop, ebiangala shop, ebiangala store, sagbama online store for timber, History of Ebiangala, history of angalabiri, the people of angalabiri
+{% endblock keywords %}
+
+{% block css %}
+{% include 'includes/shop/shopcss.html' %}
+{% endblock css %}
+
+{% block content %}
+<!-- Page Title
+		============================================= -->
+<section id="page-title">
+
+  <div class="container clearfix">
+    <h1 class="mb-3">Complete Payment</h1>
+    <span>Angalabiri Federated Community</span>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'shop:list' %}">Shop</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Complete Payment</li>
+    </ol>
+  </div>
+
+</section><!-- #page-title end -->
+
+<main id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+          <div class="col-lg-6">
+            <h3>Paystack Payment</h3>
+
+            <p>complete your payment</p>
+
+            <form action="." method="post">
+              {% csrf_token %}
+              {{form|crispy}}
+              <input type="submit" class="button button-3d float-right" value="Place Order">
+            </form>
+
+          </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

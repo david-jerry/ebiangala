@@ -68,7 +68,7 @@ class Order(TimeStampedModel):
     transaction_id = CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.order_id
+        return str(self.id)
 
     class Meta:
         ordering = ["-created"]

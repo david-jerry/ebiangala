@@ -9,6 +9,7 @@ from angalabiri.shop.forms.orderforms import OrderCreateForm
 from angalabiri.shop.cart import Cart
 from django.contrib import messages
 from angalabiri.shop.tasks import order_created
+from django.urls import reverse
 
 
 def OrderCreate(request):
@@ -28,7 +29,7 @@ def OrderCreate(request):
             order_created.delay(order.id)
             messages.success(request, "Order Completed. \n Your order id is: {}".format(order.id))
             request.session['order_id'] = order.id
-            return redirect('shop:payment_method')
+            return redirect(reverse('shop:payment_method'))
             # return render(request, "shop/orders/created.html", {"order": order})
     else:
         form = OrderCreateForm()
