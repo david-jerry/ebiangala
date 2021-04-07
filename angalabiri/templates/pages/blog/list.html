@@ -47,62 +47,46 @@ class="stretched search-overlay"
   <div class="container">
     <h1>NEWS</h1>
     <span>Get upto date information on angalabiri, its surrounding communities and latest development.</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Posts</li>
+    </ol>
   </div>
 
 </section><!-- #page-title end -->
 
 
 <main id="content">
-  <section class="content-wrap pt-5" style="overflow: visible;">
-    <div class="container">
-      <div class="row gutter-50">
+  <section class="content-wrap">
+    <div class="container clearfix">
+      <div class="row gutter-40 col-mb-80">
 
-        <div class="col-lg-3 cat-widgets position-sticky h-100" style="top: 234px;">
-          <div class="widget widget-search">
-            <form class="input-group">
-              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary icon-line-search" type="button"></button>
-              </div>
-            </form>
-          </div>
-          <div class="widget widget-nav mt-md-5">
-            <ul class="nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">All Categories</a>
-              </li>
-              {% for tag in tags %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'blog:tag' tag.slug %}">{{tag.title|upper}}</a>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
+                                <!-- Sidebar
+                ============================================= -->
+                <div class="sidebar col-lg-3">
+                  <div class="sidebar-widgets-wrap">
 
-        <div class="col-lg-9 mt-5 mt-lg-0">
-          <div class="d-flex">
-            <div class="flex-grow-1">
-              <h3>All Angalabiri Posts</h3>
-            </div>
-            <div>
-              <!-- Example single danger button -->
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  Most Popular
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Latest Posts</a>
-                  <a class="dropdown-item" href="#">Most Comments</a>
-                </div>
-              </div>
+                      <div class="widget widget-filter-links">
 
-            </div>
-          </div>
-          <div class="row col-mb-50 posts md">
+                          <h4>Select Category</h4>
+                          <ul class="custom-filter pl-2" data-container="#shop" data-active-class="active-filter">
+                              <li class="widget-filter-reset active-filter"><a href="#" data-filter="*">Clear</a></li>
+                              {% for tag in tags %}
+                              <li><a href="#" data-filter=".sf-{{tag.title|lower}}">{{tag.title|upper}}</a></li>
+                              {% endfor %}
+                          </ul>
+
+                      </div>
+
+
+                  </div>
+              </div><!-- .sidebar end -->
+
+
+        <div class="postcontent col-lg-9 mt-5 mt-lg-0 order-lg-last">
+          <div id="shop" class="row col-mb-50 posts md" data-layout="fitRows">
             {% for post in posts %}
-            <div class="col-md-4">
+            <div class="product col-md-4  col-sm-6 {% for tag in post.tags.all %}sf-{{tag.title|lower}}{% endfor %}">
               <article class="entry mb-1 clearfix">
                 <div class="entry-user">
                   <h4><a href="{% if post.url %}{{post.url}}{% else %}{{post.get_absolute_url}}{% endif %}">{{post.title}}</a>.<br><span
@@ -171,3 +155,65 @@ class="stretched search-overlay"
   </section>
 </main>
 {% endblock content %}
+
+
+{% block inline_javascript %}
+<script>
+  jQuery(document).ready( function($){
+    $(window).on( 'pluginIsotopeReady', function(){
+      $('#shop').isotope({
+        transitionDuration: '0.65s',
+        getSortData: {
+          name: '.product-title',
+          price_lh: function( itemElem ) {
+            if( $(itemElem).find('.product-price').find('ins').length > 0 ) {
+              var price = $(itemElem).find('.product-price ins').text();
+            } else {
+              var price = $(itemElem).find('.product-price').text();
+            }
+
+            priceNum = price.split("$");
+
+            return parseFloat( priceNum[1] );
+          },
+          price_hl: function( itemElem ) {
+            if( $(itemElem).find('.product-price').find('ins').length > 0 ) {
+              var price = $(itemElem).find('.product-price ins').text();
+            } else {
+              var price = $(itemElem).find('.product-price').text();
+            }
+
+            priceNum = price.split("$");
+
+            return parseFloat( priceNum[1] );
+          }
+        },
+        sortAscending: {
+          name: true,
+          price_lh: true,
+          price_hl: false
+        }
+      });
+
+      $('.custom-filter:not(.no-count)').children('li:not(.widget-filter-reset)').each( function(){
+        var element = $(this),
+          elementFilter = element.children('a').attr('data-filter'),
+          elementFilterContainer = element.parents('.custom-filter').attr('data-container');
+
+        elementFilterCount = Number( jQuery(elementFilterContainer).find( elementFilter ).length );
+
+        element.append('<span>'+ elementFilterCount +'</span>');
+
+      });
+
+      $('.shop-sorting li').click( function() {
+        $('.shop-sorting').find('li').removeClass( 'active-filter' );
+        $(this).addClass( 'active-filter' );
+        var sortByValue = $(this).find('a').attr('data-sort-by');
+        $('#shop').isotope({ sortBy: sortByValue });
+        return false;
+      });
+    });
+  });
+</script>
+{% endblock inline_javascript %}
