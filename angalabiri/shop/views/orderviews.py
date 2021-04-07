@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, JsonResponse
 from django.views.generic import View, ListView, DetailView, CreateView
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 # from angalabiri.shop.models.billingmodels import BillingProfile
 from angalabiri.shop.models.ordermodels import Order, OrderItem
@@ -10,9 +10,24 @@ from angalabiri.shop.cart import Cart
 from django.contrib import messages
 from angalabiri.shop.tasks import order_created
 from django.urls import reverse
+# from paystackapi.paystack import Paystack
+# from paystackapi.transaction import Transaction
+# from paystackapi.customer import Customer
+import random
+import string
+from django.conf import settings
+
+paystack_secret_key = settings.PAYSTACK_SECRET_KEY
+paystack_public_key = settings.PAYSTACK_PUBLIC_KEY
+
+# paystack = Paystack(secret_key=paystack_secret_key)
 
 
 def OrderCreate(request):
+    rand = ''.join(
+        [random.choice(
+            string.ascii_letters + string.digits) for n in range(16)])
+    paystack_key = paystack_public_key
     cart = Cart(request)
     if request.method == "POST":
         form = OrderCreateForm(request.POST)
@@ -26,14 +41,37 @@ def OrderCreate(request):
                     quantity=item["quantity"],
                 )
             cart.clear()
+            request.session["order_id"] = order.id
+            # transaction = Transaction.initialize(
+            #     reference=rand,
+            #     email=current_order.email,
+            #     amount="{:.2f}".format(current_order.get_total_cost()) * 100,
+            # )
+            # Transaction.charge(
+            #     reference=transaction.reference,
+            #     authorization_code=transaction.authorization_code,
+            #     amount=transaction.amount
+            # )
+            order.paid = True
+            order.save()
             order_created.delay(order.id)
-            messages.success(request, "Order Completed. \n Your order id is: {}".format(order.id))
-            request.session['order_id'] = order.id
-            return redirect(reverse('shop:payment_method'))
+            messages.success(
+                request, "Order Completed. \n Your order id is: {}".format(order.id)
+            )
+            # return redirect(reverse("shop:payment_done"))
+        else:
+            messages.error(
+                request, "Order Failed. \n Your order id is: {}".format(order.id)
+            )
+            # return redirect(reverse('shop:payment_failed'))
             # return render(request, "shop/orders/created.html", {"order": order})
     else:
         form = OrderCreateForm()
-    return render(request, "shop/orders/create.html", {"cart": cart, "form": form})
+    return render(
+        request,
+        "shop/orders/create.html",
+        {"cart": cart, "form": form, "paystack_key": paystack_key, 'rand': rand},
+    )
 
 
 class OrderListView(LoginRequiredMixin, ListView):

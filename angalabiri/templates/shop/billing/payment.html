@@ -62,9 +62,9 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
 
             <p>complete your payment</p>
 
-            <form action="." method="post">
+            <form action="." method="POST">
               {% csrf_token %}
-              {{form|crispy}}
+              <input type="text" name="phone number" id="id_phone">
               <input type="submit" class="button button-3d float-right" value="Place Order">
             </form>
 

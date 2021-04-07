@@ -62,6 +62,14 @@
   {% endblock %}
   <!-- Le javascript
     ================================================== -->
+  {{form.media}}
+</head>
+
+<body {% block body-class %}{% endblock body-class%}>
+
+  {% block maincontent %}
+  {% endblock maincontent %}
+
   {# Placed at the top of the document so pages load faster with defer #}
   {% block javascript %}
 
@@ -70,14 +78,6 @@
 
   <!-- place project specific Javascript in this file -->
   {% endblock javascript %}
-
-  {{form.media}}
-</head>
-
-<body {% block body-class %}{% endblock body-class%}>
-
-  {% block maincontent %}
-  {% endblock maincontent %}
 
   {% block inline_javascript %}
   {# Script tags with only code, no src (defer by default) #}

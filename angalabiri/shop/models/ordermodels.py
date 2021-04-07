@@ -65,7 +65,6 @@ class Order(TimeStampedModel):
     postal_code = CharField(max_length=20, null=True)
     city = CharField(max_length=100, null=True)
     paid = BooleanField(default=False, null=True)
-    transaction_id = CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.id)

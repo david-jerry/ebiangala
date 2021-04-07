@@ -166,9 +166,10 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, vel odio non dicta provident sint ex autem mollitia dolorem illum repellat ipsum aliquid illo similique sapiente fugiat minus ratione.</p>
 
 							<form action="." method="post">
+								<script src="https://js.paystack.co/v1/inline.js"></script>
 								{% csrf_token %}
 								{{form|crispy}}
-								<input type="submit" class="button button-3d float-right" value="Place Order">
+								<input type="submit" class="submit button button-3d float-right" value="Place Order">
 							</form>
 
 						</div>
@@ -181,3 +182,50 @@ Angalabiri Community shop, Ebiangala Community shop, angalabiri store, angalabir
     </div>
 </main>
 {% endblock content %}
+
+
+{% block inline_javascript %}
+<srcipt>
+  $('input.submit').click(function payWithPaystackOrg(e) {
+    var email = $("#id_email").val();
+    var fname = $("#id_first_name").val();
+    var lname = $("#id_last_name").val();
+    var full_name = fname + " " + lname;
+
+    e.preventDefault();
+    var handler = PaystackPop.setup({
+      //key: "pk_test_bbf939ac50083a6842f9a88433cf6ba690b9ca09",
+      //split_code: "SPL_OVrykLLxU4",
+      key: {{paystack_key}}, 
+      //split_code: "SPL_ZecNHCnDbi", //live split key
+      email: email,
+      firstname: fname,
+      lastname: lname,
+      amount: {{cart.get_total_price}} * 100,
+      currency: "NGN",
+      ref: "DIRIBOOST_" + Math.floor((Math.random() * 1000000000) + 1),
+      metadata: {
+        firstname: fname,
+        lastname: lname,
+        custom_fields: [
+          {
+            display_name: "Full Name",
+            variable_name: "full_name",
+            value: full_name
+          },
+        ]
+      },
+      callback: function (response) {
+        alert(fname + ', you have successfully registered with transaction ref: ' + response.reference);
+        $('form').submit();
+      },
+      onClose: function () {
+        alert(full_name + ', Your Transaction Has Been Terminated');
+        //$('form').submit();
+      }
+    });
+    handler.openIframe();
+  });
+
+</script>
+{% endblock inline_javascript %}
