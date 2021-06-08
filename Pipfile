@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 pytz = "==2021.1"
 python-slugify = "==4.0.1"
-pillow = "==8.1.1"
+pillow = "==8.2.0"
 rcssmin = "==1.0.6"
 argon2-cffi = "==20.1.0"
 redis = "==3.5.3"
